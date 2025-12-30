@@ -1,0 +1,339 @@
+{
+  "common": {
+    "home": "Home",
+    "search": "Search",
+    "add": "Add",
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "English",
+    "cancel": "Cancel",
+    "done": "Done",
+    "selectLanguage": "Select Language",
+    "next": "Next",
+    "skip": "Skip",
+    "resetOnboarding": "Show Initial Guide Again"
+  },
+  "search": {
+    "placeholder1": "Invest on Setlone",
+    "placeholder2": "Shop with SUTmembers",
+    "placeholder3": "How to use Staking service?"
+  },
+  "onboarding": {
+    "page1": {
+      "title": "Welcome! We are Setlone",
+      "description": "We are the first platform that integrates investment, consumption, fintech, and culture"
+    },
+    "page2": {
+      "title": "On our platform",
+      "description": "You can discover various things through SUTmembers. SUTmembers operates as a membership system, and you can use crypto cards and receive benefits when you sign up."
+    },
+    "page3": {
+      "title": "Shop and earn rewards",
+      "description": "Get points as rewards for your purchases! Discover various products in our shopping mall"
+    },
+    "page4": {
+      "title": "Share fun and diverse content",
+      "description": "Upload posts and short videos to get likes! Likes are rewarded with SUT every day at 00:00!"
+    },
+    "page5": {
+      "title": "Ready to explore Setlone?",
+      "description": ""
+    }
+  },
+  "feed": {
+    "title": "Feed",
+    "whatAreYouThinking": "What's on your mind?",
+    "addPhoto": "Add Photo",
+    "post": "Post",
+    "loading": "Loading...",
+    "justNow": "Just now",
+    "minutesAgo": "minutes ago",
+    "hoursAgo": "hours ago",
+    "daysAgo": "days ago"
+  },
+  "services": {
+    "yieldCard": {
+      "name": "SUTMembers",
+      "description": "Spend your investment yield"
+    },
+    "commerce": {
+      "name": "Commerce",
+      "description": "Global shopping mall"
+    },
+    "staking": {
+      "name": "Staking",
+      "description": "Asset staking"
+    },
+    "payment": {
+      "name": "Fintech",
+      "description": "Digital payment solution"
+    },
+    "rewards": {
+      "name": "Event",
+      "description": "Consumption reward system"
+    },
+    "ai": {
+      "name": "AI Auto Trading",
+      "description": "Data-driven recommendations"
+    },
+    "demo": {
+      "name": "Blockchain Game",
+      "description": "Interactive demo"
+    },
+    "mining": {
+      "name": "Mining Crypto",
+      "description": "Cryptocurrency Mining"
+    },
+    "globalPayment": {
+      "name": "Web3 Shopping",
+      "description": "Instant payment without SWIFT"
+    },
+    "crowdfunding": {
+      "name": "Crowdfunding",
+      "description": "Crowdfunding Platform"
+    }
+  },
+  "staking": {
+    "title": "Staking",
+    "back": "Back",
+    "seeMore": "See more...",
+    "comingSoon": "Coming soon...",
+    "backToStaking": "Back to Staking",
+    "options": {
+      "native": {
+        "title": "Native Staking",
+        "description": "Stake tokens directly on the blockchain network"
+      },
+      "lockup": {
+        "title": "Lockup vs Unlock Staking",
+        "description": "Choose between locked and flexible staking options"
+      },
+      "liquid": {
+        "title": "Liquid Staking (LST)",
+        "description": "Stake while maintaining liquidity with liquid staking tokens"
+      },
+      "restaking": {
+        "title": "Restaking",
+        "description": "Restake your staked tokens for additional rewards"
+      },
+      "cefi": {
+        "title": "CeFi Staking",
+        "description": "Centralized finance staking through trusted platforms"
+      },
+      "defi": {
+        "title": "DeFi Staking",
+        "description": "Decentralized finance staking on DeFi protocols"
+      }
+    },
+    "details": {
+      "native": {
+        "title": "Native Staking",
+        "content": "Native Staking allows you to stake tokens directly on the blockchain network using the native protocol. You participate directly in network security and consensus, earning rewards by staking native tokens."
+      },
+      "lockup": {
+        "title": "Lockup vs Unlock Staking",
+        "content": "Lockup Staking locks your tokens for a fixed period to earn higher rewards. Unlock Staking allows flexible withdrawal at any time, offering lower rewards but greater freedom in managing your assets."
+      },
+      "liquid": {
+        "title": "Liquid Staking (LST)",
+        "content": "Liquid Staking is an innovative way to earn rewards while maintaining liquidity of staked tokens. You receive Liquid Staking Tokens (LST) representing your staked tokens, which can be used in other DeFi protocols."
+      },
+      "restaking": {
+        "title": "Restaking",
+        "content": "Restaking allows you to stake already staked tokens again to earn additional rewards. You can stake across multiple protocols simultaneously to maximize returns."
+      },
+      "cefi": {
+        "title": "CeFi Staking",
+        "content": "CeFi (Centralized Finance) Staking provides staking services through trusted centralized platforms. It is user-friendly, stable, and offers professional management services."
+      },
+      "defi": {
+        "title": "DeFi Staking",
+        "content": "DeFi (Decentralized Finance) Staking provides staking services through decentralized protocols. You interact directly with smart contracts without intermediaries, earning rewards in a transparent and open manner."
+      }
+    }
+  },
+  "mining": {
+    "title": "Mining Crypto",
+    "back": "Back",
+    "seeMore": "See more...",
+    "comingSoon": "Coming soon...",
+    "backToMining": "Back to Mining",
+    "options": {
+      "bitcoin": {
+        "title": "Bitcoin",
+        "description": "Bitcoin mining service"
+      },
+      "ethereum": {
+        "title": "Ethereum Node Participation",
+        "description": "Participate in Ethereum network nodes to earn rewards"
+      },
+      "coins": {
+        "title": "Mineable Coins",
+        "description": "View various mineable cryptocurrencies"
+      }
+    },
+    "details": {
+      "bitcoin": {
+        "title": "Bitcoin",
+        "content": "Bitcoin mining allows you to contribute to network security and earn rewards. You can generate stable income through professional mining equipment and pools."
+      },
+      "ethereum": {
+        "title": "Ethereum Node Participation",
+        "content": "Participate in Ethereum network validation nodes to strengthen network security and earn rewards. You can generate passive income through staking."
+      },
+      "coins": {
+        "title": "Mineable Coins",
+        "content": "Check the mining feasibility and profitability of various cryptocurrencies. We provide the latest mining information and market trends."
+      }
+    }
+  },
+  "game": {
+    "title": "Blockchain Game",
+    "back": "Back",
+    "seeMore": "See more...",
+    "comingSoon": "Coming soon...",
+    "backToGame": "Back to Game",
+    "options": {
+      "casino": {
+        "title": "Online Casino",
+        "description": "Blockchain-based online casino games"
+      },
+      "investment": {
+        "title": "Investment Game",
+        "description": "Investment and profit generation through games"
+      }
+    },
+    "details": {
+      "casino": {
+        "title": "Online Casino",
+        "content": "We provide transparent and fair online casino games using blockchain technology. Smart contracts ensure the fairness of game results."
+      },
+      "investment": {
+        "title": "Investment Game",
+        "content": "An innovative platform where you can generate investment returns while enjoying games. In-game activities are connected to real profits."
+      }
+    }
+  },
+  "crowdfunding": {
+    "title": "Crowdfunding",
+    "back": "Back",
+    "seeMore": "See more...",
+    "comingSoon": "Coming soon...",
+    "backToCrowdfunding": "Back to Crowdfunding",
+    "options": {
+      "reward": {
+        "title": "Reward-based",
+        "description": "Crowdfunding where you receive rewards or products when the project succeeds"
+      },
+      "investment": {
+        "title": "Investment-based",
+        "description": "Crowdfunding where you invest in projects expecting returns"
+      },
+      "loan": {
+        "title": "Loan-based",
+        "description": "Crowdfunding where you lend to projects and receive interest"
+      }
+    },
+    "details": {
+      "reward": {
+        "title": "Reward-based Crowdfunding",
+        "content": "A form of crowdfunding where you fund a project and receive promised rewards or products when the project succeeds. This is the typical model of product-based crowdfunding."
+      },
+      "investment": {
+        "title": "Investment-based Crowdfunding",
+        "content": "A form of crowdfunding where you invest in a project expecting future returns. You can earn investment returns based on the project's success."
+      },
+      "loan": {
+        "title": "Loan-based Crowdfunding",
+        "content": "A form of crowdfunding where you lend funds to a project and receive principal and interest after a set period. You can expect stable returns."
+      }
+    }
+  },
+  "commerce": {
+    "title": "Commerce",
+    "back": "Back",
+    "seeMore": "See more...",
+    "visitSite": "Visit Site",
+    "backToCommerce": "Back to Commerce",
+    "options": {
+      "sellerket": {
+        "title": "Sellerket",
+        "description": "Global shopping mall platform"
+      },
+      "web3shopping": {
+        "title": "Web3 Shopping",
+        "description": "Instant payment shopping without SWIFT"
+      }
+    },
+    "details": {
+      "sellerket": {
+        "title": "Sellerket",
+        "content": "Sellerket is a global shopping mall platform where you can purchase various products from around the world in one place. We provide a safe and convenient shopping experience."
+      },
+      "web3shopping": {
+        "title": "Web3 Shopping",
+        "content": "An innovative shopping platform using Web3 technology. Instant payment is possible without SWIFT, and we provide secure transactions based on blockchain."
+      }
+    }
+  },
+  "aiTrading": {
+    "title": "AI Auto Trading",
+    "back": "Back",
+    "seeMore": "See more...",
+    "comingSoon": "Coming soon...",
+    "backToTrading": "Back to Trading",
+    "options": {
+      "crypto": {
+        "title": "Cryptocurrency",
+        "description": "AI-based cryptocurrency auto trading"
+      },
+      "stocks": {
+        "title": "Foreign Stocks",
+        "description": "AI-based foreign stock auto trading"
+      },
+      "futures": {
+        "title": "Futures & Options",
+        "description": "AI-based futures and options auto trading"
+      },
+      "commodities": {
+        "title": "Gold, Commodities, etc.",
+        "description": "AI-based gold and commodities auto trading"
+      },
+      "etf": {
+        "title": "Foreign ETF +",
+        "description": "AI-based foreign ETF auto trading"
+      },
+      "bonds": {
+        "title": "Bonds & Foreign Currency",
+        "description": "AI-based bonds and foreign currency auto trading"
+      }
+    },
+    "details": {
+      "crypto": {
+        "title": "Cryptocurrency",
+        "content": "Automated cryptocurrency trading service using AI algorithms. Automatically captures optimal trading opportunities through real-time market data analysis and machine learning."
+      },
+      "stocks": {
+        "title": "Foreign Stocks",
+        "content": "AI-based automated foreign stock trading service. AI analyzes various opportunities in global stock markets and automatically makes investment decisions."
+      },
+      "futures": {
+        "title": "Futures & Options",
+        "content": "AI-based automated futures and options trading service. AI manages risks and finds profit opportunities in complex derivative markets."
+      },
+      "commodities": {
+        "title": "Gold, Commodities, etc.",
+        "content": "AI-based automated gold and commodities trading service. AI analyzes commodity market volatility to pursue stable returns."
+      },
+      "etf": {
+        "title": "Foreign ETF +",
+        "content": "AI-based automated foreign ETF trading service. AI analyzes various foreign ETFs and automatically executes diversification strategies."
+      },
+      "bonds": {
+        "title": "Bonds & Foreign Currency",
+        "content": "AI-based automated bonds and foreign currency trading service. AI analyzes opportunities in bond and foreign exchange markets to pursue stable returns."
+      }
+    }
+  }
+}
+

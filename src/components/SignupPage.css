@@ -1,0 +1,332 @@
+.signup-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10000;
+  overflow-y: auto;
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 24px;
+  padding: 40px 30px;
+  animation: slideIn 0.3s ease;
+  box-shadow: 
+    0 10px 40px rgba(169, 168, 211, 0.2),
+    0 0 30px rgba(169, 168, 211, 0.1);
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.signup-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.signup-back-btn {
+  position: absolute;
+  left: 0;
+  background: transparent;
+  border: 2px solid rgb(169 168 211 / 40%);
+  border-radius: 12px;
+  color: #e9e8e8;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signup-back-btn:hover {
+  background: rgba(169, 168, 211, 0.1);
+  border-color: rgb(169 168 211 / 60%);
+  transform: scale(1.05);
+}
+
+.signup-back-btn:active {
+  transform: scale(0.95);
+}
+
+.signup-logo {
+  height: auto;
+  max-width: 180px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.signup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.signup-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e9e8e8;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.signup-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signup-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e9e8e8;
+  margin-bottom: 4px;
+}
+
+.signup-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgb(169 168 211 / 40%);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #e9e8e8;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.signup-input:focus {
+  border-color: rgb(169 168 211 / 80%);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.2);
+}
+
+.signup-input::placeholder {
+  color: rgba(233, 232, 232, 0.5);
+}
+
+.signup-input.error {
+  border-color: rgba(255, 107, 107, 0.6);
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.signup-input.error:focus {
+  border-color: rgba(255, 107, 107, 0.8);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.2);
+}
+
+.signup-error {
+  font-size: 12px;
+  color: #FF6B6B;
+  margin-top: -4px;
+  padding-left: 4px;
+}
+
+.signup-error-message {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  color: #FF6B6B;
+  font-size: 14px;
+  text-align: center;
+}
+
+.signup-submit-btn {
+  width: 100%;
+  background: rgb(30 30 70);
+  border: 2px solid rgb(169 168 211 / 60%);
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.signup-submit-btn:hover:not(:disabled) {
+  background: rgb(40 40 90);
+  border-color: rgb(169 168 211 / 80%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(169, 168, 211, 0.3);
+}
+
+.signup-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.signup-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.signup-verification-text {
+  font-size: 16px;
+  color: rgba(233, 232, 232, 0.8);
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.signup-verification-hint {
+  font-size: 14px;
+  color: rgba(169, 168, 211, 0.8);
+  text-align: center;
+  margin: -10px 0 10px 0;
+  font-weight: 600;
+  background: rgba(169, 168, 211, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgb(169 168 211 / 30%);
+}
+
+.signup-resend-btn {
+  width: 100%;
+  background: transparent;
+  border: 2px solid rgb(169 168 211 / 40%);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(233, 232, 232, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.signup-resend-btn:hover:not(:disabled) {
+  background: rgba(169, 168, 211, 0.1);
+  border-color: rgb(169 168 211 / 60%);
+  color: #e9e8e8;
+}
+
+.signup-resend-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 전화번호 입력 컨테이너 */
+.phone-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.phone-country-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgb(169 168 211 / 40%);
+  border-radius: 12px;
+  padding: 14px 12px;
+  color: #e9e8e8;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-width: 140px;
+  flex-shrink: 0;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e9e8e8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 36px;
+}
+
+.phone-country-select:hover {
+  border-color: rgb(169 168 211 / 60%);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.phone-country-select:focus {
+  border-color: rgb(169 168 211 / 80%);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.2);
+}
+
+.phone-country-select option {
+  background: rgb(20 20 51);
+  color: #e9e8e8;
+  padding: 10px;
+}
+
+.phone-number-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 30px 20px;
+    border-radius: 20px;
+    max-height: 95vh;
+  }
+
+  .signup-title {
+    font-size: 24px;
+  }
+
+  .signup-input {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  .signup-submit-btn {
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  .phone-input-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .phone-country-select {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .phone-number-input {
+    width: 100%;
+  }
+}
+

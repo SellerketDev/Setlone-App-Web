@@ -1,0 +1,339 @@
+{
+  "common": {
+    "home": "홈",
+    "search": "검색",
+    "add": "추가",
+    "profile": "프로필",
+    "settings": "설정",
+    "language": "한글",
+    "cancel": "취소",
+    "done": "완료",
+    "selectLanguage": "언어 선택",
+    "next": "다음",
+    "skip": "건너뛰기",
+    "resetOnboarding": "최초설명 다시 보기"
+  },
+  "search": {
+    "placeholder1": "Setlone에서 투자하기",
+    "placeholder2": "SUTmembers로 쇼핑하기",
+    "placeholder3": "Staking 서비스 어떻게 이용하나요?"
+  },
+  "onboarding": {
+    "page1": {
+      "title": "환영해요 우리는 Setlone 이라고해요",
+      "description": "우리는 투자,소비,핀테크, 문화를 통합한 최초의 플랫폼이에요"
+    },
+    "page2": {
+      "title": "우리 플랫폼에서는",
+      "description": "SUTmembers를 통해 다양한것들을 만나보실수있습니다. SUTmembers는 회원제로 운영되며 가입 시 크립토 카드를 이용하고 혜택을 받을 수 있습니다."
+    },
+    "page3": {
+      "title": "쇼핑몰에서 소비하고",
+      "description": "소비한 금액을 포인트로 리워드받자! 쇼핑몰에서 다양한 상품을 만나보세요"
+    },
+    "page4": {
+      "title": "피드에서 재미있고 다양한 글",
+      "description": "숏폼영상을 올려 좋아요를 받아보세요! 받는 좋아요는 SUT로 매일 00시에 리워드됩니다!"
+    },
+    "page5": {
+      "title": "이제 Setlone을 만나러가볼까요?",
+      "description": ""
+    }
+  },
+  "feed": {
+    "title": "피드",
+    "whatAreYouThinking": "무슨 생각을 하고 계신가요?",
+    "addPhoto": "사진 추가",
+    "post": "게시하기",
+    "loading": "로딩 중...",
+    "justNow": "방금 전",
+    "minutesAgo": "분 전",
+    "hoursAgo": "시간 전",
+    "daysAgo": "일 전"
+  },
+  "services": {
+    "yieldCard": {
+      "name": "SUTMembers",
+      "description": "투자 수익으로 소비하기"
+    },
+    "commerce": {
+      "name": "쇼핑몰",
+      "description": "글로벌 쇼핑몰"
+    },
+    "staking": {
+      "name": "스테이킹",
+      "description": "자산 스테이킹"
+    },
+    "payment": {
+      "name": "핀테크",
+      "description": "디지털 결제 솔루션"
+    },
+    "rewards": {
+      "name": "이벤트",
+      "description": "소비 리워드 시스템"
+    },
+    "ai": {
+      "name": "AI 오토트레이딩",
+      "description": "데이터 기반 추천"
+    },
+    "demo": {
+      "name": "블록체인 게임",
+      "description": "인터랙티브 데모"
+    },
+    "mining": {
+      "name": "가상화폐 채굴",
+      "description": "Mining Crypto"
+    },
+    "globalPayment": {
+      "name": "Web3쇼핑",
+      "description": "SWIFT 없는 즉시 결제"
+    },
+    "crowdfunding": {
+      "name": "크라우드펀딩",
+      "description": "Crowdfunding"
+    }
+  },
+  "staking": {
+    "title": "스테이킹",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "comingSoon": "준비중입니다.",
+    "backToStaking": "스테이킹 돌아가기",
+    "options": {
+      "native": {
+        "title": "네이티브 스테이킹",
+        "description": "블록체인 네트워크에 직접 토큰을 스테이킹합니다"
+      },
+      "lockup": {
+        "title": "락업 vs 언락 스테이킹",
+        "description": "고정 및 유연한 스테이킹 옵션 중 선택합니다"
+      },
+      "liquid": {
+        "title": "리퀴드 스테이킹 (LST)",
+        "description": "리퀴드 스테이킹 토큰으로 유동성을 유지하며 스테이킹합니다"
+      },
+      "restaking": {
+        "title": "리스테이킹",
+        "description": "스테이킹된 토큰을 다시 스테이킹하여 추가 보상을 받습니다"
+      },
+      "cefi": {
+        "title": "CeFi 스테이킹",
+        "description": "신뢰할 수 있는 플랫폼을 통한 중앙화 금융 스테이킹"
+      },
+      "defi": {
+        "title": "DeFi 스테이킹",
+        "description": "DeFi 프로토콜에서의 탈중앙화 금융 스테이킹"
+      }
+    },
+    "details": {
+      "native": {
+        "title": "네이티브 스테이킹",
+        "content": "네이티브 스테이킹은 블록체인 네트워크의 기본 프로토콜을 사용하여 직접 토큰을 스테이킹하는 방식입니다. 네트워크의 보안과 합의에 직접 참여하며, 네이티브 토큰을 스테이킹하여 보상을 받을 수 있습니다."
+      },
+      "lockup": {
+        "title": "락업 vs 언락 스테이킹",
+        "content": "락업 스테이킹은 일정 기간 동안 토큰을 고정하여 더 높은 보상을 받는 방식입니다. 언락 스테이킹은 언제든지 토큰을 인출할 수 있는 유연한 방식으로, 보상은 상대적으로 낮지만 자유롭게 관리할 수 있습니다."
+      },
+      "liquid": {
+        "title": "리퀴드 스테이킹 (LST)",
+        "content": "리퀴드 스테이킹은 스테이킹된 토큰의 유동성을 유지하면서 보상을 받을 수 있는 혁신적인 방식입니다. 스테이킹된 토큰을 대표하는 리퀴드 스테이킹 토큰(LST)을 받아 다른 DeFi 프로토콜에서도 활용할 수 있습니다."
+      },
+      "restaking": {
+        "title": "리스테이킹",
+        "content": "리스테이킹은 이미 스테이킹된 토큰을 다시 스테이킹하여 추가 보상을 받는 방식입니다. 여러 프로토콜에 동시에 스테이킹하여 수익을 극대화할 수 있습니다."
+      },
+      "cefi": {
+        "title": "CeFi 스테이킹",
+        "content": "CeFi(중앙화 금융) 스테이킹은 신뢰할 수 있는 중앙화된 플랫폼을 통해 스테이킹 서비스를 제공합니다. 사용하기 쉽고 안정적이며, 전문적인 관리 서비스를 받을 수 있습니다."
+      },
+      "defi": {
+        "title": "DeFi 스테이킹",
+        "content": "DeFi(탈중앙화 금융) 스테이킹은 탈중앙화된 프로토콜을 통해 스테이킹 서비스를 제공합니다. 중개자 없이 직접 스마트 컨트랙트와 상호작용하며, 투명하고 개방적인 방식으로 보상을 받을 수 있습니다."
+      }
+    }
+  },
+  "mining": {
+    "title": "가상화폐 채굴",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "comingSoon": "준비중입니다.",
+    "backToMining": "채굴 돌아가기",
+    "options": {
+      "bitcoin": {
+        "title": "비트코인",
+        "description": "비트코인 채굴 서비스"
+      },
+      "ethereum": {
+        "title": "이더리움 노드참여",
+        "description": "이더리움 네트워크 노드에 참여하여 보상을 받습니다"
+      },
+      "coins": {
+        "title": "채굴가능 코인보기",
+        "description": "채굴 가능한 다양한 암호화폐를 확인하세요"
+      }
+    },
+    "details": {
+      "bitcoin": {
+        "title": "비트코인",
+        "content": "비트코인 채굴을 통해 네트워크 보안에 기여하고 보상을 받을 수 있습니다. 전문적인 채굴 장비와 풀을 통해 안정적인 수익을 창출할 수 있습니다."
+      },
+      "ethereum": {
+        "title": "이더리움 노드참여",
+        "content": "이더리움 네트워크의 검증 노드에 참여하여 네트워크 보안을 강화하고 보상을 받습니다. 스테이킹을 통해 수동적 수익을 창출할 수 있습니다."
+      },
+      "coins": {
+        "title": "채굴가능 코인보기",
+        "content": "다양한 암호화폐의 채굴 가능 여부와 수익성을 확인할 수 있습니다. 최신 채굴 정보와 시장 동향을 제공합니다."
+      }
+    }
+  },
+  "game": {
+    "title": "블록체인 게임",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "comingSoon": "준비중입니다.",
+    "backToGame": "게임 돌아가기",
+    "options": {
+      "casino": {
+        "title": "온라인 카지노",
+        "description": "블록체인 기반 온라인 카지노 게임"
+      },
+      "investment": {
+        "title": "투자 게임",
+        "description": "게임을 통한 투자 및 수익 창출"
+      }
+    },
+    "details": {
+      "casino": {
+        "title": "온라인 카지노",
+        "content": "블록체인 기술을 활용한 투명하고 공정한 온라인 카지노 게임을 제공합니다. 스마트 컨트랙트를 통해 게임 결과의 공정성을 보장합니다."
+      },
+      "investment": {
+        "title": "투자 게임",
+        "content": "게임을 즐기면서 동시에 투자 수익을 창출할 수 있는 혁신적인 플랫폼입니다. 게임 내 활동이 실제 수익으로 연결됩니다."
+      }
+    }
+  },
+  "crowdfunding": {
+    "title": "크라우드펀딩",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "comingSoon": "준비중입니다.",
+    "backToCrowdfunding": "크라우드펀딩 돌아가기",
+    "options": {
+      "reward": {
+        "title": "보상형",
+        "description": "프로젝트 성공 시 보상 또는 제품을 받는 크라우드펀딩"
+      },
+      "investment": {
+        "title": "투자형",
+        "description": "프로젝트에 투자하여 수익을 기대하는 크라우드펀딩"
+      },
+      "loan": {
+        "title": "대출형",
+        "description": "프로젝트에 대출하여 이자를 받는 크라우드펀딩"
+      }
+    },
+    "details": {
+      "reward": {
+        "title": "보상형 크라우드펀딩",
+        "content": "프로젝트에 자금을 지원하고, 프로젝트가 성공하면 사전에 약속한 보상이나 제품을 받는 형태의 크라우드펀딩입니다. 제품 기반 크라우드펀딩의 전형적인 모델입니다."
+      },
+      "investment": {
+        "title": "투자형 크라우드펀딩",
+        "content": "프로젝트에 투자하여 향후 수익을 기대하는 형태의 크라우드펀딩입니다. 프로젝트의 성공에 따라 투자 수익을 얻을 수 있습니다."
+      },
+      "loan": {
+        "title": "대출형 크라우드펀딩",
+        "content": "프로젝트에 자금을 대출하고, 정해진 기간 후 원금과 이자를 받는 형태의 크라우드펀딩입니다. 안정적인 수익을 기대할 수 있습니다."
+      }
+    }
+  },
+  "commerce": {
+    "title": "쇼핑몰",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "visitSite": "사이트 이동하기",
+    "backToCommerce": "쇼핑몰 돌아가기",
+    "options": {
+      "sellerket": {
+        "title": "Sellerket",
+        "description": "글로벌 쇼핑몰 플랫폼"
+      },
+      "web3shopping": {
+        "title": "Web3 쇼핑",
+        "description": "SWIFT 없는 즉시 결제 쇼핑"
+      }
+    },
+    "details": {
+      "sellerket": {
+        "title": "Sellerket",
+        "content": "Sellerket은 글로벌 쇼핑몰 플랫폼으로, 전 세계의 다양한 상품을 한 곳에서 구매할 수 있습니다. 안전하고 편리한 쇼핑 경험을 제공합니다."
+      },
+      "web3shopping": {
+        "title": "Web3 쇼핑",
+        "content": "Web3 기술을 활용한 혁신적인 쇼핑 플랫폼입니다. SWIFT 없이 즉시 결제가 가능하며, 블록체인 기반의 안전한 거래를 제공합니다."
+      }
+    }
+  },
+  "aiTrading": {
+    "title": "AI 오토트레이딩",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "comingSoon": "준비중입니다.",
+    "backToTrading": "트레이딩 돌아가기",
+    "options": {
+      "crypto": {
+        "title": "가상화폐",
+        "description": "AI 기반 가상화폐 자동 트레이딩"
+      },
+      "stocks": {
+        "title": "해외주식",
+        "description": "AI 기반 해외 주식 자동 트레이딩"
+      },
+      "futures": {
+        "title": "선물옵션",
+        "description": "AI 기반 선물 및 옵션 자동 트레이딩"
+      },
+      "commodities": {
+        "title": "금, 원자재등",
+        "description": "AI 기반 금 및 원자재 자동 트레이딩"
+      },
+      "etf": {
+        "title": "해외 ETF +",
+        "description": "AI 기반 해외 ETF 자동 트레이딩"
+      },
+      "bonds": {
+        "title": "일부 채권 외화",
+        "description": "AI 기반 채권 및 외화 자동 트레이딩"
+      }
+    },
+    "details": {
+      "crypto": {
+        "title": "가상화폐",
+        "content": "AI 알고리즘을 활용한 가상화폐 자동 트레이딩 서비스입니다. 실시간 시장 데이터 분석과 머신러닝을 통해 최적의 매매 타이밍을 자동으로 포착합니다."
+      },
+      "stocks": {
+        "title": "해외주식",
+        "content": "AI 기반 해외 주식 자동 트레이딩 서비스입니다. 글로벌 주식 시장의 다양한 기회를 AI가 분석하여 자동으로 투자 결정을 내립니다."
+      },
+      "futures": {
+        "title": "선물옵션",
+        "content": "AI 기반 선물 및 옵션 자동 트레이딩 서비스입니다. 복잡한 파생상품 시장에서 AI가 리스크를 관리하며 수익 기회를 찾아냅니다."
+      },
+      "commodities": {
+        "title": "금, 원자재등",
+        "content": "AI 기반 금 및 원자재 자동 트레이딩 서비스입니다. 원자재 시장의 변동성을 AI가 분석하여 안정적인 수익을 추구합니다."
+      },
+      "etf": {
+        "title": "해외 ETF +",
+        "content": "AI 기반 해외 ETF 자동 트레이딩 서비스입니다. 다양한 해외 ETF를 AI가 분석하여 분산투자 전략을 자동으로 실행합니다."
+      },
+      "bonds": {
+        "title": "일부 채권 외화",
+        "content": "AI 기반 채권 및 외화 자동 트레이딩 서비스입니다. 채권 시장과 외환 시장의 기회를 AI가 분석하여 안정적인 수익을 추구합니다."
+      }
+    }
+  }
+}
+
