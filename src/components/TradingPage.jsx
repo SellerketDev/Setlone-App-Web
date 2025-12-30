@@ -282,7 +282,7 @@ const TradingPage = ({ item, language: propLanguage, onBack }) => {
 
 
       } catch (error) {
-        console.error('Error initializing price data:', error)
+        // console.error('Error initializing price data:', error)
         if (isMounted) {
           setIsLoading(false)
         }

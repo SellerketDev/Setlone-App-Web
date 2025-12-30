@@ -56,16 +56,16 @@ export const subscribeToPrice = (symbol, onPriceUpdate) => {
             })
           }
         } catch (error) {
-          console.error('Error parsing futures price data:', error)
+          // console.error('Error parsing futures price data:', error)
         }
       }
 
       ws.onerror = (error) => {
-        console.error('Futures WebSocket error:', error)
+        // console.error('Futures WebSocket error:', error)
       }
 
       ws.onclose = () => {
-        console.log('Futures WebSocket closed, attempting to reconnect...')
+        // console.log('Futures WebSocket closed, attempting to reconnect...')
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
@@ -105,7 +105,7 @@ export const subscribeToPrice = (symbol, onPriceUpdate) => {
           })
         }
       } catch (error) {
-        console.error(`Error fetching futures price for ${symbol}:`, error)
+        // console.error(`Error fetching futures price for ${symbol}:`, error)
       }
     }
 
@@ -156,16 +156,16 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
             onCandleUpdate(candle)
           }
         } catch (error) {
-          console.error('Error parsing futures candle data:', error)
+          // console.error('Error parsing futures candle data:', error)
         }
       }
 
       ws.onerror = (error) => {
-        console.error('Futures candle WebSocket error:', error)
+        // console.error('Futures candle WebSocket error:', error)
       }
 
       ws.onclose = () => {
-        console.log('Futures candle WebSocket closed')
+        // console.log('Futures candle WebSocket closed')
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
@@ -211,7 +211,7 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
           }
         }
       } catch (error) {
-        console.error(`Error fetching futures candles for ${symbol}:`, error)
+        // console.error(`Error fetching futures candles for ${symbol}:`, error)
       }
     }
 
@@ -243,20 +243,20 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
       const binanceInterval = interval === '1m' ? '1m' : interval === '5m' ? '5m' : interval === '15m' ? '15m' : interval === '1h' ? '1h' : '1d'
       const url = `https://fapi.binance.com/fapi/v1/klines?symbol=${futuresSymbol}&interval=${binanceInterval}&limit=${limit}`
       
-      console.log(`📡 Fetching historical futures candles from Binance: ${symbol} (${futuresSymbol})`)
+      // console.log(`📡 Fetching historical futures candles from Binance: ${symbol} (${futuresSymbol})`)
       
       let response
       try {
         response = await fetch(url)
       } catch (fetchError) {
-        console.error('Fetch error (CORS?):', fetchError)
+        // console.error('Fetch error (CORS?):', fetchError)
         // CORS 에러 시 백엔드 프록시 사용 시도
         const proxyUrl = `http://localhost:3000/api/v1/futures/chart/${symbol}?interval=${interval}&limit=${limit}`
-        console.log('Trying backend proxy:', proxyUrl)
+        // console.log('Trying backend proxy:', proxyUrl)
         try {
           response = await fetch(proxyUrl)
         } catch (proxyError) {
-          console.error('Backend proxy also failed:', proxyError)
+          // console.error('Backend proxy also failed:', proxyError)
           throw fetchError
         }
       }
@@ -294,20 +294,20 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
         }
       })
 
-      console.log(`📊 Historical futures candles loaded (${symbol}):`, {
-        'Total Candles': candles.length,
-        'First Candle': candles[0] ? new Date(candles[0].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A',
-        'Last Candle': candles[candles.length - 1] ? new Date(candles[candles.length - 1].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A'
-      })
+      // console.log(`📊 Historical futures candles loaded (${symbol}):`, {
+      //   'Total Candles': candles.length,
+      //   'First Candle': candles[0] ? new Date(candles[0].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A',
+      //   'Last Candle': candles[candles.length - 1] ? new Date(candles[candles.length - 1].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A'
+      // })
 
       return candles
     } else {
       // 일반 선물은 백엔드 API 또는 모의 데이터 사용
-      console.warn(`General futures (${symbol}) not supported yet, using mock data`)
+      // console.warn(`General futures (${symbol}) not supported yet, using mock data`)
       return generateMockCandles(symbol, limit)
     }
   } catch (error) {
-    console.error('Error fetching historical futures candles:', error)
+    // console.error('Error fetching historical futures candles:', error)
     return generateMockCandles(symbol, limit)
   }
 }
@@ -325,7 +325,7 @@ export const getCurrentPrice = async (symbol) => {
     if (futuresSymbol.endsWith('USDT')) {
       const url = `https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=${futuresSymbol}`
       
-      console.log(`📡 Fetching futures price from Binance: ${symbol}`)
+      // console.log(`📡 Fetching futures price from Binance: ${symbol}`)
       
       const response = await fetch(url)
       
@@ -339,11 +339,11 @@ export const getCurrentPrice = async (symbol) => {
       const priceChange = parseFloat(data.priceChange)
       const priceChangePercent = parseFloat(data.priceChangePercent)
 
-      console.log(`✅ Binance Futures price for ${symbol}:`, {
-        price,
-        change: priceChange,
-        changePercent: priceChangePercent.toFixed(2) + '%'
-      })
+      // console.log(`✅ Binance Futures price for ${symbol}:`, {
+      //   price,
+      //   change: priceChange,
+      //   changePercent: priceChangePercent.toFixed(2) + '%'
+      // })
 
       return {
         price: price,
@@ -356,11 +356,11 @@ export const getCurrentPrice = async (symbol) => {
       }
     } else {
       // 일반 선물은 모의 데이터 사용
-      console.warn(`General futures (${symbol}) not supported yet, using mock price`)
+      // console.warn(`General futures (${symbol}) not supported yet, using mock price`)
       return generateMockPrice(symbol)
     }
   } catch (error) {
-    console.error('Error fetching current futures price:', error)
+    // console.error('Error fetching current futures price:', error)
     return generateMockPrice(symbol)
   }
 }
@@ -437,7 +437,7 @@ export const subscribeToOrderbook = (symbol, onOrderbookUpdate) => {
         ws = new WebSocket(`wss://fstream.binance.com/ws/${wsSymbol}@depth20@100ms`)
 
         ws.onopen = () => {
-          console.log(`✅ Futures Orderbook WebSocket connected for ${symbol}`)
+          // console.log(`✅ Futures Orderbook WebSocket connected for ${symbol}`)
           reconnectAttempts = 0
         }
 
@@ -475,29 +475,29 @@ export const subscribeToOrderbook = (symbol, onOrderbookUpdate) => {
               })
             }
           } catch (error) {
-            console.error('Error parsing futures orderbook data:', error)
+            // console.error('Error parsing futures orderbook data:', error)
           }
         }
 
         ws.onerror = (error) => {
-          console.error(`❌ Futures Orderbook WebSocket error for ${symbol}:`, error)
+          // console.error(`❌ Futures Orderbook WebSocket error for ${symbol}:`, error)
         }
 
         ws.onclose = () => {
-          console.log(`⚠️ Futures Orderbook WebSocket closed for ${symbol}`)
+          // console.log(`⚠️ Futures Orderbook WebSocket closed for ${symbol}`)
           if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
             reconnectAttempts++
             const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
-            console.log(`🔄 Reconnecting futures orderbook WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
+            // console.log(`🔄 Reconnecting futures orderbook WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
             reconnectTimeout = setTimeout(() => {
               connect()
             }, delay)
           } else if (reconnectAttempts >= maxReconnectAttempts) {
-            console.error(`❌ Max reconnection attempts reached for ${symbol}`)
+            // console.error(`❌ Max reconnection attempts reached for ${symbol}`)
           }
         }
       } catch (error) {
-        console.error(`❌ Error creating futures orderbook WebSocket for ${symbol}:`, error)
+        // console.error(`❌ Error creating futures orderbook WebSocket for ${symbol}:`, error)
         if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
@@ -572,7 +572,7 @@ export const subscribeToOrderbook = (symbol, onOrderbookUpdate) => {
           onOrderbookUpdate(orderbook)
         }
       } catch (error) {
-        console.error(`Error generating mock orderbook for ${symbol}:`, error)
+        // console.error(`Error generating mock orderbook for ${symbol}:`, error)
       }
     }
 

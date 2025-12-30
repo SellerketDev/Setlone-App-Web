@@ -41,16 +41,16 @@ export const subscribeToPrice = (symbol, onPriceUpdate) => {
         })
       }
     } catch (error) {
-      console.error('Error parsing WebSocket data:', error)
+      // console.error('Error parsing WebSocket data:', error)
     }
   }
 
   ws.onerror = (error) => {
-    console.error('WebSocket error:', error)
+    // console.error('WebSocket error:', error)
   }
 
   ws.onclose = () => {
-    console.log('WebSocket closed, attempting to reconnect...')
+    // console.log('WebSocket closed, attempting to reconnect...')
     // 재연결 로직은 필요시 추가
   }
 
@@ -78,7 +78,7 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
       ws = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol}@kline_1m`)
 
       ws.onopen = () => {
-        console.log(`✅ Candle WebSocket connected for ${symbol}`)
+        // console.log(`✅ Candle WebSocket connected for ${symbol}`)
         reconnectAttempts = 0 // 연결 성공 시 재시도 횟수 리셋
       }
 
@@ -100,64 +100,64 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
             }
             
             // 디버깅: 바이낸스 원본 데이터와 변환된 데이터 비교
-            const now = Date.now()
-            if (!window.lastCandleDebugLog || now - window.lastCandleDebugLog > 10000) {
-              const utcTime = new Date(kline.t) // 바이낸스는 UTC 밀리초 타임스탬프
-              // KST는 UTC+9이므로 toLocaleString으로 변환 (자동으로 시간대 처리)
-              const kstTimeString = utcTime.toLocaleString('ko-KR', { 
-                timeZone: 'Asia/Seoul',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-              })
-              console.log(`📊 Binance Candle Data (${symbol}):`, {
-                'Binance Timestamp (ms)': kline.t,
-                'Binance Original (UTC)': utcTime.toISOString(),
-                'UTC Time String': utcTime.toLocaleString('en-US', { timeZone: 'UTC' }),
-                'KST Time': kstTimeString,
-                'Chart Timestamp (UTC seconds)': candleData.time,
-                'Chart Time (UTC)': new Date(candleData.time * 1000).toISOString(),
-                'Chart Time (KST)': new Date(candleData.time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
-                'Price (Close)': candleData.close,
-                'Open': candleData.open,
-                'High': candleData.high,
-                'Low': candleData.low,
-                'Is Closed': candleData.isClosed,
-                'Binance Symbol': binanceSymbol.toUpperCase()
-              })
-              window.lastCandleDebugLog = now
-            }
+            // const now = Date.now()
+            // if (!window.lastCandleDebugLog || now - window.lastCandleDebugLog > 10000) {
+            //   const utcTime = new Date(kline.t) // 바이낸스는 UTC 밀리초 타임스탬프
+            //   // KST는 UTC+9이므로 toLocaleString으로 변환 (자동으로 시간대 처리)
+            //   const kstTimeString = utcTime.toLocaleString('ko-KR', { 
+            //     timeZone: 'Asia/Seoul',
+            //     year: 'numeric',
+            //     month: '2-digit',
+            //     day: '2-digit',
+            //     hour: '2-digit',
+            //     minute: '2-digit',
+            //     second: '2-digit',
+            //     hour12: false
+            //   })
+            //   console.log(`📊 Binance Candle Data (${symbol}):`, {
+            //     'Binance Timestamp (ms)': kline.t,
+            //     'Binance Original (UTC)': utcTime.toISOString(),
+            //     'UTC Time String': utcTime.toLocaleString('en-US', { timeZone: 'UTC' }),
+            //     'KST Time': kstTimeString,
+            //     'Chart Timestamp (UTC seconds)': candleData.time,
+            //     'Chart Time (UTC)': new Date(candleData.time * 1000).toISOString(),
+            //     'Chart Time (KST)': new Date(candleData.time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
+            //     'Price (Close)': candleData.close,
+            //     'Open': candleData.open,
+            //     'High': candleData.high,
+            //     'Low': candleData.low,
+            //     'Is Closed': candleData.isClosed,
+            //     'Binance Symbol': binanceSymbol.toUpperCase()
+            //   })
+            //   window.lastCandleDebugLog = now
+            // }
             
             onCandleUpdate(candleData)
           }
         } catch (error) {
-          console.error('Error parsing candle data:', error)
+          // console.error('Error parsing candle data:', error)
         }
       }
 
       ws.onerror = (error) => {
-        console.error(`❌ Candle WebSocket error for ${symbol}:`, error)
+        // console.error(`❌ Candle WebSocket error for ${symbol}:`, error)
       }
 
       ws.onclose = () => {
-        console.log(`⚠️ Candle WebSocket closed for ${symbol}`)
+        // console.log(`⚠️ Candle WebSocket closed for ${symbol}`)
         if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000) // 지수 백오프, 최대 30초
-          console.log(`🔄 Reconnecting candle WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
+          // console.log(`🔄 Reconnecting candle WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
           reconnectTimeout = setTimeout(() => {
             connect()
           }, delay)
         } else if (reconnectAttempts >= maxReconnectAttempts) {
-          console.error(`❌ Max reconnection attempts reached for ${symbol}`)
+          // console.error(`❌ Max reconnection attempts reached for ${symbol}`)
         }
       }
     } catch (error) {
-      console.error(`❌ Error creating WebSocket for ${symbol}:`, error)
+      // console.error(`❌ Error creating WebSocket for ${symbol}:`, error)
       if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
         reconnectAttempts++
         const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
@@ -195,7 +195,7 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
   try {
     const binanceSymbol = getBinanceSymbol(symbol)
     const url = `https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=${interval}&limit=${limit}`
-    console.log(`📡 Fetching historical candles from Binance: ${url}`)
+    // console.log(`📡 Fetching historical candles from Binance: ${url}`)
     
     const response = await fetch(url)
     
@@ -211,18 +211,18 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
       const lastCandle = data[data.length - 1]
       const firstTime = new Date(firstCandle[0]) // 바이낸스는 UTC 밀리초
       const lastTime = new Date(lastCandle[0])
-      console.log(`📊 Historical candles loaded (${symbol}):`, {
-        'Total Candles': data.length,
-        'First Candle Timestamp (ms)': firstCandle[0],
-        'First Candle (UTC)': firstTime.toISOString(),
-        'First Candle (KST)': firstTime.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
-        'Last Candle Timestamp (ms)': lastCandle[0],
-        'Last Candle (UTC)': lastTime.toISOString(),
-        'Last Candle (KST)': lastTime.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
-        'First Price': parseFloat(firstCandle[4]),
-        'Last Price': parseFloat(lastCandle[4]),
-        'Binance Symbol': binanceSymbol
-      })
+      // console.log(`📊 Historical candles loaded (${symbol}):`, {
+      //   'Total Candles': data.length,
+      //   'First Candle Timestamp (ms)': firstCandle[0],
+      //   'First Candle (UTC)': firstTime.toISOString(),
+      //   'First Candle (KST)': firstTime.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
+      //   'Last Candle Timestamp (ms)': lastCandle[0],
+      //   'Last Candle (UTC)': lastTime.toISOString(),
+      //   'Last Candle (KST)': lastTime.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
+      //   'First Price': parseFloat(firstCandle[4]),
+      //   'Last Price': parseFloat(lastCandle[4]),
+      //   'Binance Symbol': binanceSymbol
+      // })
     }
     
     return data.map(kline => ({
@@ -234,7 +234,7 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
       volume: parseFloat(kline[5])
     }))
   } catch (error) {
-    console.error('Error fetching historical candles:', error)
+    // console.error('Error fetching historical candles:', error)
     return []
   }
 }
@@ -261,7 +261,7 @@ export const getCurrentPrice = async (symbol) => {
       priceString: data.price // 원본 가격 문자열
     }
   } catch (error) {
-    console.error('Error fetching current price:', error)
+    // console.error('Error fetching current price:', error)
     return null
   }
 }
@@ -286,7 +286,7 @@ export const subscribeToOrderbook = (symbol, onOrderbookUpdate) => {
       ws = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol}@depth20@100ms`)
 
       ws.onopen = () => {
-        console.log(`✅ Orderbook WebSocket connected for ${symbol}`)
+        // console.log(`✅ Orderbook WebSocket connected for ${symbol}`)
         reconnectAttempts = 0
       }
 
@@ -326,29 +326,29 @@ export const subscribeToOrderbook = (symbol, onOrderbookUpdate) => {
             })
           }
         } catch (error) {
-          console.error('Error parsing orderbook data:', error)
+          // console.error('Error parsing orderbook data:', error)
         }
       }
 
       ws.onerror = (error) => {
-        console.error(`❌ Orderbook WebSocket error for ${symbol}:`, error)
+        // console.error(`❌ Orderbook WebSocket error for ${symbol}:`, error)
       }
 
       ws.onclose = () => {
-        console.log(`⚠️ Orderbook WebSocket closed for ${symbol}`)
+        // console.log(`⚠️ Orderbook WebSocket closed for ${symbol}`)
         if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)
-          console.log(`🔄 Reconnecting orderbook WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
+          // console.log(`🔄 Reconnecting orderbook WebSocket for ${symbol} in ${delay}ms (attempt ${reconnectAttempts}/${maxReconnectAttempts})`)
           reconnectTimeout = setTimeout(() => {
             connect()
           }, delay)
         } else if (reconnectAttempts >= maxReconnectAttempts) {
-          console.error(`❌ Max reconnection attempts reached for ${symbol}`)
+          // console.error(`❌ Max reconnection attempts reached for ${symbol}`)
         }
       }
     } catch (error) {
-      console.error(`❌ Error creating orderbook WebSocket for ${symbol}:`, error)
+      // console.error(`❌ Error creating orderbook WebSocket for ${symbol}:`, error)
       if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
         reconnectAttempts++
         const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000)

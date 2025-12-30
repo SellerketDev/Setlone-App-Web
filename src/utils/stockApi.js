@@ -120,24 +120,10 @@ export const subscribeToPrice = (symbol, onPriceUpdate) => {
           timestamp: Date.now()
         }
         
-        // 디버깅: 가격 업데이트 로그 (10초마다)
-        const now = Date.now()
-        if (!window.lastPriceUpdateLog || now - window.lastPriceUpdateLog > 10000) {
-          console.log(`📈 Price update for ${symbol}:`, {
-            price: updateData.price,
-            priceString: updateData.priceString,
-            change: updateData.priceChange,
-            changePercent: updateData.priceChangePercent,
-            timestamp: new Date(updateData.timestamp).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })
-          })
-          window.lastPriceUpdateLog = now
-        }
         onPriceUpdate(updateData)
-      } else {
-        console.warn(`⚠️ No price data received for ${symbol}`)
       }
     } catch (error) {
-      console.error(`❌ Error fetching stock price for ${symbol}:`, error)
+      // 에러 발생 시 조용히 처리
     }
   }
 
@@ -229,13 +215,11 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
         if (typeof latestCandle.time === 'number') {
           candleTime = Math.floor(latestCandle.time)
         } else {
-          console.warn(`Invalid candle time type for ${symbol}:`, typeof latestCandle.time, latestCandle.time)
           candleTime = Math.floor(Date.now() / 1000)
         }
         
         // 타임스탬프 유효성 검사
         if (isNaN(candleTime) || candleTime <= 0) {
-          console.warn(`Invalid candle time value for ${symbol}:`, candleTime)
           candleTime = Math.floor(Date.now() / 1000)
         }
         
@@ -253,35 +237,11 @@ export const subscribeToCandles = (symbol, onCandleUpdate) => {
             isClosed: false // 실시간 업데이트 중
           }
           
-          // 디버깅: 타임스탬프 확인
-          const logNow = Date.now()
-          if (!window.lastCandleFetchLog || logNow - window.lastCandleFetchLog > 10000) {
-            console.log(`📊 Candle update for ${symbol}:`, {
-              time: candleTime,
-              timeFormatted: new Date(candleTime * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
-              close: candleData.close,
-              lastCandleTime: lastCandleTime,
-              currentTime: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
-              timeDiff: now - candleTime
-            })
-            window.lastCandleFetchLog = logNow
-          }
-          
           onCandleUpdate(candleData)
-        } else {
-          // 같은 타임스탬프면 스킵 (너무 많은 로그 방지)
-          const logNow = Date.now()
-          if (!window.lastCandleSkipLog || logNow - window.lastCandleSkipLog > 30000) {
-            console.log(`⏭️ Skipping duplicate candle for ${symbol}:`, {
-              time: candleTime,
-              lastCandleTime: lastCandleTime
-            })
-            window.lastCandleSkipLog = logNow
-          }
         }
       }
     } catch (error) {
-      console.error(`Error fetching stock candles for ${symbol}:`, error)
+      // 에러 발생 시 조용히 처리
     }
   }
 
@@ -325,8 +285,6 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
 
     const apiUrl = `http://localhost:3000/api/v1/stock/chart/${symbol}?interval=${interval}&range=${range}`
     
-    console.log(`📡 Fetching historical stock candles via backend API: ${symbol} (${interval}, ${range})`)
-    
     const response = await fetch(apiUrl)
     
     if (!response.ok) {
@@ -336,7 +294,6 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
     const data = await response.json()
     
     if (!data || !data.candles || data.candles.length === 0) {
-      console.warn('Backend API: No data, using mock data')
       return generateMockCandles(symbol, limit)
     }
 
@@ -364,7 +321,6 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
       
       // 타임스탬프 유효성 검사
       if (isNaN(timeValue) || timeValue <= 0) {
-        console.warn('Invalid candle time, using current time:', candle.time)
         timeValue = Math.floor(Date.now() / 1000)
       }
       
@@ -378,15 +334,9 @@ export const getHistoricalCandles = async (symbol, interval = '1m', limit = 500)
       }
     })
 
-    console.log(`📊 Historical stock candles loaded via backend API (${symbol}):`, {
-      'Total Candles': normalizedCandles.length,
-      'First Candle': normalizedCandles[0] ? new Date(normalizedCandles[0].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A',
-      'Last Candle': normalizedCandles[normalizedCandles.length - 1] ? new Date(normalizedCandles[normalizedCandles.length - 1].time * 1000).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : 'N/A'
-    })
-
     return normalizedCandles
   } catch (error) {
-    console.error('Error fetching historical stock candles from backend API:', error)
+    // 에러 발생 시 조용히 처리
     // 에러 발생 시 모의 데이터 반환
     return generateMockCandles(symbol, limit)
   }
@@ -468,8 +418,6 @@ export const getCurrentPrice = async (symbol) => {
     // 백엔드 API를 통해 Yahoo Finance 데이터 가져오기 (CORS 문제 해결)
     const apiUrl = `http://localhost:3000/api/v1/stock/price/${symbol}`
     
-    console.log(`📡 Fetching stock price via backend API: ${symbol}`)
-    
     const response = await fetch(apiUrl)
     
     if (!response.ok) {
@@ -479,19 +427,12 @@ export const getCurrentPrice = async (symbol) => {
     const data = await response.json()
     
     if (!data || !data.price) {
-      console.warn('Backend API: No data, using mock price')
       return generateMockPrice(symbol)
     }
 
-    console.log(`✅ Stock price for ${symbol}:`, {
-      price: data.price,
-      change: data.priceChange,
-      changePercent: data.priceChangePercent?.toFixed(2) + '%'
-    })
-
     return data
   } catch (error) {
-    console.error('Error fetching current stock price from backend API:', error)
+    // 에러 발생 시 조용히 처리
     // 에러 발생 시 모의 데이터 반환
     return generateMockPrice(symbol)
   }
