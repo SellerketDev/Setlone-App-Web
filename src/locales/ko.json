@@ -306,6 +306,10 @@
       "bonds": {
         "title": "일부 채권 외화",
         "description": "AI 기반 채권 및 외화 자동 트레이딩"
+      },
+      "currency": {
+        "title": "외화",
+        "description": "AI 기반 외화 자동 트레이딩"
       }
     },
     "details": {
@@ -332,6 +336,80 @@
       "bonds": {
         "title": "일부 채권 외화",
         "content": "AI 기반 채권 및 외화 자동 트레이딩 서비스입니다. 채권 시장과 외환 시장의 기회를 AI가 분석하여 안정적인 수익을 추구합니다."
+      },
+      "currency": {
+        "title": "외화",
+        "description": "AI 기반 외화 자동 트레이딩",
+        "content": "AI 기반 외화 자동 트레이딩 서비스입니다. 외환 시장의 기회를 AI가 분석하여 안정적인 수익을 추구합니다.",
+        "items": {
+          "EURUSD": "유로 / 미국 달러",
+          "GBPUSD": "영국 파운드 / 미국 달러",
+          "USDJPY": "미국 달러 / 일본 엔",
+          "USDKRW": "미국 달러 / 대한민국 원",
+          "USDCNY": "미국 달러 / 중국 위안",
+          "AUDUSD": "호주 달러 / 미국 달러"
+        }
+      }
+    },
+    "itemDescription": "AI 알고리즘이 실시간으로 시장을 분석하여 최적의 매매 타이밍을 제안합니다.",
+    "startTrading": "트레이딩 하기",
+    "searchPlaceholder": "심볼 또는 이름으로 검색...",
+    "searchResults": "{count}개의 결과",
+    "noResults": "검색 결과가 없습니다."
+  },
+  "trading": {
+    "back": "돌아가기",
+    "buy": "매수",
+    "sell": "매도",
+    "market": "시장가",
+    "limit": "지정가",
+    "price": "가격",
+    "amount": "수량",
+    "total": "총액",
+    "buyOrder": "매수 주문",
+    "sellOrder": "매도 주문",
+    "orderbook": "호가창",
+    "spread": "스프레드",
+    "chartPlaceholder": "차트 영역 (실시간 가격 차트가 여기에 표시됩니다)",
+    "loading": "데이터를 불러오는 중...",
+    "mode": {
+      "manual": "수동 거래",
+      "auto": "AI 자동 거래"
+    },
+    "aiTrading": {
+      "title": "AI 자동 거래",
+      "strategy": "전략 선택",
+      "strategies": {
+        "momentum": "모멘텀 전략",
+        "mean_reversion": "평균 회귀 전략",
+        "trend_following": "추세 추종 전략"
+      },
+      "strategyDesc": {
+        "momentum": "가격 모멘텀을 활용한 단기 매매",
+        "mean_reversion": "평균 가격으로의 회귀를 이용한 매매",
+        "trend_following": "추세를 따라가는 중장기 매매"
+      },
+      "start": "자동 거래 시작",
+      "stop": "자동 거래 중지",
+      "active": "자동 거래 활성화 중",
+      "inactive": "자동 거래 비활성화",
+      "signals": "AI 신호",
+      "stats": {
+        "totalTrades": "총 거래",
+        "winRate": "승률",
+        "totalProfit": "총 수익",
+        "profitPercent": "수익률"
+      },
+      "noSignals": "아직 신호가 없습니다",
+      "tradeHistory": "거래 내역",
+      "noTrades": "아직 거래 내역이 없습니다",
+      "trade": {
+        "time": "시간",
+        "action": "액션",
+        "price": "가격",
+        "amount": "수량",
+        "profit": "수익",
+        "status": "상태"
       }
     }
   }

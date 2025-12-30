@@ -306,6 +306,10 @@
       "bonds": {
         "title": "Bonds & Foreign Currency",
         "description": "AI-based bonds and foreign currency auto trading"
+      },
+      "currency": {
+        "title": "Foreign Currency",
+        "description": "AI-based foreign currency auto trading"
       }
     },
     "details": {
@@ -332,6 +336,80 @@
       "bonds": {
         "title": "Bonds & Foreign Currency",
         "content": "AI-based automated bonds and foreign currency trading service. AI analyzes opportunities in bond and foreign exchange markets to pursue stable returns."
+      },
+      "currency": {
+        "title": "Foreign Currency",
+        "description": "AI-based foreign currency auto trading",
+        "content": "AI-based automated foreign currency trading service. AI analyzes opportunities in foreign exchange markets to pursue stable returns.",
+        "items": {
+          "EURUSD": "Euro / US Dollar",
+          "GBPUSD": "British Pound / US Dollar",
+          "USDJPY": "US Dollar / Japanese Yen",
+          "USDKRW": "US Dollar / Korean Won",
+          "USDCNY": "US Dollar / Chinese Yuan",
+          "AUDUSD": "Australian Dollar / US Dollar"
+        }
+      }
+    },
+    "itemDescription": "AI algorithms analyze the market in real-time to suggest optimal trading opportunities.",
+    "startTrading": "Start Trading",
+    "searchPlaceholder": "Search by symbol or name...",
+    "searchResults": "{count} results",
+    "noResults": "No results found."
+  },
+  "trading": {
+    "back": "Back",
+    "buy": "Buy",
+    "sell": "Sell",
+    "market": "Market",
+    "limit": "Limit",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total",
+    "buyOrder": "Buy Order",
+    "sellOrder": "Sell Order",
+    "orderbook": "Order Book",
+    "spread": "Spread",
+    "chartPlaceholder": "Chart Area (Real-time price chart will be displayed here)",
+    "loading": "Loading data...",
+    "mode": {
+      "manual": "Manual Trading",
+      "auto": "AI Auto Trading"
+    },
+    "aiTrading": {
+      "title": "AI Auto Trading",
+      "strategy": "Select Strategy",
+      "strategies": {
+        "momentum": "Momentum Strategy",
+        "mean_reversion": "Mean Reversion Strategy",
+        "trend_following": "Trend Following Strategy"
+      },
+      "strategyDesc": {
+        "momentum": "Short-term trading using price momentum",
+        "mean_reversion": "Trading using mean price reversion",
+        "trend_following": "Medium to long-term trend following"
+      },
+      "start": "Start Auto Trading",
+      "stop": "Stop Auto Trading",
+      "active": "Auto Trading Active",
+      "inactive": "Auto Trading Inactive",
+      "signals": "AI Signals",
+      "stats": {
+        "totalTrades": "Total Trades",
+        "winRate": "Win Rate",
+        "totalProfit": "Total Profit",
+        "profitPercent": "Profit %"
+      },
+      "noSignals": "No signals yet",
+      "tradeHistory": "Trade History",
+      "noTrades": "No trades yet",
+      "trade": {
+        "time": "Time",
+        "action": "Action",
+        "price": "Price",
+        "amount": "Amount",
+        "profit": "Profit",
+        "status": "Status"
       }
     }
   }

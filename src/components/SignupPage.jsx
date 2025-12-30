@@ -37,7 +37,7 @@ const SignupPage = ({ onSignup, onBack }) => {
 
   const validateForm = () => {
     const newErrors = {}
-    
+
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
@@ -99,38 +99,53 @@ const SignupPage = ({ onSignup, onBack }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
 
     setLoading(true)
     try {
+      const requestBody = {
+        email: formData.email,
+        username: formData.nickname, // API는 username 필드 사용
+        password: formData.password,
+        realName: formData.name, // API는 realName 필드 사용
+        birthDate: formData.birthDate,
+        phoneNumber: `${formData.countryCode}${formData.phoneNumber}` // 국가번호 포함
+      }
+      console.log('Sending signup request:', { ...requestBody, password: '***' })
+
       // Call signup API
       const response = await fetch(getApiUrl('/api/v1/auth/register'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          email: formData.email,
-          username: formData.nickname, // API는 username 필드 사용
-          password: formData.password,
-          realName: formData.name, // API는 realName 필드 사용
-          birthDate: formData.birthDate,
-          phoneNumber: `${formData.countryCode}${formData.phoneNumber}` // 국가번호 포함
-        })
+        body: JSON.stringify(requestBody)
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (error) {
+        console.error('Failed to parse response:', error)
+        data = { message: response.statusText || 'Unknown error' }
+      }
 
       if (response.ok) {
         // Move to verification step
         setStep(2)
       } else {
-        // Show error
+        // Show error with detailed message
+        console.error('Signup API error:', {
+          status: response.status,
+          statusText: response.statusText,
+          data: data
+        })
+        const errorMessage = data?.message || data?.error || response.statusText || (language === 'ko' ? '회원가입에 실패했습니다' : 'Signup failed')
         setErrors({
-          submit: data.message || (language === 'ko' ? '회원가입에 실패했습니다' : 'Signup failed')
+          submit: errorMessage
         })
       }
     } catch (error) {
@@ -166,7 +181,13 @@ const SignupPage = ({ onSignup, onBack }) => {
         })
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (error) {
+        console.error('Failed to parse verification response:', error)
+        data = { message: response.statusText || 'Unknown error' }
+      }
 
       if (response.ok) {
         // Signup successful - get user info from API
@@ -184,7 +205,7 @@ const SignupPage = ({ onSignup, onBack }) => {
         } catch (error) {
           console.error('Error loading user after signup:', error)
         }
-        
+
         // Fallback
         if (onSignup) {
           onSignup({
@@ -238,9 +259,9 @@ const SignupPage = ({ onSignup, onBack }) => {
           <button className="signup-back-btn" onClick={onBack}>
             ←
           </button>
-          <img 
-            src="/images/SETLONE_Left_logo.png" 
-            alt="SETLONE" 
+          <img
+            src="/images/SETLONE_Left_logo.png"
+            alt="SETLONE"
             className="signup-logo"
           />
         </div>
@@ -412,12 +433,12 @@ const SignupPage = ({ onSignup, onBack }) => {
                 <div className="signup-error-message">{errors.submit}</div>
               )}
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="signup-submit-btn"
                 disabled={loading}
               >
-                {loading 
+                {loading
                   ? (language === 'ko' ? '처리 중...' : 'Processing...')
                   : (language === 'ko' ? '회원가입' : 'Sign Up')
                 }
@@ -431,13 +452,13 @@ const SignupPage = ({ onSignup, onBack }) => {
               {language === 'ko' ? '이메일 인증' : 'Email Verification'}
             </h2>
             <p className="signup-verification-text">
-              {language === 'ko' 
+              {language === 'ko'
                 ? `${formData.email}로 인증 코드를 발송했습니다.`
                 : `Verification code has been sent to ${formData.email}.`
               }
             </p>
             <p className="signup-verification-hint">
-              {language === 'ko' 
+              {language === 'ko'
                 ? '인증 코드: 123456'
                 : 'Verification code: 123456'
               }
@@ -470,12 +491,12 @@ const SignupPage = ({ onSignup, onBack }) => {
                 )}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="signup-submit-btn"
                 disabled={loading}
               >
-                {loading 
+                {loading
                   ? (language === 'ko' ? '인증 중...' : 'Verifying...')
                   : (language === 'ko' ? '인증하기' : 'Verify')
                 }
