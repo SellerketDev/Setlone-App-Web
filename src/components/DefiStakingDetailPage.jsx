@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { getCurrentLanguage, t } from '../utils/i18n'
 import { getToken, fetchWithAuth } from '../utils/auth'
 import { getApiUrl } from '../config/api'
@@ -8,6 +8,9 @@ import './StakingPage.css'
 const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLoginRequired }) => {
   const [language, setLanguage] = useState(propLanguage || getCurrentLanguage())
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const canvasRef = useRef(null)
+  const particlesRef = useRef([])
+  const animationFrameRef = useRef(null)
   
   // DeFi 동의 상태
   const [defiAgreements, setDefiAgreements] = useState({
@@ -28,6 +31,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
   const [unclaimedRewards, setUnclaimedRewards] = useState(0)
   const [protocol, setProtocol] = useState(product?.protocol || 'Lido')
   const [network, setNetwork] = useState(product?.network || 'Ethereum')
+  const [apy, setApy] = useState(product?.apy || 5) // APY (변동)
   const [isLoadingStakingData, setIsLoadingStakingData] = useState(false)
   const [transactionHistory, setTransactionHistory] = useState([])
   const [protocolInfo, setProtocolInfo] = useState({
@@ -46,7 +50,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
     if (!amount || isNaN(parseFloat(amount))) return 0
     // DeFi는 변동 보상이므로 예상치만 표시
     const numAmount = parseFloat(amount)
-    const estimatedDailyReward = (numAmount * 0.05 / 100) / 365 // 예상 5% APY
+    const estimatedDailyReward = (numAmount * apy / 100) / 365 // 변동 APY 사용
     return estimatedDailyReward.toFixed(4)
   }
 
@@ -73,6 +77,124 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
       setLanguage(propLanguage)
     }
   }, [propLanguage, language])
+
+  // 보상 자동 증가 시뮬레이션 (스테이킹 중일 때만)
+  useEffect(() => {
+    if (!isLoggedIn || currentStaking === 0) return
+
+    const rewardInterval = setInterval(() => {
+      // 일일 보상 계산 (APY / 365)
+      const dailyReward = (currentStaking * apy / 100) / 365
+      // 1분마다 보상 증가 (실제로는 하루에 한 번)
+      const minuteReward = dailyReward / (24 * 60)
+      setTotalRewards(prev => prev + minuteReward)
+      setUnclaimedRewards(prev => prev + minuteReward)
+    }, 60000) // 1분마다 업데이트
+
+    return () => clearInterval(rewardInterval)
+  }, [isLoggedIn, currentStaking, apy])
+
+  // 우주 배경 효과 초기화
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    let animationId
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    const particleCount = 80
+    const particles = []
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+        this.size = Math.random() * 2 + 0.5
+        this.speedX = (Math.random() - 0.5) * 0.5
+        this.speedY = (Math.random() - 0.5) * 0.5
+        this.opacity = Math.random() * 0.5 + 0.3
+        this.glow = Math.random() > 0.7
+      }
+
+      update() {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+      }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx.fillStyle = this.glow 
+          ? `rgba(100, 150, 255, ${this.opacity})` 
+          : `rgba(255, 255, 255, ${this.opacity})`
+        ctx.fill()
+        
+        if (this.glow) {
+          ctx.shadowBlur = 10
+          ctx.shadowColor = 'rgba(100, 150, 255, 0.8)'
+          ctx.fill()
+          ctx.shadowBlur = 0
+        }
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+    particlesRef.current = particles
+
+    const drawConnections = () => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+
+          if (distance < 150) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance / 150)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.stroke()
+          }
+        }
+      }
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+
+      drawConnections()
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    animate()
+    animationFrameRef.current = animationId
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [])
 
   // 스테이킹 데이터 로드
   const loadStakingData = async () => {
@@ -153,18 +275,25 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
       // 3. 스마트컨트랙트 예치
       await new Promise(resolve => setTimeout(resolve, 2000))
       
-      setStakingStatus('success')
-      setCurrentStaking(prev => prev + parseFloat(stakingAmount))
+      // 시뮬레이션: 성공 처리
+      const amount = parseFloat(stakingAmount)
+      setBalance(prev => prev - amount)
+      setCurrentStaking(prev => prev + amount)
       setStakingAmount('')
+      setStakingStatus('success')
       
       setTimeout(() => {
         setStakingStatus(null)
       }, 3000)
       
-      await loadStakingData()
+      // loadStakingData()는 초기값으로 리셋하므로 호출하지 않음
+      // 실제 API 연동 시에는 API 응답으로 상태를 업데이트해야 함
     } catch (error) {
       console.error('Staking failed:', error)
       setStakingStatus('failed')
+      setTimeout(() => {
+        setStakingStatus(null)
+      }, 3000)
     } finally {
       setIsStaking(false)
     }
@@ -180,27 +309,43 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
       const date = new Date(today)
       date.setDate(date.getDate() - i)
       
+      // 진행률 계산 (0부터 1까지)
       const progress = (29 - i) / 29
-      const baseStaking = currentStaking * 0.7
-      const variation = Math.sin(i / 5) * (currentStaking * 0.1)
-      const stakingValue = baseStaking + variation + progress * (currentStaking * 0.3)
       
-      const baseRewards = totalRewards * 0.7
-      const rewardsVariation = Math.cos(i / 7) * (totalRewards * 0.1)
-      const rewardsValue = baseRewards + rewardsVariation + progress * (totalRewards * 0.3)
+      // 스테이킹 금액: 과거부터 현재까지 점진적으로 증가
+      const stakingValue = currentStaking > 0 
+        ? Math.max(0, currentStaking * (0.3 + progress * 0.7))
+        : 0
+      
+      // 보상: 과거부터 현재까지 점진적으로 증가
+      const rewardsValue = totalRewards > 0
+        ? Math.max(0, totalRewards * (0.2 + progress * 0.8))
+        : 0
       
       data.push({
         date: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
         dateFull: date.toLocaleDateString(locale),
-        staking: Math.max(0, Math.round(stakingValue)),
-        rewards: Math.max(0, Math.round(rewardsValue * 10) / 10)
+        staking: Math.round(stakingValue),
+        rewards: Math.round(rewardsValue * 100) / 100
       })
     }
+    
+    // 마지막 값이 정확히 현재 상태와 일치하도록 보정
+    if (data.length > 0) {
+      data[data.length - 1].staking = currentStaking
+      data[data.length - 1].rewards = totalRewards
+    }
+    
     return data
   }, [currentStaking, totalRewards, language])
 
   return (
     <div className="staking-page">
+      {/* 우주 배경 효과 */}
+      <canvas 
+        ref={canvasRef} 
+        className="space-background"
+      />
       <div className="staking-header">
         <button className="back-button" onClick={onBack}>
           ← {t('staking.back', language)}
@@ -227,7 +372,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
 
           {/* 작동 방식 설명 (DeFi 전용) */}
           <div className="staking-info-box" style={{ marginBottom: '24px' }}>
-            <h3 className="staking-info-box-title">작동 방식</h3>
+            <h3 className="staking-info-box-title">{t('staking.howItWorks', language)}</h3>
             <div className="staking-info-box-content">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', background: 'rgba(255, 87, 34, 0.1)', borderRadius: '8px' }}>
@@ -287,7 +432,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                 color: 'rgba(255, 255, 255, 0.8)',
                 textAlign: 'center'
               }}>
-                ⚠️ CeFi와 다르게 <strong>사용자가 직접</strong> 스마트컨트랙트와 상호작용합니다
+                ⚠️ {t('staking.defiDifferenceNotice', language)}
               </div>
             </div>
           </div>
@@ -298,7 +443,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
               <div className="staking-info-card">
                 <span className="staking-info-label">{t('staking.walletAddress', language)}</span>
                 <span className="staking-info-value" style={{ fontSize: '12px', wordBreak: 'break-all', fontFamily: 'monospace' }}>
-                  {walletAddress || 'Not Connected'}
+                  {walletAddress || t('staking.walletNotConnected', language)}
                 </span>
               </div>
               <div className="staking-info-card">
@@ -425,7 +570,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
           {isLoggedIn && (
             <div className="staking-warning-box" style={{ marginBottom: '24px' }}>
               <div className="staking-warning-header">
-                <span className="staking-warning-title">⚠️ 참여 전 필수 동의 (모두 체크 필요)</span>
+                <span className="staking-warning-title">⚠️ {t('staking.requiredAgreementTitle', language)}</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
                 <label style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer' }}>
@@ -504,7 +649,7 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                   color: '#ff5722',
                   textAlign: 'center'
                 }}>
-                  {t('staking.pleaseAgreeAll', language) || '모든 동의 항목을 체크해주세요'}
+                  {t('staking.pleaseAgreeAllDefi', language)}
                 </p>
               )}
             </div>
@@ -565,12 +710,14 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                       tickLine={{ stroke: 'rgba(255, 255, 255, 0.3)' }}
                       axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
                       tickFormatter={(value) => {
-                        if (value >= 1000) {
+                        if (value >= 1000000) {
+                          return `${(value / 1000000).toFixed(1)}M`
+                        } else if (value >= 1000) {
                           return `${(value / 1000).toFixed(1)}K`
                         }
-                        return value.toString()
+                        return value.toLocaleString()
                       }}
-                      width={50}
+                      width={60}
                     />
                     <Tooltip 
                       contentStyle={{
@@ -590,19 +737,20 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                       formatter={(value, name, props) => {
                         const data = props.payload
                         const locale = language === 'ko' ? 'ko-KR' : 'en-US'
+                        const numValue = parseFloat(value) || 0
                         
                         if (name === t('staking.chartStakingAmount', language)) {
-                          return [`${parseFloat(value).toLocaleString(locale)} ${product?.name || 'ETH'}`, name]
+                          return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} ${product?.name || 'ETH'}`, name]
                         } else if (name === t('staking.chartTotalRewards', language)) {
                           const stakingAmount = data?.staking || 0
-                          const rewardsAmount = parseFloat(value) || 0
+                          const rewardsAmount = numValue
                           const profitRate = stakingAmount > 0 ? ((rewardsAmount / stakingAmount) * 100).toFixed(2) : 0
                           return [
-                            `${rewardsAmount.toLocaleString(locale)} ${product?.name || 'ETH'} (+${profitRate}%)`, 
+                            `${rewardsAmount.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${product?.name || 'ETH'} (+${profitRate}%)`, 
                             name
                           ]
                         }
-                        return [`${parseFloat(value).toLocaleString(locale)} ${product?.name || 'ETH'}`, name]
+                        return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} ${product?.name || 'ETH'}`, name]
                       }}
                       labelFormatter={(label) => {
                         return label
@@ -651,10 +799,16 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                 <div className="staking-transaction-history" style={{ marginTop: '24px' }}>
                   <h4 className="staking-transaction-title">{t('staking.transactionHistory', language)}</h4>
                   <div className="staking-transaction-list">
-                    {transactionHistory.map((tx, index) => (
+                    {transactionHistory.map((tx, index) => {
+                      const txTypeMap = {
+                        'deposit': t('staking.transactionDeposit', language),
+                        'reward': t('staking.transactionReward', language),
+                        'withdraw': t('staking.transactionWithdraw', language)
+                      }
+                      return (
                       <div key={index} className="staking-transaction-item">
                         <div className="staking-transaction-info">
-                          <span className="staking-transaction-type">{tx.type}</span>
+                          <span className="staking-transaction-type">{txTypeMap[tx.type] || tx.type}</span>
                           <span className="staking-transaction-amount">
                             {tx.amount.toLocaleString()} {product?.name || 'ETH'}
                           </span>
@@ -669,7 +823,8 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
                           {tx.hash.substring(0, 10)}... ↗
                         </a>
                       </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -692,4 +847,16 @@ const DefiStakingDetailPage = ({ onBack, language: propLanguage, product, onLogi
 }
 
 export default DefiStakingDetailPage
+
+
+
+
+
+
+
+
+
+
+
+
 

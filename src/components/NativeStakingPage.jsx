@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { getCurrentLanguage, t } from '../utils/i18n'
 import { getToken, fetchWithAuth } from '../utils/auth'
 import { getApiUrl } from '../config/api'
@@ -8,6 +8,9 @@ import './StakingPage.css'
 const NativeStakingPage = ({ onBack, language: propLanguage, onLoginRequired }) => {
   // prop으로 받은 language가 있으면 사용, 없으면 localStorage에서 가져오기
   const [language, setLanguage] = useState(propLanguage || getCurrentLanguage())
+  const canvasRef = useRef(null)
+  const particlesRef = useRef([])
+  const animationFrameRef = useRef(null)
   
   // 인증 상태
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -88,6 +91,123 @@ const NativeStakingPage = ({ onBack, language: propLanguage, onLoginRequired }) 
       setLanguage(propLanguage)
     }
   }, [propLanguage, language])
+
+  // 보상 자동 증가 시뮬레이션 (스테이킹 중일 때만)
+  useEffect(() => {
+    if (!isLoggedIn || currentStaking === 0) return
+
+    const rewardInterval = setInterval(() => {
+      // 일일 보상 계산 (APY / 365)
+      const dailyReward = (currentStaking * apy / 100) / 365
+      // 1분마다 보상 증가 (실제로는 하루에 한 번)
+      const minuteReward = dailyReward / (24 * 60)
+      setTotalRewards(prev => prev + minuteReward)
+    }, 60000) // 1분마다 업데이트
+
+    return () => clearInterval(rewardInterval)
+  }, [isLoggedIn, currentStaking, apy])
+
+  // 우주 배경 효과 초기화
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    let animationId
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    const particleCount = 80
+    const particles = []
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+        this.size = Math.random() * 2 + 0.5
+        this.speedX = (Math.random() - 0.5) * 0.5
+        this.speedY = (Math.random() - 0.5) * 0.5
+        this.opacity = Math.random() * 0.5 + 0.3
+        this.glow = Math.random() > 0.7
+      }
+
+      update() {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+      }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx.fillStyle = this.glow 
+          ? `rgba(100, 150, 255, ${this.opacity})` 
+          : `rgba(255, 255, 255, ${this.opacity})`
+        ctx.fill()
+        
+        if (this.glow) {
+          ctx.shadowBlur = 10
+          ctx.shadowColor = 'rgba(100, 150, 255, 0.8)'
+          ctx.fill()
+          ctx.shadowBlur = 0
+        }
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+    particlesRef.current = particles
+
+    const drawConnections = () => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+
+          if (distance < 150) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance / 150)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.stroke()
+          }
+        }
+      }
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+
+      drawConnections()
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    animate()
+    animationFrameRef.current = animationId
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [])
 
   // 스테이킹 데이터 로드
   const loadStakingData = async () => {
@@ -328,6 +448,11 @@ const NativeStakingPage = ({ onBack, language: propLanguage, onLoginRequired }) 
 
   return (
     <div className="staking-page">
+      {/* 우주 배경 효과 */}
+      <canvas 
+        ref={canvasRef} 
+        className="space-background"
+      />
       <div className="staking-header">
         <button className="back-button" onClick={onBack}>
           ← {t('staking.backToStaking', language)}
@@ -504,12 +629,14 @@ const NativeStakingPage = ({ onBack, language: propLanguage, onLoginRequired }) 
                       tickLine={{ stroke: 'rgba(255, 255, 255, 0.3)' }}
                       axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
                       tickFormatter={(value) => {
-                        if (value >= 1000) {
+                        if (value >= 1000000) {
+                          return `${(value / 1000000).toFixed(1)}M`
+                        } else if (value >= 1000) {
                           return `${(value / 1000).toFixed(1)}K`
                         }
-                        return value.toString()
+                        return value.toLocaleString()
                       }}
-                      width={50}
+                      width={60}
                     />
                     <Tooltip 
                       contentStyle={{

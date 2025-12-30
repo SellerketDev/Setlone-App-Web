@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { getCurrentLanguage, t } from '../utils/i18n'
 import { getToken, fetchWithAuth } from '../utils/auth'
 import { getApiUrl } from '../config/api'
@@ -8,6 +8,9 @@ import './StakingPage.css'
 const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, initialStakingType }) => {
   // prop으로 받은 language가 있으면 사용, 없으면 localStorage에서 가져오기
   const [language, setLanguage] = useState(propLanguage || getCurrentLanguage())
+  const canvasRef = useRef(null)
+  const particlesRef = useRef([])
+  const animationFrameRef = useRef(null)
   
   // 스테이킹 타입 선택 (lockup: 락업, unlock: 언락)
   const [stakingType, setStakingType] = useState(initialStakingType || 'lockup') // 'lockup' or 'unlock'
@@ -143,6 +146,123 @@ const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, in
       setLanguage(propLanguage)
     }
   }, [propLanguage, language])
+
+  // 보상 자동 증가 시뮬레이션 (스테이킹 중일 때만)
+  useEffect(() => {
+    if (!isLoggedIn || currentStaking === 0) return
+
+    const rewardInterval = setInterval(() => {
+      // 일일 보상 계산 (APY / 365)
+      const dailyReward = (currentStaking * apy / 100) / 365
+      // 1분마다 보상 증가 (실제로는 하루에 한 번)
+      const minuteReward = dailyReward / (24 * 60)
+      setTotalRewards(prev => prev + minuteReward)
+    }, 60000) // 1분마다 업데이트
+
+    return () => clearInterval(rewardInterval)
+  }, [isLoggedIn, currentStaking, apy])
+
+  // 우주 배경 효과 초기화
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    let animationId
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    const particleCount = 80
+    const particles = []
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+        this.size = Math.random() * 2 + 0.5
+        this.speedX = (Math.random() - 0.5) * 0.5
+        this.speedY = (Math.random() - 0.5) * 0.5
+        this.opacity = Math.random() * 0.5 + 0.3
+        this.glow = Math.random() > 0.7
+      }
+
+      update() {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+      }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx.fillStyle = this.glow 
+          ? `rgba(100, 150, 255, ${this.opacity})` 
+          : `rgba(255, 255, 255, ${this.opacity})`
+        ctx.fill()
+        
+        if (this.glow) {
+          ctx.shadowBlur = 10
+          ctx.shadowColor = 'rgba(100, 150, 255, 0.8)'
+          ctx.fill()
+          ctx.shadowBlur = 0
+        }
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+    particlesRef.current = particles
+
+    const drawConnections = () => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+
+          if (distance < 150) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance / 150)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.stroke()
+          }
+        }
+      }
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+
+      drawConnections()
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    animate()
+    animationFrameRef.current = animationId
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [])
 
   // 스테이킹 데이터 로드
   const loadStakingData = async () => {
@@ -365,33 +485,49 @@ const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, in
       const date = new Date(today)
       date.setDate(date.getDate() - i)
       
-      // 스테이킹 금액은 점진적으로 증가 (과거부터 현재까지)
-      const progress = (29 - i) / 29 // 0 (과거) ~ 1 (현재)
-      const baseStaking = currentStaking * 0.3
-      const stakingVariation = Math.sin(i / 10) * (currentStaking * 0.05)
-      const stakingValue = baseStaking + (currentStaking * 0.7 * progress) + stakingVariation
+      // 진행률 계산 (0부터 1까지)
+      const progress = (29 - i) / 29
       
-      // 누적 수익도 점진적으로 증가 (과거부터 현재까지)
-      const baseRewards = totalRewards * 0.2
-      const rewardsVariation = Math.cos(i / 7) * (totalRewards * 0.05)
-      const rewardsValue = baseRewards + (totalRewards * 0.8 * progress) + rewardsVariation
+      // 스테이킹 금액: 과거부터 현재까지 점진적으로 증가
+      const stakingValue = currentStaking > 0 
+        ? Math.max(0, currentStaking * (0.3 + progress * 0.7))
+        : 0
+      
+      // 보상: 과거부터 현재까지 점진적으로 증가
+      const rewardsValue = totalRewards > 0
+        ? Math.max(0, totalRewards * (0.2 + progress * 0.8))
+        : 0
       
       // 수익률 계산 (보상 / 스테이킹 금액)
-      const profitRate = stakingValue > 0 ? ((rewardsValue / stakingValue) * 100).toFixed(2) : 0
+      const profitRate = stakingValue > 0 ? ((rewardsValue / stakingValue) * 100) : 0
       
       data.push({
         date: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
         dateFull: date.toLocaleDateString(locale),
-        staking: Math.max(0, Math.round(stakingValue)),
-        rewards: Math.max(0, Math.round(rewardsValue * 10) / 10),
-        profitRate: parseFloat(profitRate)
+        staking: Math.round(stakingValue),
+        rewards: Math.round(rewardsValue * 100) / 100,
+        profitRate: Math.round(profitRate * 100) / 100
       })
     }
+    
+    // 마지막 값이 정확히 현재 상태와 일치하도록 보정
+    if (data.length > 0) {
+      data[data.length - 1].staking = currentStaking
+      data[data.length - 1].rewards = totalRewards
+      const currentProfitRate = currentStaking > 0 ? ((totalRewards / currentStaking) * 100) : 0
+      data[data.length - 1].profitRate = Math.round(currentProfitRate * 100) / 100
+    }
+    
     return data
   }, [currentStaking, totalRewards, language])
 
   return (
     <div className="staking-page">
+      {/* 우주 배경 효과 */}
+      <canvas 
+        ref={canvasRef} 
+        className="space-background"
+      />
       <div className="staking-header">
         <button className="back-button" onClick={onBack}>
           ← {t('staking.backToStaking', language)}
@@ -661,12 +797,14 @@ const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, in
                       tickLine={{ stroke: 'rgba(255, 255, 255, 0.3)' }}
                       axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
                       tickFormatter={(value) => {
-                        if (value >= 1000) {
+                        if (value >= 1000000) {
+                          return `${(value / 1000000).toFixed(1)}M`
+                        } else if (value >= 1000) {
                           return `${(value / 1000).toFixed(1)}K`
                         }
-                        return value.toString()
+                        return value.toLocaleString()
                       }}
-                      width={50}
+                      width={60}
                     />
                     <Tooltip 
                       contentStyle={{
@@ -691,19 +829,20 @@ const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, in
                       formatter={(value, name, props) => {
                         const data = props.payload
                         const locale = language === 'ko' ? 'ko-KR' : 'en-US'
+                        const numValue = parseFloat(value) || 0
                         
                         if (name === t('staking.chartStakingAmount', language)) {
-                          return [`${parseFloat(value).toLocaleString(locale)} SET`, name]
+                          return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} SET`, name]
                         } else if (name === t('staking.chartTotalRewards', language)) {
                           const stakingAmount = data?.staking || 0
-                          const rewardsAmount = parseFloat(value) || 0
+                          const rewardsAmount = numValue
                           const profitRate = stakingAmount > 0 ? ((rewardsAmount / stakingAmount) * 100).toFixed(2) : 0
                           return [
-                            `${rewardsAmount.toLocaleString(locale)} SET (+${profitRate}%)`, 
+                            `${rewardsAmount.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} SET (+${profitRate}%)`, 
                             name
                           ]
                         }
-                        return [`${parseFloat(value).toLocaleString(locale)} SET`, name]
+                        return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} SET`, name]
                       }}
                       labelFormatter={(label) => {
                         return label

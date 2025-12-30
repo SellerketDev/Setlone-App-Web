@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { getCurrentLanguage, t } from '../utils/i18n'
 import { getToken, fetchWithAuth } from '../utils/auth'
 import { getApiUrl } from '../config/api'
@@ -8,6 +8,9 @@ import './StakingPage.css'
 const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLoginRequired }) => {
   const [language, setLanguage] = useState(propLanguage || getCurrentLanguage())
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const canvasRef = useRef(null)
+  const particlesRef = useRef([])
+  const animationFrameRef = useRef(null)
   
   // 리퀴드 스테이킹 상태
   const [balance, setBalance] = useState(0)
@@ -84,6 +87,123 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
       setLanguage(propLanguage)
     }
   }, [propLanguage, language])
+
+  // 보상 자동 증가 시뮬레이션 (스테이킹 중일 때만)
+  useEffect(() => {
+    if (!isLoggedIn || currentStaking === 0) return
+
+    const rewardInterval = setInterval(() => {
+      // 일일 보상 계산 (APY / 365)
+      const dailyReward = (currentStaking * apy / 100) / 365
+      // 1분마다 보상 증가 (실제로는 하루에 한 번)
+      const minuteReward = dailyReward / (24 * 60)
+      setTotalRewards(prev => prev + minuteReward)
+    }, 60000) // 1분마다 업데이트
+
+    return () => clearInterval(rewardInterval)
+  }, [isLoggedIn, currentStaking, apy])
+
+  // 우주 배경 효과 초기화
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    let animationId
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    const particleCount = 80
+    const particles = []
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+        this.size = Math.random() * 2 + 0.5
+        this.speedX = (Math.random() - 0.5) * 0.5
+        this.speedY = (Math.random() - 0.5) * 0.5
+        this.opacity = Math.random() * 0.5 + 0.3
+        this.glow = Math.random() > 0.7
+      }
+
+      update() {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+      }
+
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx.fillStyle = this.glow 
+          ? `rgba(100, 150, 255, ${this.opacity})` 
+          : `rgba(255, 255, 255, ${this.opacity})`
+        ctx.fill()
+        
+        if (this.glow) {
+          ctx.shadowBlur = 10
+          ctx.shadowColor = 'rgba(100, 150, 255, 0.8)'
+          ctx.fill()
+          ctx.shadowBlur = 0
+        }
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+    particlesRef.current = particles
+
+    const drawConnections = () => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+
+          if (distance < 150) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance / 150)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.stroke()
+          }
+        }
+      }
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach(particle => {
+        particle.update()
+        particle.draw()
+      })
+
+      drawConnections()
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    animate()
+    animationFrameRef.current = animationId
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [])
 
   // 스테이킹 데이터 로드
   const loadStakingData = async () => {
@@ -175,22 +295,24 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
       // 시뮬레이션: 2초 대기
       await new Promise(resolve => setTimeout(resolve, 2000))
       
-      setStakingStatus('success')
+      // 시뮬레이션: 성공 처리
       const stakedAmount = parseFloat(stakingAmount)
+      setBalance(prev => prev - stakedAmount) // 잔액 차감
       setCurrentStaking(prev => prev + stakedAmount)
       setLstAmount(prev => prev + stakedAmount)
       // LST 가치는 변동 가능하므로 1:1이 아닐 수 있음
       const lstPriceVariation = 0.99 + (Math.random() * 0.04) // 0.99 ~ 1.03
       setLstValue(prev => prev + (stakedAmount * lstPriceVariation))
       setStakingAmount('')
+      setStakingStatus('success')
       
       // 성공 메시지 3초 후 제거
       setTimeout(() => {
         setStakingStatus(null)
       }, 3000)
       
-      // 데이터 다시 로드
-      await loadStakingData()
+      // loadStakingData()는 초기값으로 리셋하므로 호출하지 않음
+      // 실제 API 연동 시에는 API 응답으로 상태를 업데이트해야 함
     } catch (error) {
       console.error('Staking failed:', error)
       setStakingStatus('failed')
@@ -209,27 +331,50 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
       const date = new Date(today)
       date.setDate(date.getDate() - i)
       
-      const baseStaking = currentStaking * 0.7
-      const variation = Math.sin(i / 5) * (currentStaking * 0.1)
-      const stakingValue = baseStaking + variation + (29 - i) * (currentStaking * 0.01)
+      // 진행률 계산 (0부터 1까지)
+      const progress = (29 - i) / 29
       
-      const baseRewards = totalRewards * 0.7
-      const rewardsVariation = Math.cos(i / 7) * (totalRewards * 0.1)
-      const rewardsValue = baseRewards + rewardsVariation + (29 - i) * (totalRewards * 0.01)
+      // 스테이킹 금액: 과거부터 현재까지 점진적으로 증가
+      const stakingValue = currentStaking > 0 
+        ? Math.max(0, currentStaking * (0.3 + progress * 0.7))
+        : 0
+      
+      // 보상: 과거부터 현재까지 점진적으로 증가
+      const rewardsValue = totalRewards > 0
+        ? Math.max(0, totalRewards * (0.2 + progress * 0.8))
+        : 0
+      
+      // LST 수량 (스테이킹과 유사하지만 약간의 변동성 포함)
+      const lstValue = lstAmount > 0
+        ? Math.max(0, lstAmount * (0.3 + progress * 0.7))
+        : 0
       
       data.push({
         date: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
         dateFull: date.toLocaleDateString(locale),
-        staking: Math.max(0, Math.round(stakingValue)),
-        rewards: Math.max(0, Math.round(rewardsValue * 10) / 10),
-        lst: Math.max(0, Math.round(stakingValue))
+        staking: Math.round(stakingValue),
+        rewards: Math.round(rewardsValue * 100) / 100,
+        lst: Math.round(lstValue)
       })
     }
+    
+    // 마지막 값이 정확히 현재 상태와 일치하도록 보정
+    if (data.length > 0) {
+      data[data.length - 1].staking = currentStaking
+      data[data.length - 1].rewards = totalRewards
+      data[data.length - 1].lst = lstAmount
+    }
+    
     return data
-  }, [currentStaking, totalRewards, language])
+  }, [currentStaking, totalRewards, lstAmount, language])
 
   return (
     <div className="staking-page">
+      {/* 우주 배경 효과 */}
+      <canvas 
+        ref={canvasRef} 
+        className="space-background"
+      />
       <div className="staking-header">
         <button className="back-button" onClick={onBack}>
           ← {t('staking.back', language)}
@@ -495,12 +640,14 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
                       tickLine={{ stroke: 'rgba(255, 255, 255, 0.3)' }}
                       axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
                       tickFormatter={(value) => {
-                        if (value >= 1000) {
+                        if (value >= 1000000) {
+                          return `${(value / 1000000).toFixed(1)}M`
+                        } else if (value >= 1000) {
                           return `${(value / 1000).toFixed(1)}K`
                         }
-                        return value.toString()
+                        return value.toLocaleString()
                       }}
-                      width={50}
+                      width={60}
                     />
                     <Tooltip 
                       contentStyle={{
@@ -519,14 +666,15 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
                       }}
                       formatter={(value, name) => {
                         const locale = language === 'ko' ? 'ko-KR' : 'en-US'
+                        const numValue = parseFloat(value) || 0
                         if (name === 'staking') {
-                          return [`${value.toLocaleString(locale)} ${product?.name || 'ETH'}`, t('staking.stakingAmount', language)]
+                          return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} ${product?.name || 'ETH'}`, t('staking.stakingAmount', language)]
                         } else if (name === 'rewards') {
-                          return [`${value.toLocaleString(locale)} ${product?.name || 'ETH'}`, t('staking.totalRewards', language)]
+                          return [`${numValue.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${product?.name || 'ETH'}`, t('staking.totalRewards', language)]
                         } else if (name === 'lst') {
-                          return [`${value.toLocaleString(locale)} ${lstToken}`, t('staking.lstAmount', language)]
+                          return [`${numValue.toLocaleString(locale, { maximumFractionDigits: 0 })} ${lstToken}`, t('staking.lstAmount', language)]
                         }
-                        return [value, name]
+                        return [`${numValue.toLocaleString(locale)}`, name]
                       }}
                     />
                     <Legend 

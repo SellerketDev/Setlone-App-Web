@@ -16,6 +16,9 @@ import DefiStakingDetailPage from './DefiStakingDetailPage'
 import MiningPage from './MiningPage'
 import GamePage from './GamePage'
 import CrowdfundingPage from './CrowdfundingPage'
+import RewardCrowdfundingDetailPage from './RewardCrowdfundingDetailPage'
+import InvestmentCrowdfundingDetailPage from './InvestmentCrowdfundingDetailPage'
+import LoanCrowdfundingDetailPage from './LoanCrowdfundingDetailPage'
 import CommercePage from './CommercePage'
 import AITradingPage from './AITradingPage'
 
@@ -133,6 +136,9 @@ const MainPage = () => {
   const [showMiningPage, setShowMiningPage] = useState(false)
   const [showGamePage, setShowGamePage] = useState(false)
   const [showCrowdfundingPage, setShowCrowdfundingPage] = useState(false)
+  const [showRewardCrowdfundingDetailPage, setShowRewardCrowdfundingDetailPage] = useState(false)
+  const [showInvestmentCrowdfundingDetailPage, setShowInvestmentCrowdfundingDetailPage] = useState(false)
+  const [showLoanCrowdfundingDetailPage, setShowLoanCrowdfundingDetailPage] = useState(false)
   const [showCommercePage, setShowCommercePage] = useState(false)
   const [showAITradingPage, setShowAITradingPage] = useState(false)
   const [currentUserId, setCurrentUserId] = useState(null)
@@ -1705,6 +1711,70 @@ const MainPage = () => {
             console.log('Closing Crowdfunding Page')
             setShowCrowdfundingPage(false)
             saveCurrentPage('')
+          }}
+          onRewardCrowdfundingDetail={() => {
+            setShowCrowdfundingPage(false)
+            setShowRewardCrowdfundingDetailPage(true)
+            saveCurrentPage('crowdfunding-reward')
+          }}
+          onInvestmentCrowdfundingDetail={() => {
+            setShowCrowdfundingPage(false)
+            setShowInvestmentCrowdfundingDetailPage(true)
+            saveCurrentPage('crowdfunding-investment')
+          }}
+          onLoanCrowdfundingDetail={() => {
+            setShowCrowdfundingPage(false)
+            setShowLoanCrowdfundingDetailPage(true)
+            saveCurrentPage('crowdfunding-loan')
+          }}
+          onLoginRequired={() => {
+            setShowLoginPage(true)
+          }}
+        />
+      )}
+
+      {/* 보상형 크라우드펀딩 상세 페이지 */}
+      {showRewardCrowdfundingDetailPage && (
+        <RewardCrowdfundingDetailPage
+          language={language}
+          onBack={() => {
+            setShowRewardCrowdfundingDetailPage(false)
+            setShowCrowdfundingPage(true)
+            saveCurrentPage('crowdfunding')
+          }}
+          onLoginRequired={() => {
+            setShowLoginPage(true)
+          }}
+        />
+      )}
+
+      {/* 투자형 크라우드펀딩 상세 페이지 */}
+      {showInvestmentCrowdfundingDetailPage && (
+        <InvestmentCrowdfundingDetailPage
+          language={language}
+          onBack={() => {
+            setShowInvestmentCrowdfundingDetailPage(false)
+            setShowCrowdfundingPage(true)
+            saveCurrentPage('crowdfunding')
+          }}
+          onLoginRequired={() => {
+            setShowLoginPage(true)
+          }}
+        />
+      )}
+
+      {/* 대출형 크라우드펀딩 상세 페이지 */}
+      {showLoanCrowdfundingDetailPage && (
+        <LoanCrowdfundingDetailPage
+          onBack={() => {
+            setShowLoanCrowdfundingDetailPage(false)
+            setShowCrowdfundingPage(true)
+            saveCurrentPage('crowdfunding')
+          }}
+          language={language}
+          onLoginRequired={() => {
+            setShowLoanCrowdfundingDetailPage(false)
+            setShowLoginPage(true)
           }}
         />
       )}

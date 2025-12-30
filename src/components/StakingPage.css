@@ -6,11 +6,22 @@
   bottom: 0;
   width: 100vw;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  color: #ffffff;
+  background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e9e8e8;
   padding: 20px;
   z-index: 2000;
   overflow-y: auto;
+}
+
+/* 우주 배경 효과 */
+.space-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .staking-header {
@@ -18,23 +29,27 @@
   align-items: center;
   margin-bottom: 30px;
   position: relative;
+  z-index: 1;
 }
 
 .back-button {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 2px solid rgb(169 168 211 / 60%);
+  color: #e9e8e8;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateX(-3px);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.3);
 }
 
 .staking-title {
@@ -50,6 +65,8 @@
 .staking-content {
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .staking-grid {
@@ -60,9 +77,9 @@
 }
 
 .staking-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   padding: 24px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
@@ -72,10 +89,12 @@
 }
 
 .staking-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 10px 40px rgba(169, 168, 211, 0.3),
+    0 0 30px rgba(169, 168, 211, 0.2);
 }
 
 .staking-card-header {
@@ -86,7 +105,7 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .staking-card-description {
@@ -98,21 +117,23 @@
 }
 
 .staking-see-more-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   margin-top: auto;
 }
 
 .staking-see-more-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-see-more-btn:active {
@@ -137,8 +158,8 @@
 }
 
 .staking-detail-modal {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 20px;
   max-width: 900px;
   width: 100%;
@@ -161,13 +182,13 @@
   font-size: 24px;
   font-weight: 600;
   margin: 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .staking-detail-close {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 2px solid rgb(169 168 211 / 60%);
+  color: #e9e8e8;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -181,7 +202,8 @@
 }
 
 .staking-detail-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: rotate(90deg);
 }
 
@@ -272,16 +294,16 @@
 
 .staking-back-button {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   backdrop-filter: blur(10px);
 }
 
 .staking-back-button:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-back-button:active {
@@ -294,14 +316,17 @@
 }
 
 .staking-participate-button {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 15px rgba(169, 168, 211, 0.2);
 }
 
 .staking-participate-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-participate-button:active {
@@ -410,7 +435,7 @@
 .staking-key-info-value {
   font-size: 15px;
   font-weight: 600;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .staking-key-info-value-no {
@@ -659,11 +684,11 @@
 
 .staking-amount-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgb(169 168 211 / 40%);
+  border-radius: 12px;
   padding: 14px 16px;
-  color: #ffffff;
+  color: #e9e8e8;
   font-size: 16px;
   transition: all 0.3s ease;
   height: 48px;
@@ -673,8 +698,8 @@
 
 .staking-amount-input:focus {
   outline: none;
-  border-color: #4facfe;
-  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 60%);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .staking-amount-input:disabled {
@@ -683,14 +708,14 @@
 }
 
 .staking-max-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   white-space: nowrap;
   height: 48px;
@@ -702,8 +727,10 @@
 }
 
 .staking-max-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-max-button:disabled {
@@ -920,8 +947,8 @@
 }
 
 .staking-modal-content {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 20px;
   max-width: 500px;
   width: 100%;
@@ -944,6 +971,7 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0;
+  color: #e9e8e8;
   color: #ffffff;
 }
 
@@ -1027,18 +1055,20 @@
 .staking-modal-cancel-button {
   flex: 1;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 24px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .staking-modal-cancel-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.3);
 }
 
 .staking-modal-cancel-button:disabled {
@@ -1048,11 +1078,11 @@
 
 .staking-modal-confirm-button {
   flex: 1;
-  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 24px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -1060,8 +1090,10 @@
 }
 
 .staking-modal-confirm-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-modal-confirm-button:disabled {
@@ -1086,11 +1118,11 @@
 }
 
 .staking-login-button {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 12px 32px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -1098,17 +1130,19 @@
 }
 
 .staking-login-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 /* 스테이킹 버튼 */
 .staking-stake-button {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 32px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -1118,8 +1152,10 @@
 }
 
 .staking-stake-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(79, 172, 254, 0.5);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-stake-button:disabled {
@@ -1545,9 +1581,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
 }
@@ -1568,7 +1604,7 @@
 .staking-header-value {
   font-size: 28px;
   font-weight: 700;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .apy-highlight {
@@ -1587,8 +1623,8 @@
 }
 
 .staking-info-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -1599,9 +1635,10 @@
 }
 
 .staking-info-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.3);
 }
 
 .staking-info-label {
@@ -1613,7 +1650,7 @@
 .staking-info-value {
   font-size: 20px;
   font-weight: 600;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .rewards-value {
@@ -1626,9 +1663,9 @@
 }
 
 .staking-action-section {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   padding: 24px;
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
@@ -1684,8 +1721,8 @@
 
 .staking-stake-button-primary {
   width: 100%;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 16px 24px;
   border-radius: 12px;
@@ -1693,12 +1730,14 @@
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 15px rgba(169, 168, 211, 0.2);
 }
 
 .staking-stake-button-primary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-stake-button-primary:disabled {
@@ -2895,11 +2934,6 @@
   }
 }
 
-
-    width: 100%;
-  }
-}
-
 /* 스테이킹 액션 버튼 */
 .staking-action-buttons {
   margin-top: 30px;
@@ -3161,9 +3195,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
 }
@@ -3184,7 +3218,7 @@
 .staking-header-value {
   font-size: 28px;
   font-weight: 700;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .apy-highlight {
@@ -3203,8 +3237,8 @@
 }
 
 .staking-info-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -3215,9 +3249,10 @@
 }
 
 .staking-info-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.3);
 }
 
 .staking-info-label {
@@ -3229,7 +3264,7 @@
 .staking-info-value {
   font-size: 20px;
   font-weight: 600;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .rewards-value {
@@ -3242,9 +3277,9 @@
 }
 
 .staking-action-section {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   padding: 24px;
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
@@ -3300,8 +3335,8 @@
 
 .staking-stake-button-primary {
   width: 100%;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 16px 24px;
   border-radius: 12px;
@@ -3309,12 +3344,14 @@
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 15px rgba(169, 168, 211, 0.2);
 }
 
 .staking-stake-button-primary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .staking-stake-button-primary:disabled {
