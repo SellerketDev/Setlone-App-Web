@@ -140,7 +140,7 @@
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  max-width: 600px;
+  max-width: 900px;
   width: 100%;
   max-height: 90vh;
   display: flex;
@@ -207,7 +207,40 @@
   font-size: 16px;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0;
+  margin: 0 0 24px 0;
+}
+
+.staking-additional-info {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.staking-info-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.staking-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.staking-info-bullet {
+  color: #667eea;
+  font-weight: bold;
+  margin-right: 12px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.staking-info-text {
+  color: rgba(255, 255, 255, 0.85);
+  flex: 1;
 }
 
 .staking-detail-footer {
@@ -216,29 +249,899 @@
   padding: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   justify-content: center;
+  align-items: stretch;
+}
+
+.staking-back-button,
+.staking-participate-button {
+  flex: 1;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: none;
 }
 
 .staking-back-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+.staking-back-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.staking-back-button:active {
+  transform: translateY(0);
+}
+
+.staking-back-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-participate-button {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.staking-participate-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.staking-participate-button:active {
+  transform: translateY(0);
+}
+
+.staking-participate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  width: 100%;
+}
+
+.staking-button-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 락업 스테이킹 모달 스타일 */
+.lockup-staking-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.staking-hero-section {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.staking-hero-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.staking-hero-description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.staking-summary-card {
+  padding: 20px;
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.staking-summary-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4facfe;
+  margin: 0 0 12px 0;
+}
+
+.staking-summary-content {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.7;
+}
+
+.staking-key-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.staking-key-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-key-info-item:last-child {
+  border-bottom: none;
+}
+
+.staking-key-info-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.staking-key-info-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.staking-key-info-value-no {
+  color: #ff6b6b;
+}
+
+.staking-warning-box {
+  padding: 16px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.staking-warning-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.staking-warning-icon {
+  font-size: 18px;
+}
+
+.staking-warning-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.staking-warning-content {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.staking-recommendation-section {
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 12px;
+  margin-bottom: 0;
+}
+
+.staking-detail-content .staking-recommendation-section {
+  margin-bottom: 24px;
+}
+
+.staking-recommendation-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.staking-recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staking-recommendation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.staking-recommendation-icon {
+  color: #4facfe;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.staking-recommendation-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.staking-reward-notice {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.staking-reward-notice-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.staking-common-notice {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.staking-common-notice-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* 네이티브 스테이킹 폼 */
+.native-staking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* 스테이킹 설명 섹션 */
+.staking-explanation-section {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(0, 242, 254, 0.1) 100%);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  border-radius: 16px;
+  margin-bottom: 8px;
+}
+
+.staking-explanation-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4facfe;
+  margin: 0 0 12px 0;
+}
+
+.staking-explanation-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 20px 0;
+}
+
+.staking-benefits-box {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-benefits-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.staking-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.staking-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.staking-benefit-icon {
+  color: #4facfe;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.staking-benefit-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  flex: 1;
+}
+
+/* 네이티브 스테이킹 정보 섹션 */
+.native-staking-info-section {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.native-staking-info-section .staking-detail-text {
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* 잔액 섹션 */
+.staking-balance-section {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.staking-balance-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+}
+
+.staking-balance-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.staking-balance-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4facfe;
+}
+
+/* 입력 섹션 */
+.staking-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staking-input-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-input-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.staking-amount-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  height: 48px;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+.staking-amount-input:focus {
+  outline: none;
+  border-color: #4facfe;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.staking-amount-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-max-button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #ffffff;
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.staking-max-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.staking-max-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-amount-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 수익률 섹션 */
+.staking-rewards-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  border-radius: 12px;
+}
+
+.staking-rewards-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.staking-rewards-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.staking-rewards-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4facfe;
+}
+
+/* 스테이킹 내역 섹션 */
+.staking-history-section {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.staking-chart-container {
+  width: 100%;
+  min-height: 320px;
+  margin: 0 0 32px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.staking-chart-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-chart-return-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(79, 172, 254, 0.15);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  border-radius: 8px;
+}
+
+.staking-chart-return-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.staking-chart-return-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.staking-chart-return-value.positive {
+  color: #4facfe;
+}
+
+.staking-chart-return-value.negative {
+  color: #f44336;
+}
+
+.staking-chart-container .recharts-legend-wrapper {
+  padding-top: 16px !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 0 !important;
+}
+
+.staking-chart-container .recharts-legend-item {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 13px !important;
+  margin-right: 24px !important;
+  margin-left: 0 !important;
+}
+
+.staking-chart-container .recharts-legend-item-text {
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin-left: 8px !important;
+}
+
+.staking-chart-container .recharts-legend-item .recharts-surface {
+  margin-right: 6px !important;
+}
+
+.staking-history-stats {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-history-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 24px 0;
+}
+
+.staking-history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-history-item:last-child {
+  border-bottom: none;
+}
+
+.staking-history-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.staking-history-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-unstake-available {
+  color: #4facfe;
+}
+
+.staking-status-badge {
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(79, 172, 254, 0.1);
+  display: inline-block;
+}
+
+.staking-unstake-button-container {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-unstake-button {
+  width: 100%;
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  border: none;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.staking-unstake-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+}
+
+.staking-unstake-button:active {
+  transform: translateY(0);
+}
+
+/* 언스테이킹 모달 */
+.staking-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.staking-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.staking-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+}
+
+.staking-modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.staking-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.staking-modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.staking-modal-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.staking-modal-message {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 500;
+}
+
+.staking-modal-detail {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.staking-modal-waiting-period {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.staking-modal-waiting-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.staking-modal-waiting-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.staking-modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-modal-cancel-button {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.staking-modal-cancel-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.staking-modal-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-modal-confirm-button {
+  flex: 1;
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  border: none;
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.staking-modal-confirm-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+}
+
+.staking-modal-confirm-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 로그인 필요 메시지 */
+.staking-login-required-message {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.staking-login-required-message p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+}
+
+.staking-login-button {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border: none;
+  color: #ffffff;
+  padding: 12px 32px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.staking-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+/* 스테이킹 버튼 */
+.staking-stake-button {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border: none;
   color: #ffffff;
   padding: 14px 32px;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   flex: 1;
   max-width: 200px;
 }
 
-.staking-back-button:hover {
+.staking-stake-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 20px rgba(79, 172, 254, 0.5);
 }
 
-.staking-back-button:active {
+.staking-stake-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-stake-button:active:not(:disabled) {
   transform: translateY(0);
+}
+
+/* 상태 메시지 */
+.staking-success {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border-color: rgba(76, 175, 80, 0.4) !important;
+  color: #4caf50 !important;
+}
+
+.staking-error {
+  background: rgba(244, 67, 54, 0.2) !important;
+  border-color: rgba(244, 67, 54, 0.4) !important;
+  color: #f44336 !important;
 }
 
 /* 반응형 디자인 */
@@ -273,6 +1176,3338 @@
 
   .staking-back-button {
     max-width: 100%;
+  }
+
+  .staking-stake-button {
+    max-width: 100%;
+  }
+
+  .staking-balance-section {
+    flex-direction: column;
+  }
+
+  .staking-input-wrapper {
+    flex-direction: column;
+  }
+
+  .staking-max-button {
+    width: 100%;
+  }
+
+  .staking-amount-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .staking-rewards-section {
+    gap: 16px;
+  }
+
+  .staking-explanation-section {
+    padding: 16px;
+  }
+
+  .staking-explanation-title {
+    font-size: 18px;
+  }
+
+  .staking-explanation-text {
+    font-size: 14px;
+  }
+
+  .staking-benefits-box {
+    padding: 12px;
+  }
+
+  .staking-benefit-text {
+    font-size: 13px;
+  }
+
+  .staking-chart-container {
+    min-height: 280px;
+    padding: 16px;
+  }
+
+  .staking-chart-header {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .staking-chart-return-info {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .staking-chart-return-label {
+    font-size: 12px;
+  }
+
+  .staking-chart-return-value {
+    font-size: 14px;
+  }
+
+  .staking-history-stats {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .staking-chart-container {
+    margin-bottom: 20px;
+  }
+
+  .staking-history-item {
+    padding: 12px 0;
+    margin-bottom: 6px;
+  }
+
+  .staking-modal-content {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .staking-modal-header {
+    padding: 20px;
+  }
+
+  .staking-modal-body {
+    padding: 20px;
+  }
+
+  .staking-modal-footer {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .staking-modal-cancel-button,
+  .staking-modal-confirm-button {
+    width: 100%;
+  }
+}
+
+/* 스테이킹 액션 버튼 */
+.staking-action-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.staking-action-buttons .staking-stake-button {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* 네이티브 스테이킹 페이지 전문적인 스타일 */
+.staking-type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staking-type-button {
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  backdrop-filter: blur(10px);
+}
+
+.staking-type-button:hover {
+  border-color: rgba(79, 172, 254, 0.4);
+  background: rgba(15, 23, 42, 0.8);
+  transform: translateY(-2px);
+}
+
+.staking-type-button.active {
+  border-color: #4facfe;
+  background: rgba(79, 172, 254, 0.15);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.staking-type-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.staking-type-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.staking-type-apy {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4facfe;
+}
+
+.staking-type-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.staking-type-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.staking-type-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.staking-type-badge-high-yield {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.staking-type-badge-liquidity {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4facfe;
+  border: 1px solid rgba(79, 172, 254, 0.4);
+}
+
+.staking-type-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.staking-type-period {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.staking-type-icon {
+  font-size: 16px;
+}
+
+.staking-type-period-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.staking-type-warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+.staking-type-warning-icon {
+  font-size: 14px;
+}
+
+.staking-type-warning-text {
+  font-size: 12px;
+  color: rgba(255, 193, 7, 0.9);
+  line-height: 1.4;
+}
+
+/* 락업 기간 선택 */
+.lockup-period-selector {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.lockup-period-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 12px;
+}
+
+.lockup-period-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.lockup-period-button {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(79, 172, 254, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.lockup-period-button:hover {
+  border-color: rgba(79, 172, 254, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lockup-period-button.active {
+  border-color: #4facfe;
+  background: rgba(79, 172, 254, 0.15);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.lockup-period-days {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.lockup-period-apy {
+  display: block;
+  font-size: 14px;
+  color: #4facfe;
+  font-weight: 500;
+}
+
+/* 락업/언락 정보 박스 */
+.lockup-info-box,
+.unlock-info-box {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.lockup-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.lockup-info-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lockup-info-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lockup-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.lockup-info-value-warning {
+  color: #ffc107;
+}
+
+.unlock-info-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+}
+
+.unlock-info-icon {
+  font-size: 18px;
+}
+
+.unlock-info-text {
+  font-size: 13px;
+  color: rgba(255, 193, 7, 0.9);
+  line-height: 1.5;
+}
+
+.staking-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.staking-header-balance,
+.staking-header-apy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staking-header-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.staking-header-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.apy-highlight {
+  color: #4facfe;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.staking-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staking-info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.staking-info-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.staking-info-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.staking-info-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.rewards-value {
+  color: #00f2fe;
+}
+
+.profit-value {
+  color: #4caf50;
+  font-weight: 700;
+}
+
+.staking-action-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.staking-input-container {
+  margin-bottom: 20px;
+}
+
+.staking-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.staking-input-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.staking-estimated-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px;
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 8px;
+}
+
+.staking-estimated-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.staking-estimated-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.staking-estimated-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4facfe;
+}
+
+.annual-reward {
+  color: #4caf50;
+}
+
+.staking-stake-button-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border: none;
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.staking-stake-button-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.staking-stake-button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.total-profit-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.profit-highlight {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* 다음 보상 지급 정보 카드 */
+.next-reward-card {
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.next-reward-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.next-reward-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.next-reward-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4facfe;
+}
+
+.reward-cycle-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reward-cycle-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.reward-cycle-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 상태 시각화 */
+.staking-status-visualization {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.status-indicator.active .status-dot {
+  color: #4facfe;
+  font-size: 16px;
+}
+
+.status-indicator.inactive .status-dot {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
+
+.status-dot {
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.status-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.status-indicator.active .status-text {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.status-indicator.inactive .status-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 언스테이킹 안내 박스 */
+.unstaking-warning-box {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.unstaking-warning-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.unstaking-warning-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unstaking-warning-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffc107;
+  margin-bottom: 4px;
+}
+
+.unstaking-warning-message {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 락업 VS 언락 비교 모달 */
+.lockup-unlock-comparison-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.staking-comparison-section {
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.staking-comparison-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-comparison-header.lockup-header {
+  border-bottom-color: rgba(255, 193, 7, 0.3);
+}
+
+.staking-comparison-header.unlock-header {
+  border-bottom-color: rgba(79, 172, 254, 0.3);
+}
+
+.staking-comparison-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.staking-comparison-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.staking-comparison-badge-high-yield {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.staking-comparison-badge-liquidity {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4facfe;
+  border: 1px solid rgba(79, 172, 254, 0.4);
+}
+
+.staking-comparison-section .staking-hero-section {
+  text-align: left;
+  padding: 0;
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-hero-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.staking-comparison-section .staking-hero-description {
+  font-size: 14px;
+}
+
+.staking-comparison-section .staking-summary-card {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-key-info {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-warning-box {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-recommendation-section {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-reward-notice {
+  margin-bottom: 0;
+}
+
+.staking-liquidity-box {
+  background: rgba(79, 172, 254, 0.1);
+  border-color: rgba(79, 172, 254, 0.3);
+}
+
+.staking-comparison-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.staking-lockup-button {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+}
+
+.staking-unlock-button {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+@media (max-width: 768px) {
+  .staking-type-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .lockup-period-options {
+    grid-template-columns: 1fr;
+  }
+
+  .staking-comparison-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .staking-comparison-section {
+    padding: 20px;
+  }
+
+  .staking-header-info {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .staking-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .staking-input-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* 리퀴드 스테이킹 페이지 스타일 */
+.liquid-staking-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.liquid-staking-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.liquid-staking-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.liquid-staking-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 히어로 영역 */
+.liquid-staking-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 20px;
+}
+
+.liquid-staking-hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.liquid-staking-hero-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+  white-space: pre-line;
+}
+
+.liquid-staking-warning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  color: #ffc107;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.warning-icon {
+  font-size: 18px;
+}
+
+/* 구조 설명 카드 */
+.liquid-staking-structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.liquid-staking-structure-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-structure-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.structure-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.structure-arrow {
+  font-size: 32px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 16px 0;
+}
+
+.structure-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.structure-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* 상품 선택 카드 */
+.liquid-staking-products {
+  margin-bottom: 40px;
+}
+
+.liquid-staking-products-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.liquid-staking-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.liquid-staking-product-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-product-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.product-risk {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.product-risk-low {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.product-risk-medium {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.product-risk-high {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.product-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-info-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.product-info-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.product-detail-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* 동의 팝업 */
+.liquid-staking-agreement-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(5px);
+}
+
+.agreement-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.agreement-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.agreement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.agreement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.agreement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.agreement-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.agreement-item span {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.agreement-modal-footer {
+  display: flex;
+  gap: 12px;
+}
+
+.agreement-cancel-button,
+.agreement-confirm-button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.agreement-cancel-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.agreement-cancel-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.agreement-confirm-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.agreement-confirm-button:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.agreement-confirm-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 리퀴드 스테이킹 상세 페이지 */
+.liquid-staking-detail-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.liquid-staking-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.liquid-staking-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.liquid-staking-detail-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 요약 카드 */
+.liquid-staking-summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.summary-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.summary-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.summary-card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-card-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.summary-card-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 리스크 박스 */
+.liquid-staking-risk-box {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.risk-box-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.risk-box-icon {
+  font-size: 24px;
+}
+
+.risk-box-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f44336;
+  margin: 0;
+}
+
+.risk-box-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.risk-box-list li {
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.risk-box-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #f44336;
+  font-size: 20px;
+}
+
+/* 스테이킹 입력 섹션 */
+.liquid-staking-input-section {
+  margin-bottom: 32px;
+}
+
+.staking-input-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.liquid-staking-estimates {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.estimate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.estimate-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.estimate-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* LST 활용 섹션 */
+.liquid-staking-utilization-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.utilization-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.utilization-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.utilization-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.utilization-icon {
+  font-size: 40px;
+}
+
+.utilization-text {
+  font-size: 14px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.utilization-notice {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* CTA 섹션 */
+.liquid-staking-cta-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cta-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 12px;
+}
+
+/* 대시보드 */
+.liquid-staking-dashboard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dashboard-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .liquid-staking-structure {
+    grid-template-columns: 1fr;
+  }
+
+  .liquid-staking-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .utilization-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 리퀴드 스테이킹 모달 스타일 */
+.liquid-staking-warning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  color: #ffc107;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.liquid-staking-warning-badge .warning-icon {
+  font-size: 16px;
+}
+
+.liquid-staking-structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.liquid-staking-structure-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-structure-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.liquid-staking-structure-card .structure-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.liquid-staking-structure-card .structure-arrow {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 12px 0;
+  display: block;
+}
+
+.liquid-staking-structure-card .structure-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.liquid-staking-structure-card .structure-description {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.staking-risk-box {
+  background: rgba(244, 67, 54, 0.15) !important;
+  border: 1px solid rgba(244, 67, 54, 0.3) !important;
+}
+
+.staking-risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staking-risk-list li {
+  padding-left: 20px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-risk-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #f44336;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.staking-risk-notice {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.staking-risk-notice-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 리퀴드 스테이킹 동의 섹션 */
+.staking-agreement-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 0;
+  margin-top: 24px;
+}
+
+.staking-agreement-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.staking-agreement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staking-agreement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.staking-agreement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.staking-agreement-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.staking-agreement-item span {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-participate-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-participate-button.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* CeFi 스테이킹 비교 테이블 */
+.staking-key-info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.staking-comparison-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.staking-comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-comparison-row:first-child {
+  background: rgba(79, 172, 254, 0.1);
+  border-color: rgba(79, 172, 254, 0.3);
+  font-weight: 600;
+}
+
+.staking-comparison-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.staking-comparison-value {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.staking-comparison-row:first-child .staking-comparison-label,
+.staking-comparison-row:first-child .staking-comparison-value {
+  color: #4facfe;
+  font-weight: 600;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .liquid-staking-structure {
+    grid-template-columns: 1fr;
+  }
+  
+  .staking-comparison-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .staking-comparison-row:first-child {
+    display: none;
+  }
+  
+  .staking-comparison-row::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4facfe;
+    margin-bottom: 4px;
+  }
+}
+
+
+    width: 100%;
+  }
+}
+
+/* 스테이킹 액션 버튼 */
+.staking-action-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.staking-action-buttons .staking-stake-button {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* 네이티브 스테이킹 페이지 전문적인 스타일 */
+.staking-type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staking-type-button {
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  backdrop-filter: blur(10px);
+}
+
+.staking-type-button:hover {
+  border-color: rgba(79, 172, 254, 0.4);
+  background: rgba(15, 23, 42, 0.8);
+  transform: translateY(-2px);
+}
+
+.staking-type-button.active {
+  border-color: #4facfe;
+  background: rgba(79, 172, 254, 0.15);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.staking-type-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.staking-type-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.staking-type-apy {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4facfe;
+}
+
+.staking-type-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.staking-type-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.staking-type-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.staking-type-badge-high-yield {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.staking-type-badge-liquidity {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4facfe;
+  border: 1px solid rgba(79, 172, 254, 0.4);
+}
+
+.staking-type-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.staking-type-period {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.staking-type-icon {
+  font-size: 16px;
+}
+
+.staking-type-period-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.staking-type-warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+.staking-type-warning-icon {
+  font-size: 14px;
+}
+
+.staking-type-warning-text {
+  font-size: 12px;
+  color: rgba(255, 193, 7, 0.9);
+  line-height: 1.4;
+}
+
+/* 락업 기간 선택 */
+.lockup-period-selector {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.lockup-period-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 12px;
+}
+
+.lockup-period-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.lockup-period-button {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(79, 172, 254, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.lockup-period-button:hover {
+  border-color: rgba(79, 172, 254, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lockup-period-button.active {
+  border-color: #4facfe;
+  background: rgba(79, 172, 254, 0.15);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.lockup-period-days {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.lockup-period-apy {
+  display: block;
+  font-size: 14px;
+  color: #4facfe;
+  font-weight: 500;
+}
+
+/* 락업/언락 정보 박스 */
+.lockup-info-box,
+.unlock-info-box {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.lockup-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.lockup-info-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lockup-info-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lockup-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.lockup-info-value-warning {
+  color: #ffc107;
+}
+
+.unlock-info-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+}
+
+.unlock-info-icon {
+  font-size: 18px;
+}
+
+.unlock-info-text {
+  font-size: 13px;
+  color: rgba(255, 193, 7, 0.9);
+  line-height: 1.5;
+}
+
+.staking-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.staking-header-balance,
+.staking-header-apy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staking-header-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.staking-header-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.apy-highlight {
+  color: #4facfe;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.staking-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.staking-info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.staking-info-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.staking-info-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.staking-info-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.rewards-value {
+  color: #00f2fe;
+}
+
+.profit-value {
+  color: #4caf50;
+  font-weight: 700;
+}
+
+.staking-action-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.staking-input-container {
+  margin-bottom: 20px;
+}
+
+.staking-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.staking-input-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.staking-estimated-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px;
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 8px;
+}
+
+.staking-estimated-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.staking-estimated-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.staking-estimated-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4facfe;
+}
+
+.annual-reward {
+  color: #4caf50;
+}
+
+.staking-stake-button-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border: none;
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.staking-stake-button-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.staking-stake-button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.total-profit-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.profit-highlight {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* 다음 보상 지급 정보 카드 */
+.next-reward-card {
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.next-reward-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.next-reward-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.next-reward-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4facfe;
+}
+
+.reward-cycle-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reward-cycle-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.reward-cycle-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 상태 시각화 */
+.staking-status-visualization {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.status-indicator.active .status-dot {
+  color: #4facfe;
+  font-size: 16px;
+}
+
+.status-indicator.inactive .status-dot {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
+
+.status-dot {
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.status-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.status-indicator.active .status-text {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.status-indicator.inactive .status-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 언스테이킹 안내 박스 */
+.unstaking-warning-box {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.unstaking-warning-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.unstaking-warning-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unstaking-warning-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffc107;
+  margin-bottom: 4px;
+}
+
+.unstaking-warning-message {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 락업 VS 언락 비교 모달 */
+.lockup-unlock-comparison-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.staking-comparison-section {
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.staking-comparison-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-comparison-header.lockup-header {
+  border-bottom-color: rgba(255, 193, 7, 0.3);
+}
+
+.staking-comparison-header.unlock-header {
+  border-bottom-color: rgba(79, 172, 254, 0.3);
+}
+
+.staking-comparison-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.staking-comparison-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.staking-comparison-badge-high-yield {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.staking-comparison-badge-liquidity {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4facfe;
+  border: 1px solid rgba(79, 172, 254, 0.4);
+}
+
+.staking-comparison-section .staking-hero-section {
+  text-align: left;
+  padding: 0;
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-hero-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.staking-comparison-section .staking-hero-description {
+  font-size: 14px;
+}
+
+.staking-comparison-section .staking-summary-card {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-key-info {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-warning-box {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-recommendation-section {
+  margin-bottom: 20px;
+}
+
+.staking-comparison-section .staking-reward-notice {
+  margin-bottom: 0;
+}
+
+.staking-liquidity-box {
+  background: rgba(79, 172, 254, 0.1);
+  border-color: rgba(79, 172, 254, 0.3);
+}
+
+.staking-comparison-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.staking-lockup-button {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+}
+
+.staking-unlock-button {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+@media (max-width: 768px) {
+  .staking-type-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .lockup-period-options {
+    grid-template-columns: 1fr;
+  }
+
+  .staking-comparison-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .staking-comparison-section {
+    padding: 20px;
+  }
+
+  .staking-header-info {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .staking-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .staking-input-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* 리퀴드 스테이킹 페이지 스타일 */
+.liquid-staking-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.liquid-staking-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.liquid-staking-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.liquid-staking-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 히어로 영역 */
+.liquid-staking-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 20px;
+}
+
+.liquid-staking-hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.liquid-staking-hero-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+  white-space: pre-line;
+}
+
+.liquid-staking-warning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  color: #ffc107;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.warning-icon {
+  font-size: 18px;
+}
+
+/* 구조 설명 카드 */
+.liquid-staking-structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.liquid-staking-structure-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-structure-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.structure-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.structure-arrow {
+  font-size: 32px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 16px 0;
+}
+
+.structure-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.structure-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* 상품 선택 카드 */
+.liquid-staking-products {
+  margin-bottom: 40px;
+}
+
+.liquid-staking-products-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.liquid-staking-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.liquid-staking-product-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-product-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.product-risk {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.product-risk-low {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.product-risk-medium {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.product-risk-high {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.product-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-info-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.product-info-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.product-detail-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* 동의 팝업 */
+.liquid-staking-agreement-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(5px);
+}
+
+.agreement-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.agreement-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.agreement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.agreement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.agreement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.agreement-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.agreement-item span {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.agreement-modal-footer {
+  display: flex;
+  gap: 12px;
+}
+
+.agreement-cancel-button,
+.agreement-confirm-button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.agreement-cancel-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.agreement-cancel-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.agreement-confirm-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.agreement-confirm-button:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.agreement-confirm-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 리퀴드 스테이킹 상세 페이지 */
+.liquid-staking-detail-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.liquid-staking-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.liquid-staking-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.liquid-staking-detail-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 요약 카드 */
+.liquid-staking-summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.summary-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.summary-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.summary-card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-card-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.summary-card-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 리스크 박스 */
+.liquid-staking-risk-box {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.risk-box-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.risk-box-icon {
+  font-size: 24px;
+}
+
+.risk-box-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f44336;
+  margin: 0;
+}
+
+.risk-box-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.risk-box-list li {
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.risk-box-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #f44336;
+  font-size: 20px;
+}
+
+/* 스테이킹 입력 섹션 */
+.liquid-staking-input-section {
+  margin-bottom: 32px;
+}
+
+.staking-input-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.liquid-staking-estimates {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.estimate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.estimate-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.estimate-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* LST 활용 섹션 */
+.liquid-staking-utilization-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.utilization-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.utilization-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.utilization-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.utilization-icon {
+  font-size: 40px;
+}
+
+.utilization-text {
+  font-size: 14px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.utilization-notice {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* CTA 섹션 */
+.liquid-staking-cta-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cta-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 12px;
+}
+
+/* 대시보드 */
+.liquid-staking-dashboard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dashboard-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .liquid-staking-structure {
+    grid-template-columns: 1fr;
+  }
+
+  .liquid-staking-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .utilization-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 리퀴드 스테이킹 모달 스타일 */
+.liquid-staking-warning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  color: #ffc107;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.liquid-staking-warning-badge .warning-icon {
+  font-size: 16px;
+}
+
+.liquid-staking-structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.liquid-staking-structure-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.liquid-staking-structure-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.liquid-staking-structure-card .structure-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.liquid-staking-structure-card .structure-arrow {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 12px 0;
+  display: block;
+}
+
+.liquid-staking-structure-card .structure-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.liquid-staking-structure-card .structure-description {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.staking-risk-box {
+  background: rgba(244, 67, 54, 0.15) !important;
+  border: 1px solid rgba(244, 67, 54, 0.3) !important;
+}
+
+.staking-risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staking-risk-list li {
+  padding-left: 20px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-risk-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #f44336;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.staking-risk-notice {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.staking-risk-notice-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 리퀴드 스테이킹 동의 섹션 */
+.staking-agreement-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 0;
+  margin-top: 24px;
+}
+
+.staking-agreement-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.staking-agreement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staking-agreement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.staking-agreement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.staking-agreement-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.staking-agreement-item span {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.staking-participate-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.staking-participate-button.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* CeFi 스테이킹 비교 테이블 */
+.staking-key-info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.staking-comparison-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.staking-comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-comparison-row:first-child {
+  background: rgba(79, 172, 254, 0.1);
+  border-color: rgba(79, 172, 254, 0.3);
+  font-weight: 600;
+}
+
+.staking-comparison-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.staking-comparison-value {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.staking-comparison-row:first-child .staking-comparison-label,
+.staking-comparison-row:first-child .staking-comparison-value {
+  color: #4facfe;
+  font-weight: 600;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .liquid-staking-structure {
+    grid-template-columns: 1fr;
+  }
+  
+  .staking-comparison-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .staking-comparison-row:first-child {
+    display: none;
+  }
+  
+  .staking-comparison-row::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4facfe;
+    margin-bottom: 4px;
   }
 }
 

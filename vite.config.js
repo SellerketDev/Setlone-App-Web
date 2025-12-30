@@ -12,14 +12,14 @@ export default defineConfig({
       'setlone.com',
       'www.setlone.com',
       'localhost'
-    ],
-    // HTTPS 환경에서 WebSocket 연결을 위한 설정
-    // nginx를 통해 프록시되므로 상대 경로 사용
-    hmr: {
-      protocol: 'wss',
-      host: 'setlone.com',
-      clientPort: 443
-    }
+    ]
+    // 개발 환경에서는 HMR이 자동으로 ws:// 프로토콜을 사용합니다
+    // 프로덕션 환경에서 nginx를 통해 프록시할 때만 아래 설정이 필요합니다:
+    // hmr: {
+    //   protocol: 'wss',
+    //   host: 'setlone.com',
+    //   clientPort: 443
+    // }
   }
   // 환경 변수는 .env 파일 또는 시스템 환경 변수로 설정
   // Vite는 자동으로 import.meta.env.VITE_* 형태의 변수를 제공

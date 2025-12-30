@@ -11,21 +11,34 @@ const defaultLanguage = 'en'
 
 // 현재 언어 가져오기 (localStorage 또는 기본값)
 export const getCurrentLanguage = () => {
-  const saved = localStorage.getItem('language')
-  if (saved === '한글' || saved === 'ko') return 'ko'
-  if (saved === 'English' || saved === 'en') return 'en'
-  return defaultLanguage
+  try {
+    const saved = localStorage.getItem('language')
+    if (!saved) return defaultLanguage
+    // 저장된 값이 'ko' 또는 'en'인지 확인
+    if (saved === 'ko' || saved === '한글') return 'ko'
+    if (saved === 'en' || saved === 'English') return 'en'
+    return defaultLanguage
+  } catch (error) {
+    console.error('Error reading language from localStorage:', error)
+    return defaultLanguage
+  }
 }
 
 // 언어 설정
 export const setLanguage = (lang) => {
-  const langCode = lang === '한글' ? 'ko' : 'en'
-  localStorage.setItem('language', langCode)
-  return langCode
+  try {
+    // 'ko' 또는 'en' 형식으로 정규화
+    const langCode = lang === '한글' || lang === 'ko' ? 'ko' : 'en'
+    localStorage.setItem('language', langCode)
+    return langCode
+  } catch (error) {
+    console.error('Error saving language to localStorage:', error)
+    return lang === '한글' || lang === 'ko' ? 'ko' : 'en'
+  }
 }
 
 // 번역 함수
-export const t = (key, lang = null) => {
+export const t = (key, lang = null, params = {}) => {
   const currentLang = lang || getCurrentLanguage()
   const keys = key.split('.')
   let value = translations[currentLang]
@@ -45,6 +58,19 @@ export const t = (key, lang = null) => {
       }
       break
     }
+  }
+  
+  // 문자열이 아니면 그대로 반환
+  if (typeof value !== 'string') {
+    return value || key
+  }
+  
+  // 플레이스홀더 치환
+  if (params && typeof params === 'object') {
+    Object.keys(params).forEach(paramKey => {
+      const regex = new RegExp(`\\{${paramKey}\\}`, 'g')
+      value = value.replace(regex, params[paramKey])
+    })
   }
   
   // 빈 문자열도 유효한 값으로 처리

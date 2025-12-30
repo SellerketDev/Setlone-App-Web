@@ -7,6 +7,12 @@ import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
 import ProfilePage from './ProfilePage'
 import StakingPage from './StakingPage'
+import NativeStakingPage from './NativeStakingPage'
+import LockupStakingPage from './LockupStakingPage'
+import LiquidStakingDetailPage from './LiquidStakingDetailPage'
+import RestakingDetailPage from './RestakingDetailPage'
+import CefiStakingDetailPage from './CefiStakingDetailPage'
+import DefiStakingDetailPage from './DefiStakingDetailPage'
 import MiningPage from './MiningPage'
 import GamePage from './GamePage'
 import CrowdfundingPage from './CrowdfundingPage'
@@ -113,6 +119,17 @@ const MainPage = () => {
   const [showSignupPage, setShowSignupPage] = useState(false)
   const [showProfilePage, setShowProfilePage] = useState(false)
   const [showStakingPage, setShowStakingPage] = useState(false)
+  const [showNativeStakingPage, setShowNativeStakingPage] = useState(false)
+  const [showLockupStakingPage, setShowLockupStakingPage] = useState(false)
+  const [lockupStakingInitialType, setLockupStakingInitialType] = useState('lockup')
+  const [showLiquidStakingDetailPage, setShowLiquidStakingDetailPage] = useState(false)
+  const [selectedLiquidProduct, setSelectedLiquidProduct] = useState(null)
+  const [showRestakingDetailPage, setShowRestakingDetailPage] = useState(false)
+  const [selectedRestakingProduct, setSelectedRestakingProduct] = useState(null)
+  const [showCefiStakingDetailPage, setShowCefiStakingDetailPage] = useState(false)
+  const [selectedCefiProduct, setSelectedCefiProduct] = useState(null)
+  const [showDefiStakingDetailPage, setShowDefiStakingDetailPage] = useState(false)
+  const [selectedDefiProduct, setSelectedDefiProduct] = useState(null)
   const [showMiningPage, setShowMiningPage] = useState(false)
   const [showGamePage, setShowGamePage] = useState(false)
   const [showCrowdfundingPage, setShowCrowdfundingPage] = useState(false)
@@ -121,8 +138,18 @@ const MainPage = () => {
   const [currentUserId, setCurrentUserId] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
 
-  // 첫 접속 확인 및 온보딩 표시
+  // 현재 페이지 상태를 localStorage에 저장하는 함수
+  const saveCurrentPage = (pageName) => {
+    localStorage.setItem('currentPage', pageName)
+  }
+
+  // 첫 접속 확인 및 온보딩 표시 및 페이지 상태 복원
   useEffect(() => {
+    // 언어 설정 복원 (가장 먼저 실행)
+    const savedLanguage = getCurrentLanguage()
+    setLanguageState(savedLanguage)
+    setTempLanguage(savedLanguage)
+    
     const hasVisited = localStorage.getItem('hasVisited')
     if (!hasVisited) {
       // 스플래시 표시 후 온보딩
@@ -132,6 +159,99 @@ const MainPage = () => {
       }, 2000) // 2초 스플래시
     } else {
       setShowSplash(false)
+      
+      // 저장된 페이지 상태 복원
+      const savedPage = localStorage.getItem('currentPage')
+      if (savedPage) {
+        // 모든 페이지 상태 초기화
+        setShowStakingPage(false)
+        setShowNativeStakingPage(false)
+        setShowLockupStakingPage(false)
+        setShowMiningPage(false)
+        setShowGamePage(false)
+        setShowCrowdfundingPage(false)
+        setShowCommercePage(false)
+        setShowAITradingPage(false)
+        setShowLiquidStakingDetailPage(false)
+        setShowRestakingDetailPage(false)
+        setShowCefiStakingDetailPage(false)
+        setShowDefiStakingDetailPage(false)
+        setShowLoginPage(false)
+        setShowSignupPage(false)
+        setShowProfilePage(false)
+        
+        // 저장된 페이지 복원
+        switch(savedPage) {
+          case 'staking':
+            setShowStakingPage(true)
+            break
+          case 'native-staking':
+            setShowNativeStakingPage(true)
+            break
+          case 'lockup-staking':
+            setShowLockupStakingPage(true)
+            const savedType = localStorage.getItem('lockupStakingType')
+            if (savedType) {
+              setLockupStakingInitialType(savedType)
+            }
+            break
+          case 'mining':
+            setShowMiningPage(true)
+            break
+          case 'game':
+            setShowGamePage(true)
+            break
+          case 'crowdfunding':
+            setShowCrowdfundingPage(true)
+            break
+          case 'commerce':
+            setShowCommercePage(true)
+            break
+          case 'ai-trading':
+            setShowAITradingPage(true)
+            break
+          case 'liquid-staking-detail':
+            setShowLiquidStakingDetailPage(true)
+            const savedProduct = localStorage.getItem('liquidStakingProduct')
+            if (savedProduct) {
+              setSelectedLiquidProduct(JSON.parse(savedProduct))
+            }
+            break
+          case 'restaking-detail':
+            setShowRestakingDetailPage(true)
+            const savedRestakingProduct = localStorage.getItem('restakingProduct')
+            if (savedRestakingProduct) {
+              setSelectedRestakingProduct(JSON.parse(savedRestakingProduct))
+            }
+            break
+          case 'cefi-staking-detail':
+            setShowCefiStakingDetailPage(true)
+            const savedCefiProduct = localStorage.getItem('cefiStakingProduct')
+            if (savedCefiProduct) {
+              setSelectedCefiProduct(JSON.parse(savedCefiProduct))
+            }
+            break
+          case 'defi-staking-detail':
+            setShowDefiStakingDetailPage(true)
+            const savedDefiProduct = localStorage.getItem('defiStakingProduct')
+            if (savedDefiProduct) {
+              setSelectedDefiProduct(JSON.parse(savedDefiProduct))
+            }
+            break
+          case 'login':
+            setShowLoginPage(true)
+            break
+          case 'signup':
+            setShowSignupPage(true)
+            break
+          case 'profile':
+            setShowProfilePage(true)
+            break
+          default:
+            // 메인 페이지 유지
+            break
+        }
+      }
     }
   }, [])
 
@@ -406,6 +526,7 @@ const MainPage = () => {
     // 로그인 체크
     if (!isLoggedIn) {
       setShowLoginPage(true)
+      saveCurrentPage('login')
       return
     }
     
@@ -515,12 +636,7 @@ const MainPage = () => {
     }, 2000)
   }
 
-  // 언어 초기화
-  useEffect(() => {
-    const currentLang = getCurrentLanguage()
-    setLanguageState(currentLang)
-    setTempLanguage(currentLang)
-  }, [])
+  // 언어 초기화는 첫 접속 확인 useEffect에서 처리
 
   // 로그인 핸들러
   const handleLogout = async () => {
@@ -639,6 +755,7 @@ const MainPage = () => {
   const handleSignup = () => {
     setShowLoginPage(false)
     setShowSignupPage(true)
+    saveCurrentPage('signup')
   }
 
   // 회원가입 완료 핸들러
@@ -691,6 +808,7 @@ const MainPage = () => {
   const handleSignupPageBack = () => {
     setShowSignupPage(false)
     setShowLoginPage(true)
+    saveCurrentPage('login')
   }
 
   // 비밀번호 분실 핸들러
@@ -712,19 +830,23 @@ const MainPage = () => {
         setCurrentUserId(1) // Mock user ID
       }
       setShowProfilePage(true)
+      saveCurrentPage('profile')
     } else {
       setShowLoginPage(true)
+      saveCurrentPage('login')
     }
   }
 
   // 프로필 페이지 닫기
   const handleProfilePageBack = () => {
     setShowProfilePage(false)
+    saveCurrentPage('')
   }
 
   // 로그인 페이지 닫기
   const handleLoginPageBack = () => {
     setShowLoginPage(false)
+    saveCurrentPage('')
   }
 
   return (
@@ -888,18 +1010,23 @@ const MainPage = () => {
                 } else if (service.category === 'mining') {
                   console.log('Opening Mining Page')
                   setShowMiningPage(true)
+                  saveCurrentPage('mining')
                 } else if (service.category === 'game') {
                   console.log('Opening Game Page')
                   setShowGamePage(true)
+                  saveCurrentPage('game')
                 } else if (service.category === 'crowdfunding') {
                   console.log('Opening Crowdfunding Page')
                   setShowCrowdfundingPage(true)
+                  saveCurrentPage('crowdfunding')
                 } else if (service.category === 'commerce') {
                   console.log('Opening Commerce Page')
                   setShowCommercePage(true)
+                  saveCurrentPage('commerce')
                 } else if (service.category === 'ai-trading') {
                   console.log('Opening AI Trading Page')
                   setShowAITradingPage(true)
+                  saveCurrentPage('ai-trading')
                 } else if (service.url && service.url.trim() !== '') {
                   handleSiteClick(service.url)
                 }
@@ -1145,6 +1272,178 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing Staking Page')
             setShowStakingPage(false)
+            saveCurrentPage('')
+          }}
+          onNativeStaking={() => {
+            console.log('Opening Native Staking Page')
+            setShowStakingPage(false)
+            setShowNativeStakingPage(true)
+            saveCurrentPage('native-staking')
+          }}
+          onLockupStaking={(initialType) => {
+            console.log('Opening Lockup Staking Page', initialType)
+            setLockupStakingInitialType(initialType || 'lockup')
+            setShowStakingPage(false)
+            setShowLockupStakingPage(true)
+            saveCurrentPage('lockup-staking')
+            if (initialType) {
+              localStorage.setItem('lockupStakingType', initialType)
+            }
+          }}
+          onLiquidStakingDetail={(product) => {
+            console.log('Opening Liquid Staking Detail Page', product)
+            setSelectedLiquidProduct(product)
+            setShowStakingPage(false)
+            setShowLiquidStakingDetailPage(true)
+            saveCurrentPage('liquid-staking-detail')
+            localStorage.setItem('liquidStakingProduct', JSON.stringify(product))
+          }}
+          onRestakingDetail={(product) => {
+            console.log('Opening Restaking Detail Page', product)
+            setSelectedRestakingProduct(product)
+            setShowStakingPage(false)
+            setShowRestakingDetailPage(true)
+            saveCurrentPage('restaking-detail')
+            localStorage.setItem('restakingProduct', JSON.stringify(product))
+          }}
+          onCefiStakingDetail={(product) => {
+            console.log('Opening CeFi Staking Detail Page', product)
+            setSelectedCefiProduct(product)
+            setShowStakingPage(false)
+            setShowCefiStakingDetailPage(true)
+            saveCurrentPage('cefi-staking-detail')
+            localStorage.setItem('cefiStakingProduct', JSON.stringify(product))
+          }}
+          onDefiStakingDetail={(product) => {
+            console.log('Opening DeFi Staking Detail Page', product)
+            setSelectedDefiProduct(product)
+            setShowStakingPage(false)
+            setShowDefiStakingDetailPage(true)
+            saveCurrentPage('defi-staking-detail')
+            localStorage.setItem('defiStakingProduct', JSON.stringify(product))
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for staking')
+            setShowStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 네이티브 스테이킹 페이지 */}
+      {showNativeStakingPage && (
+        <NativeStakingPage
+          language={language}
+          onBack={() => {
+            console.log('Closing Native Staking Page')
+            setShowNativeStakingPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for native staking')
+            setShowNativeStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 락업 스테이킹 페이지 */}
+      {showLockupStakingPage && (
+        <LockupStakingPage
+          language={language}
+          initialStakingType={lockupStakingInitialType}
+          onBack={() => {
+            console.log('Closing Lockup Staking Page')
+            setShowLockupStakingPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for lockup staking')
+            setShowLockupStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 리퀴드 스테이킹 페이지 */}
+      {/* 리퀴드 스테이킹 상세 페이지 */}
+      {showLiquidStakingDetailPage && selectedLiquidProduct && (
+        <LiquidStakingDetailPage
+          language={language}
+          product={selectedLiquidProduct}
+          onBack={() => {
+            console.log('Closing Liquid Staking Detail Page')
+            setShowLiquidStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for liquid staking detail')
+            setShowLiquidStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showRestakingDetailPage && selectedRestakingProduct && (
+        <RestakingDetailPage
+          language={language}
+          product={selectedRestakingProduct}
+          onBack={() => {
+            console.log('Closing Restaking Detail Page')
+            setShowRestakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for restaking detail')
+            setShowRestakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showCefiStakingDetailPage && selectedCefiProduct && (
+        <CefiStakingDetailPage
+          language={language}
+          product={selectedCefiProduct}
+          onBack={() => {
+            console.log('Closing CeFi Staking Detail Page')
+            setShowCefiStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for cefi staking detail')
+            setShowCefiStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showDefiStakingDetailPage && selectedDefiProduct && (
+        <DefiStakingDetailPage
+          language={language}
+          product={selectedDefiProduct}
+          onBack={() => {
+            console.log('Closing DeFi Staking Detail Page')
+            setShowDefiStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for defi staking detail')
+            setShowDefiStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
           }}
         />
       )}
@@ -1156,6 +1455,7 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing Mining Page')
             setShowMiningPage(false)
+            saveCurrentPage('')
           }}
         />
       )}
@@ -1167,6 +1467,232 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing Game Page')
             setShowGamePage(false)
+            saveCurrentPage('')
+          }}
+        />
+      )}
+
+      {/* 로그인 페이지 */}
+      {showLoginPage && !showSignupPage && (
+        <LoginPage
+          onLogin={handleLogin}
+          onSignup={handleSignup}
+          onForgotPassword={handleForgotPassword}
+          onBack={handleLoginPageBack}
+        />
+      )}
+
+      {/* 회원가입 페이지 */}
+      {showSignupPage && (
+        <SignupPage
+          onSignup={handleSignupComplete}
+          onBack={handleSignupPageBack}
+        />
+      )}
+
+      {/* 스테이킹 페이지 */}
+      {showStakingPage && (
+        <StakingPage
+          language={language}
+          onBack={() => {
+            console.log('Closing Staking Page')
+            setShowStakingPage(false)
+            saveCurrentPage('')
+          }}
+          onNativeStaking={() => {
+            console.log('Opening Native Staking Page')
+            setShowStakingPage(false)
+            setShowNativeStakingPage(true)
+            saveCurrentPage('native-staking')
+          }}
+          onLockupStaking={(initialType) => {
+            console.log('Opening Lockup Staking Page', initialType)
+            setLockupStakingInitialType(initialType || 'lockup')
+            setShowStakingPage(false)
+            setShowLockupStakingPage(true)
+            saveCurrentPage('lockup-staking')
+            if (initialType) {
+              localStorage.setItem('lockupStakingType', initialType)
+            }
+          }}
+          onLiquidStakingDetail={(product) => {
+            console.log('Opening Liquid Staking Detail Page', product)
+            setSelectedLiquidProduct(product)
+            setShowStakingPage(false)
+            setShowLiquidStakingDetailPage(true)
+            saveCurrentPage('liquid-staking-detail')
+            localStorage.setItem('liquidStakingProduct', JSON.stringify(product))
+          }}
+          onRestakingDetail={(product) => {
+            console.log('Opening Restaking Detail Page', product)
+            setSelectedRestakingProduct(product)
+            setShowStakingPage(false)
+            setShowRestakingDetailPage(true)
+            saveCurrentPage('restaking-detail')
+            localStorage.setItem('restakingProduct', JSON.stringify(product))
+          }}
+          onCefiStakingDetail={(product) => {
+            console.log('Opening CeFi Staking Detail Page', product)
+            setSelectedCefiProduct(product)
+            setShowStakingPage(false)
+            setShowCefiStakingDetailPage(true)
+            saveCurrentPage('cefi-staking-detail')
+            localStorage.setItem('cefiStakingProduct', JSON.stringify(product))
+          }}
+          onDefiStakingDetail={(product) => {
+            console.log('Opening DeFi Staking Detail Page', product)
+            setSelectedDefiProduct(product)
+            setShowStakingPage(false)
+            setShowDefiStakingDetailPage(true)
+            saveCurrentPage('defi-staking-detail')
+            localStorage.setItem('defiStakingProduct', JSON.stringify(product))
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for staking')
+            setShowStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 네이티브 스테이킹 페이지 */}
+      {showNativeStakingPage && (
+        <NativeStakingPage
+          language={language}
+          onBack={() => {
+            console.log('Closing Native Staking Page')
+            setShowNativeStakingPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for native staking')
+            setShowNativeStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 락업 스테이킹 페이지 */}
+      {showLockupStakingPage && (
+        <LockupStakingPage
+          language={language}
+          initialStakingType={lockupStakingInitialType}
+          onBack={() => {
+            console.log('Closing Lockup Staking Page')
+            setShowLockupStakingPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for lockup staking')
+            setShowLockupStakingPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 리퀴드 스테이킹 페이지 */}
+      {/* 리퀴드 스테이킹 상세 페이지 */}
+      {showLiquidStakingDetailPage && selectedLiquidProduct && (
+        <LiquidStakingDetailPage
+          language={language}
+          product={selectedLiquidProduct}
+          onBack={() => {
+            console.log('Closing Liquid Staking Detail Page')
+            setShowLiquidStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for liquid staking detail')
+            setShowLiquidStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showRestakingDetailPage && selectedRestakingProduct && (
+        <RestakingDetailPage
+          language={language}
+          product={selectedRestakingProduct}
+          onBack={() => {
+            console.log('Closing Restaking Detail Page')
+            setShowRestakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for restaking detail')
+            setShowRestakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showCefiStakingDetailPage && selectedCefiProduct && (
+        <CefiStakingDetailPage
+          language={language}
+          product={selectedCefiProduct}
+          onBack={() => {
+            console.log('Closing CeFi Staking Detail Page')
+            setShowCefiStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for cefi staking detail')
+            setShowCefiStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {showDefiStakingDetailPage && selectedDefiProduct && (
+        <DefiStakingDetailPage
+          language={language}
+          product={selectedDefiProduct}
+          onBack={() => {
+            console.log('Closing DeFi Staking Detail Page')
+            setShowDefiStakingDetailPage(false)
+            setShowStakingPage(true)
+            saveCurrentPage('staking')
+          }}
+          onLoginRequired={() => {
+            console.log('Login required for defi staking detail')
+            setShowDefiStakingDetailPage(false)
+            setShowLoginPage(true)
+            saveCurrentPage('login')
+          }}
+        />
+      )}
+
+      {/* 채굴 페이지 */}
+      {showMiningPage && (
+        <MiningPage
+          language={language}
+          onBack={() => {
+            console.log('Closing Mining Page')
+            setShowMiningPage(false)
+            saveCurrentPage('')
+          }}
+        />
+      )}
+
+      {/* 게임 페이지 */}
+      {showGamePage && (
+        <GamePage
+          language={language}
+          onBack={() => {
+            console.log('Closing Game Page')
+            setShowGamePage(false)
+            saveCurrentPage('')
           }}
         />
       )}
@@ -1178,6 +1704,7 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing Crowdfunding Page')
             setShowCrowdfundingPage(false)
+            saveCurrentPage('')
           }}
         />
       )}
@@ -1189,6 +1716,7 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing Commerce Page')
             setShowCommercePage(false)
+            saveCurrentPage('')
           }}
         />
       )}
@@ -1200,6 +1728,7 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing AI Trading Page')
             setShowAITradingPage(false)
+            saveCurrentPage('')
           }}
         />
       )}
