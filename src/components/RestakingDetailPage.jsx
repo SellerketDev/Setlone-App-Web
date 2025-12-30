@@ -198,7 +198,7 @@ const RestakingDetailPage = ({ onBack, language: propLanguage, product, onLoginR
         setIsLoadingStakingData(false)
       }, 500)
     } catch (error) {
-      console.error('Failed to load staking data:', error)
+      // console.error('Failed to load staking data:', error)
       setIsLoadingStakingData(false)
     }
   }
@@ -270,7 +270,7 @@ const RestakingDetailPage = ({ onBack, language: propLanguage, product, onLoginR
       // loadStakingData()는 초기값으로 리셋하므로 호출하지 않음
       // 실제 API 연동 시에는 API 응답으로 상태를 업데이트해야 함
     } catch (error) {
-      console.error('Restaking failed:', error)
+      // console.error('Restaking failed:', error)
       setStakingStatus('failed')
       setTimeout(() => {
         setStakingStatus(null)

@@ -230,7 +230,7 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
         setIsLoadingStakingData(false)
       }, 500)
     } catch (error) {
-      console.error('Failed to load staking data:', error)
+      // console.error('Failed to load staking data:', error)
       setIsLoadingStakingData(false)
     }
   }
@@ -314,7 +314,7 @@ const LiquidStakingDetailPage = ({ onBack, language: propLanguage, product, onLo
       // loadStakingData()는 초기값으로 리셋하므로 호출하지 않음
       // 실제 API 연동 시에는 API 응답으로 상태를 업데이트해야 함
     } catch (error) {
-      console.error('Staking failed:', error)
+      // console.error('Staking failed:', error)
       setStakingStatus('failed')
     } finally {
       setIsStaking(false)

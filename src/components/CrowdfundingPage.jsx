@@ -54,7 +54,7 @@ const CrowdfundingPage = ({ onBack, language: propLanguage, onRewardCrowdfunding
         setIsLoadingHistory(false)
       }, 300)
     } catch (error) {
-      console.error('Failed to load funding history:', error)
+      // console.error('Failed to load funding history:', error)
       setIsLoadingHistory(false)
     }
   }

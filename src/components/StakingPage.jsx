@@ -141,7 +141,7 @@ const StakingPage = ({ onBack, language: propLanguage, onNativeStaking, onLockup
       setUnstakingStatus('active')
       setUnstakingDaysLeft(0)
     } catch (error) {
-      console.error('Failed to load staking data:', error)
+      // console.error('Failed to load staking data:', error)
     } finally {
       setIsLoadingStakingData(false)
     }
@@ -1936,14 +1936,14 @@ const StakingPage = ({ onBack, language: propLanguage, onNativeStaking, onLockup
                     e.preventDefault()
                     e.stopPropagation()
                     
-                    console.log('리퀴드 스테이킹 시작하기 버튼 클릭됨')
-                    console.log('동의 상태:', liquidAgreements)
-                    console.log('onLiquidStakingDetail prop:', onLiquidStakingDetail)
+                    // console.log('리퀴드 스테이킹 시작하기 버튼 클릭됨')
+                    // console.log('동의 상태:', liquidAgreements)
+                    // console.log('onLiquidStakingDetail prop:', onLiquidStakingDetail)
                     
                     // 동의 체크
                     const allAgreed = liquidAgreements.understandLST && liquidAgreements.understandRisk && liquidAgreements.understandDifference
                     if (!allAgreed) {
-                      console.log('동의 체크 실패 - 모든 체크박스를 선택해주세요')
+                      // console.log('동의 체크 실패 - 모든 체크박스를 선택해주세요')
                       alert(t('staking.pleaseAgreeAll', language) || '모든 동의 사항을 체크해주세요')
                       return
                     }
@@ -1952,22 +1952,22 @@ const StakingPage = ({ onBack, language: propLanguage, onNativeStaking, onLockup
                     const token = getToken()
                     const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
                     
-                    console.log('인증 상태:', { token: !!token, loggedIn })
+                    // console.log('인증 상태:', { token: !!token, loggedIn })
                     
                     if (!token || !loggedIn) {
                       // 비로그인 상태면 로그인 페이지로 이동
-                      console.log('비로그인 상태 - 로그인 페이지로 이동')
+                      // console.log('비로그인 상태 - 로그인 페이지로 이동')
                       handleCloseDetail()
                       if (onLoginRequired) {
                         onLoginRequired()
                       }
                     } else {
                       // 로그인 상태면 리퀴드 스테이킹 상세 페이지로 이동
-                      console.log('로그인 상태 - 리퀴드 스테이킹 상세 페이지로 이동')
+                      // console.log('로그인 상태 - 리퀴드 스테이킹 상세 페이지로 이동')
                       // 기본 상품으로 ETH 선택
                       if (onLiquidStakingDetail) {
                         const product = { id: 'eth', name: 'ETH', apy: 3.5, lstToken: 'stETH', risk: 'medium' }
-                        console.log('상품 정보:', product)
+                        // console.log('상품 정보:', product)
                         onLiquidStakingDetail(product)
                         // 동의 상태 초기화
                         setLiquidAgreements({
@@ -1978,7 +1978,7 @@ const StakingPage = ({ onBack, language: propLanguage, onNativeStaking, onLockup
                         // 모달 닫기
                         handleCloseDetail()
                       } else {
-                        console.error('onLiquidStakingDetail prop이 전달되지 않았습니다!')
+                        // console.error('onLiquidStakingDetail prop이 전달되지 않았습니다!')
                         alert(t('staking.pageNavigationFailed', language) || '페이지 이동에 실패했습니다. 다시 시도해주세요.')
                       }
                     }

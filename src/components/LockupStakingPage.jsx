@@ -279,7 +279,7 @@ const LockupStakingPage = ({ onBack, language: propLanguage, onLoginRequired, in
       setUnstakingStatus('active')
       setUnstakingDaysLeft(0)
     } catch (error) {
-      console.error('Failed to load staking data:', error)
+      // console.error('Failed to load staking data:', error)
     } finally {
       setIsLoadingStakingData(false)
     }

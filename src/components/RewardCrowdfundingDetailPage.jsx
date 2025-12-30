@@ -217,7 +217,7 @@ const RewardCrowdfundingDetailPage = ({ onBack, language: propLanguage, project,
         setIsLoadingFundingData(false)
       }, 500)
     } catch (error) {
-      console.error('Failed to load funding data:', error)
+      // console.error('Failed to load funding data:', error)
       setIsLoadingFundingData(false)
     }
   }
@@ -313,7 +313,7 @@ const RewardCrowdfundingDetailPage = ({ onBack, language: propLanguage, project,
       // loadFundingData()는 초기값으로 리셋하므로 호출하지 않음
       // 실제 API 연동 시에는 API 응답으로 상태를 업데이트해야 함
     } catch (error) {
-      console.error('Funding failed:', error)
+      // console.error('Funding failed:', error)
       setFundingStatus('failed')
       setTimeout(() => {
         setFundingStatus(null)

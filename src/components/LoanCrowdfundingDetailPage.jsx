@@ -228,7 +228,7 @@ const LoanCrowdfundingDetailPage = ({ onBack, language: propLanguage, project, o
         setIsLoadingFundingData(false)
       }, 500)
     } catch (error) {
-      console.error('Failed to load funding data:', error)
+      // console.error('Failed to load funding data:', error)
       setIsLoadingFundingData(false)
     }
   }
@@ -319,7 +319,7 @@ const LoanCrowdfundingDetailPage = ({ onBack, language: propLanguage, project, o
         setLoanStatus(null)
       }, 3000)
     } catch (error) {
-      console.error('Loan failed:', error)
+      // console.error('Loan failed:', error)
       setLoanStatus('failed')
       setTimeout(() => {
         setLoanStatus(null)

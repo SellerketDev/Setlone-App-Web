@@ -221,7 +221,7 @@ const InvestmentCrowdfundingDetailPage = ({ onBack, language: propLanguage, proj
         setIsLoadingFundingData(false)
       }, 500)
     } catch (error) {
-      console.error('Failed to load funding data:', error)
+      // console.error('Failed to load funding data:', error)
       setIsLoadingFundingData(false)
     }
   }
@@ -311,7 +311,7 @@ const InvestmentCrowdfundingDetailPage = ({ onBack, language: propLanguage, proj
         setInvestmentStatus(null)
       }, 3000)
     } catch (error) {
-      console.error('Investment failed:', error)
+      // console.error('Investment failed:', error)
       setInvestmentStatus('failed')
       setTimeout(() => {
         setInvestmentStatus(null)
