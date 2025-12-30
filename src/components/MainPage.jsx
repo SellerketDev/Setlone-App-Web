@@ -12,6 +12,7 @@ import GamePage from './GamePage'
 import CrowdfundingPage from './CrowdfundingPage'
 import CommercePage from './CommercePage'
 import AITradingPage from './AITradingPage'
+import EventPage from './EventPage'
 
 const MainPage = () => {
   const [language, setLanguageState] = useState(getCurrentLanguage())
@@ -118,6 +119,7 @@ const MainPage = () => {
   const [showCrowdfundingPage, setShowCrowdfundingPage] = useState(false)
   const [showCommercePage, setShowCommercePage] = useState(false)
   const [showAITradingPage, setShowAITradingPage] = useState(false)
+  const [showEventPage, setShowEventPage] = useState(false)
   const [currentUserId, setCurrentUserId] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
 
@@ -877,7 +879,7 @@ const MainPage = () => {
           {services.map((service, index) => (
             <button
               key={index}
-              className={`category-card-circle ${(!service.url || service.url.trim() === '') && !['staking', 'mining', 'game', 'crowdfunding', 'commerce', 'ai-trading'].includes(service.category) ? 'disabled' : ''}`}
+              className={`category-card-circle ${(!service.url || service.url.trim() === '') && !['staking', 'mining', 'game', 'crowdfunding', 'commerce', 'ai-trading', 'rewards'].includes(service.category) ? 'disabled' : ''}`}
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
@@ -900,6 +902,9 @@ const MainPage = () => {
                 } else if (service.category === 'ai-trading') {
                   console.log('Opening AI Trading Page')
                   setShowAITradingPage(true)
+                } else if (service.category === 'rewards') {
+                  console.log('Opening Event Page')
+                  setShowEventPage(true)
                 } else if (service.url && service.url.trim() !== '') {
                   handleSiteClick(service.url)
                 }
@@ -1200,6 +1205,17 @@ const MainPage = () => {
           onBack={() => {
             console.log('Closing AI Trading Page')
             setShowAITradingPage(false)
+          }}
+        />
+      )}
+
+      {/* 이벤트 페이지 */}
+      {showEventPage && (
+        <EventPage
+          language={language}
+          onBack={() => {
+            console.log('Closing Event Page')
+            setShowEventPage(false)
           }}
         />
       )}

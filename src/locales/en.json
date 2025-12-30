@@ -473,6 +473,33 @@
         "status": "Status"
       }
     }
+  },
+  "event": {
+    "title": "Events",
+    "back": "Back",
+    "seeMore": "See More",
+    "tabs": {
+      "upcoming": "Upcoming Events",
+      "ongoing": "Ongoing Events",
+      "ended": "Ended Events",
+      "winners": "Winners"
+    },
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "imageNotRegistered": "Image not registered",
+    "winnerCount": "Winners",
+    "people": "",
+    "announceDate": "Announce Date",
+    "author": "Author",
+    "description": "Event Description",
+    "descriptionPlaceholder": "Event details will be displayed here.",
+    "close": "Close",
+    "empty": {
+      "upcoming": "No upcoming events.",
+      "ongoing": "No ongoing events.",
+      "ended": "No ended events.",
+      "winners": "No winners announced yet."
+    }
   }
 }
 

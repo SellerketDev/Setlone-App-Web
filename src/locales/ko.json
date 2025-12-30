@@ -70,7 +70,7 @@
     },
     "rewards": {
       "name": "이벤트",
-      "description": "소비 리워드 시스템"
+      "description": "다양한 이벤트 참여"
     },
     "ai": {
       "name": "AI 오토트레이딩",
@@ -472,6 +472,33 @@
         "profit": "수익",
         "status": "상태"
       }
+    }
+  },
+  "event": {
+    "title": "이벤트",
+    "back": "돌아가기",
+    "seeMore": "자세히 보기",
+    "tabs": {
+      "upcoming": "예정된 이벤트",
+      "ongoing": "진행중인 이벤트",
+      "ended": "종료된 이벤트",
+      "winners": "당첨자 발표"
+    },
+    "startDate": "시작일",
+    "endDate": "종료일",
+    "imageNotRegistered": "이미지가 등록되지 않았습니다",
+    "winnerCount": "당첨자",
+    "people": "명",
+    "announceDate": "발표일",
+    "author": "작성자",
+    "description": "이벤트 설명",
+    "descriptionPlaceholder": "이벤트 상세 내용이 여기에 표시됩니다.",
+    "close": "닫기",
+    "empty": {
+      "upcoming": "예정된 이벤트가 없습니다.",
+      "ongoing": "진행중인 이벤트가 없습니다.",
+      "ended": "종료된 이벤트가 없습니다.",
+      "winners": "당첨자 발표가 없습니다."
     }
   }
 }
