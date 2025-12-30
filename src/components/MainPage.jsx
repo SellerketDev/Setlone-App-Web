@@ -883,27 +883,19 @@ const MainPage = () => {
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                console.log('Service clicked:', service.name, 'Category:', service.category, 'URL:', service.url)
                 if (service.category === 'staking') {
-                  console.log('Opening Staking Page')
                   setShowStakingPage(true)
                 } else if (service.category === 'mining') {
-                  console.log('Opening Mining Page')
                   setShowMiningPage(true)
                 } else if (service.category === 'game') {
-                  console.log('Opening Game Page')
                   setShowGamePage(true)
                 } else if (service.category === 'crowdfunding') {
-                  console.log('Opening Crowdfunding Page')
                   setShowCrowdfundingPage(true)
                 } else if (service.category === 'commerce') {
-                  console.log('Opening Commerce Page')
                   setShowCommercePage(true)
                 } else if (service.category === 'ai-trading') {
-                  console.log('Opening AI Trading Page')
                   setShowAITradingPage(true)
                 } else if (service.category === 'rewards') {
-                  console.log('Opening Event Page')
                   setShowEventPage(true)
                 } else if (service.url && service.url.trim() !== '') {
                   handleSiteClick(service.url)
@@ -1148,7 +1140,6 @@ const MainPage = () => {
         <StakingPage
           language={language}
           onBack={() => {
-            console.log('Closing Staking Page')
             setShowStakingPage(false)
           }}
         />
@@ -1159,7 +1150,6 @@ const MainPage = () => {
         <MiningPage
           language={language}
           onBack={() => {
-            console.log('Closing Mining Page')
             setShowMiningPage(false)
           }}
         />
@@ -1170,7 +1160,6 @@ const MainPage = () => {
         <GamePage
           language={language}
           onBack={() => {
-            console.log('Closing Game Page')
             setShowGamePage(false)
           }}
         />
@@ -1181,7 +1170,6 @@ const MainPage = () => {
         <CrowdfundingPage
           language={language}
           onBack={() => {
-            console.log('Closing Crowdfunding Page')
             setShowCrowdfundingPage(false)
           }}
         />
@@ -1192,7 +1180,6 @@ const MainPage = () => {
         <CommercePage
           language={language}
           onBack={() => {
-            console.log('Closing Commerce Page')
             setShowCommercePage(false)
           }}
         />
@@ -1203,7 +1190,6 @@ const MainPage = () => {
         <AITradingPage
           language={language}
           onBack={() => {
-            console.log('Closing AI Trading Page')
             setShowAITradingPage(false)
           }}
         />
@@ -1214,7 +1200,6 @@ const MainPage = () => {
         <EventPage
           language={language}
           onBack={() => {
-            console.log('Closing Event Page')
             setShowEventPage(false)
           }}
         />
