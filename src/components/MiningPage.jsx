@@ -16,6 +16,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [miningTime, setMiningTime] = useState(0)
   const [miningHistory, setMiningHistory] = useState([])
   const [rewardHistory, setRewardHistory] = useState([])
+  const [claimedRewards, setClaimedRewards] = useState([]) // 수령한 보상 내역
   
   // 이더리움 노드참여 관련 상태
   const [ethPrice, setEthPrice] = useState(null)
@@ -258,6 +259,73 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
     }
   }
 
+  // 비트코인 보상 수령
+  const handleClaimReward = (rewardId) => {
+    const reward = rewardHistory.find(r => r.id === rewardId)
+    if (reward) {
+      // 수령한 보상에 추가
+      setClaimedRewards(prev => [reward, ...prev])
+      // 출금 가능한 보상에서 제거
+      setRewardHistory(prev => prev.filter(r => r.id !== rewardId))
+    }
+  }
+
+  // 비트코인 전체 보상 수령
+  const handleClaimAllRewards = () => {
+    if (rewardHistory.length > 0) {
+      setClaimedRewards(prev => [...rewardHistory, ...prev])
+      setRewardHistory([])
+    }
+  }
+
+  // 이더리움 보상 수령
+  const handleClaimEthReward = (rewardId) => {
+    const reward = participationHistory.find(r => r.id === rewardId)
+    if (reward) {
+      setEthClaimedRewards(prev => [reward, ...prev])
+      setParticipationHistory(prev => prev.filter(r => r.id !== rewardId))
+    }
+  }
+
+  // 이더리움 전체 보상 수령
+  const handleClaimAllEthRewards = () => {
+    if (participationHistory.length > 0) {
+      setEthClaimedRewards(prev => [...participationHistory, ...prev])
+      setParticipationHistory([])
+    }
+  }
+
+  // 코인별 보상 수령
+  const handleClaimCoinReward = (coinSymbol, rewardId) => {
+    const history = coinMiningHistory[coinSymbol] || []
+    const reward = history.find(r => r.id === rewardId)
+    if (reward) {
+      setCoinClaimedRewards(prev => ({
+        ...prev,
+        [coinSymbol]: [reward, ...(prev[coinSymbol] || [])]
+      }))
+      setCoinMiningHistory(prev => ({
+        ...prev,
+        [coinSymbol]: (prev[coinSymbol] || []).filter(r => r.id !== rewardId)
+      }))
+    }
+  }
+
+  // 코인별 전체 보상 수령
+  const handleClaimAllCoinRewards = (coinSymbol) => {
+    const history = coinMiningHistory[coinSymbol] || []
+    if (history.length > 0) {
+      setCoinClaimedRewards(prev => ({
+        ...prev,
+        [coinSymbol]: [...history, ...(prev[coinSymbol] || [])]
+      }))
+      setCoinMiningHistory(prev => ({
+        ...prev,
+        [coinSymbol]: []
+      }))
+    }
+  }
+
   // 컴포넌트 언마운트 시 정리
   useEffect(() => {
     return () => {
@@ -399,6 +467,8 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [coinMinedAmount, setCoinMinedAmount] = useState({}) // { LTC: 0, BCH: 0.001, ... }
   const [coinMiningTime, setCoinMiningTime] = useState({}) // { LTC: 0, BCH: 3600, ... }
   const [coinMiningHistory, setCoinMiningHistory] = useState({}) // { LTC: [], BCH: [], ... }
+  const [coinClaimedRewards, setCoinClaimedRewards] = useState({}) // { LTC: [], BCH: [], ... }
+  const [ethClaimedRewards, setEthClaimedRewards] = useState([]) // 이더리움 수령한 보상
   
   const coinMiningIntervalRef = useRef({}) // { LTC: intervalId, BCH: intervalId, ... }
   const coinTimeIntervalRef = useRef({}) // { LTC: intervalId, BCH: intervalId, ... }
@@ -749,28 +819,85 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   )}
                 </div>
 
-                {/* 보상 내역 */}
+                {/* 출금 가능 보상 */}
                 <div className="mining-reward-section">
-                  <h3 className="mining-reward-title">{t('mining.rewardHistory', language)}</h3>
+                  <div className="mining-reward-header-section">
+                    <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
+                    {rewardHistory.length > 0 && (
+                      <button 
+                        className="mining-claim-all-btn"
+                        onClick={handleClaimAllRewards}
+                      >
+                        {t('mining.claimAll', language)}
+                      </button>
+                    )}
+                  </div>
                   {rewardHistory.length > 0 ? (
                     <div className="mining-reward-table">
                       <div className="mining-reward-header">
                         <div>{t('mining.time', language)}</div>
                         <div>{t('mining.amount', language)}</div>
                         <div>{t('mining.reward', language)}</div>
+                        <div>{t('mining.claim', language)}</div>
                       </div>
-                      {rewardHistory.slice(0, 10).map((entry) => (
+                      {rewardHistory.map((entry) => (
                         <div key={entry.id} className="mining-reward-row">
                           <div>{new Date(entry.time).toLocaleString()}</div>
                           <div>{entry.amount.toFixed(8)} BTC</div>
                           <div>${entry.value.toFixed(2)}</div>
+                          <div>
+                            <button 
+                              className="mining-claim-btn"
+                              onClick={() => handleClaimReward(entry.id)}
+                            >
+                              {t('mining.claimReward', language)}
+                            </button>
+                          </div>
                         </div>
                       ))}
+                      <div className="mining-reward-total">
+                        <div>{t('mining.totalAvailable', language)}</div>
+                        <div>
+                          {rewardHistory.reduce((sum, entry) => sum + entry.value, 0).toFixed(2)} USD
+                        </div>
+                      </div>
                     </div>
                   ) : (
-                    <div className="mining-no-data">{t('mining.noRewards', language)}</div>
+                    <div className="mining-no-data">{t('mining.noAvailableRewards', language)}</div>
                   )}
                 </div>
+
+                {/* 수령한 보상 내역 */}
+                {claimedRewards.length > 0 && (
+                  <div className="mining-reward-section">
+                    <h3 className="mining-reward-title">{t('mining.claimedRewards', language)}</h3>
+                    <div className="mining-reward-table">
+                      <div className="mining-reward-header">
+                        <div>{t('mining.time', language)}</div>
+                        <div>{t('mining.amount', language)}</div>
+                        <div>{t('mining.reward', language)}</div>
+                        <div>{t('mining.status', language)}</div>
+                      </div>
+                      {claimedRewards.slice(0, 10).map((entry) => (
+                        <div key={entry.id} className="mining-reward-row claimed">
+                          <div>{new Date(entry.time).toLocaleString()}</div>
+                          <div>{entry.amount.toFixed(8)} BTC</div>
+                          <div>${entry.value.toFixed(2)}</div>
+                          <div className="mining-claimed-badge">✓ {t('mining.claimedRewards', language)}</div>
+                        </div>
+                      ))}
+                      <div className="mining-reward-total claimed-total">
+                        <div>{t('mining.totalClaimed', language)}</div>
+                        <div>
+                          {claimedRewards.reduce((sum, entry) => sum + entry.amount, 0).toFixed(8)} BTC
+                          <span className="mining-reward-usd">
+                            {' '}(${claimedRewards.reduce((sum, entry) => sum + entry.value, 0).toFixed(2)})
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -868,30 +995,106 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   </div>
                 </div>
 
-                {/* 참여 내역 */}
-                <div className="mining-history-section">
-                  <h3 className="mining-history-title">{t('mining.participationHistory', language)}</h3>
+                {/* 출금 가능 보상 */}
+                <div className="mining-reward-section">
+                  <div className="mining-reward-header-section">
+                    <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
+                    {participationHistory.length > 0 && (
+                      <button 
+                        className="mining-claim-all-btn"
+                        onClick={handleClaimAllEthRewards}
+                      >
+                        {t('mining.claimAll', language)}
+                      </button>
+                    )}
+                  </div>
                   {participationHistory.length > 0 ? (
-                    <div className="mining-history-table">
-                      <div className="mining-history-header">
+                    <div className="mining-reward-table">
+                      <div className="mining-reward-header">
                         <div>{t('mining.time', language)}</div>
                         <div>{t('mining.stakingAmount', language)}</div>
                         <div>{t('mining.reward', language)}</div>
-                        <div>{t('mining.participationTime', language)}</div>
+                        <div>{t('mining.claim', language)}</div>
                       </div>
-                      {participationHistory.slice(0, 10).map((entry) => (
-                        <div key={entry.id} className="mining-history-row">
+                      {participationHistory.map((entry) => (
+                        <div key={entry.id} className="mining-reward-row">
                           <div>{new Date(entry.time).toLocaleString()}</div>
                           <div>{entry.stakedAmount.toFixed(2)} ETH</div>
-                          <div>{entry.rewardAmount.toFixed(6)} ETH</div>
-                          <div>{formatTime(entry.duration)}</div>
+                          <div>
+                            {entry.rewardAmount.toFixed(6)} ETH
+                            {ethPrice && (
+                              <span className="mining-reward-usd">
+                                {' '}(${(entry.rewardAmount * ethPrice.price).toFixed(2)})
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <button 
+                              className="mining-claim-btn"
+                              onClick={() => handleClaimEthReward(entry.id)}
+                            >
+                              {t('mining.claimReward', language)}
+                            </button>
+                          </div>
                         </div>
                       ))}
+                      <div className="mining-reward-total">
+                        <div>{t('mining.totalAvailable', language)}</div>
+                        <div>
+                          {participationHistory.reduce((sum, entry) => sum + entry.rewardAmount, 0).toFixed(6)} ETH
+                          {ethPrice && (
+                            <span className="mining-reward-usd">
+                              {' '}(${(participationHistory.reduce((sum, entry) => sum + entry.rewardAmount, 0) * ethPrice.price).toFixed(2)})
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   ) : (
-                    <div className="mining-no-data">{t('mining.noParticipationHistory', language)}</div>
+                    <div className="mining-no-data">{t('mining.noAvailableRewards', language)}</div>
                   )}
                 </div>
+
+                {/* 수령한 보상 내역 */}
+                {ethClaimedRewards.length > 0 && (
+                  <div className="mining-reward-section">
+                    <h3 className="mining-reward-title">{t('mining.claimedRewards', language)}</h3>
+                    <div className="mining-reward-table">
+                      <div className="mining-reward-header">
+                        <div>{t('mining.time', language)}</div>
+                        <div>{t('mining.stakingAmount', language)}</div>
+                        <div>{t('mining.reward', language)}</div>
+                        <div>{t('mining.status', language)}</div>
+                      </div>
+                      {ethClaimedRewards.slice(0, 10).map((entry) => (
+                        <div key={entry.id} className="mining-reward-row claimed">
+                          <div>{new Date(entry.time).toLocaleString()}</div>
+                          <div>{entry.stakedAmount.toFixed(2)} ETH</div>
+                          <div>
+                            {entry.rewardAmount.toFixed(6)} ETH
+                            {ethPrice && (
+                              <span className="mining-reward-usd">
+                                {' '}(${(entry.rewardAmount * ethPrice.price).toFixed(2)})
+                              </span>
+                            )}
+                          </div>
+                          <div className="mining-claimed-badge">✓ {t('mining.claimedRewards', language)}</div>
+                        </div>
+                      ))}
+                      <div className="mining-reward-total claimed-total">
+                        <div>{t('mining.totalClaimed', language)}</div>
+                        <div>
+                          {ethClaimedRewards.reduce((sum, entry) => sum + entry.rewardAmount, 0).toFixed(6)} ETH
+                          {ethPrice && (
+                            <span className="mining-reward-usd">
+                              {' '}(${(ethClaimedRewards.reduce((sum, entry) => sum + entry.rewardAmount, 0) * ethPrice.price).toFixed(2)})
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1059,30 +1262,104 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   </div>
                 </div>
 
-                {/* 채굴 내역 */}
-                <div className="mining-history-section">
-                  <h3 className="mining-history-title">{t('mining.miningHistory', language)}</h3>
+                {/* 출금 가능 보상 */}
+                <div className="mining-reward-section">
+                  <div className="mining-reward-header-section">
+                    <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
+                    {coinMiningHistory[selectedCoin.symbol] && coinMiningHistory[selectedCoin.symbol].length > 0 && (
+                      <button 
+                        className="mining-claim-all-btn"
+                        onClick={() => handleClaimAllCoinRewards(selectedCoin.symbol)}
+                      >
+                        {t('mining.claimAll', language)}
+                      </button>
+                    )}
+                  </div>
                   {coinMiningHistory[selectedCoin.symbol] && coinMiningHistory[selectedCoin.symbol].length > 0 ? (
-                    <div className="mining-history-table">
-                      <div className="mining-history-header">
+                    <div className="mining-reward-table">
+                      <div className="mining-reward-header">
                         <div>{t('mining.time', language)}</div>
                         <div>{t('mining.amount', language)}</div>
-                        <div>{t('mining.hashRate', language)}</div>
-                        <div>{t('mining.miningTime', language)}</div>
+                        <div>{t('mining.reward', language)}</div>
+                        <div>{t('mining.claim', language)}</div>
                       </div>
-                      {coinMiningHistory[selectedCoin.symbol].slice(0, 10).map((entry) => (
-                        <div key={entry.id} className="mining-history-row">
-                          <div>{new Date(entry.time).toLocaleString()}</div>
-                          <div>{entry.amount.toFixed(8)} {selectedCoin.symbol}</div>
-                          <div>{entry.hashRate.toFixed(2)} {getHashRateUnit(selectedCoin.symbol)}</div>
-                          <div>{formatTime(entry.duration)}</div>
+                      {coinMiningHistory[selectedCoin.symbol].map((entry) => {
+                        const rewardValue = coinPrice[selectedCoin.symbol] 
+                          ? entry.amount * coinPrice[selectedCoin.symbol].price 
+                          : 0
+                        return (
+                          <div key={entry.id} className="mining-reward-row">
+                            <div>{new Date(entry.time).toLocaleString()}</div>
+                            <div>{entry.amount.toFixed(8)} {selectedCoin.symbol}</div>
+                            <div>
+                              {rewardValue > 0 ? `$${rewardValue.toFixed(2)}` : 'Calculating...'}
+                            </div>
+                            <div>
+                              <button 
+                                className="mining-claim-btn"
+                                onClick={() => handleClaimCoinReward(selectedCoin.symbol, entry.id)}
+                              >
+                                {t('mining.claimReward', language)}
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      })}
+                      <div className="mining-reward-total">
+                        <div>{t('mining.totalAvailable', language)}</div>
+                        <div>
+                          {coinMiningHistory[selectedCoin.symbol].reduce((sum, entry) => sum + entry.amount, 0).toFixed(8)} {selectedCoin.symbol}
+                          {coinPrice[selectedCoin.symbol] && (
+                            <span className="mining-reward-usd">
+                              {' '}(${(coinMiningHistory[selectedCoin.symbol].reduce((sum, entry) => sum + entry.amount, 0) * coinPrice[selectedCoin.symbol].price).toFixed(2)})
+                            </span>
+                          )}
                         </div>
-                      ))}
+                      </div>
                     </div>
                   ) : (
-                    <div className="mining-no-data">{t('mining.noHistory', language)}</div>
+                    <div className="mining-no-data">{t('mining.noAvailableRewards', language)}</div>
                   )}
                 </div>
+
+                {/* 수령한 보상 내역 */}
+                {coinClaimedRewards[selectedCoin.symbol] && coinClaimedRewards[selectedCoin.symbol].length > 0 && (
+                  <div className="mining-reward-section">
+                    <h3 className="mining-reward-title">{t('mining.claimedRewards', language)}</h3>
+                    <div className="mining-reward-table">
+                      <div className="mining-reward-header">
+                        <div>{t('mining.time', language)}</div>
+                        <div>{t('mining.amount', language)}</div>
+                        <div>{t('mining.reward', language)}</div>
+                        <div>{t('mining.status', language)}</div>
+                      </div>
+                      {coinClaimedRewards[selectedCoin.symbol].slice(0, 10).map((entry) => {
+                        const rewardValue = coinPrice[selectedCoin.symbol] 
+                          ? entry.amount * coinPrice[selectedCoin.symbol].price 
+                          : 0
+                        return (
+                          <div key={entry.id} className="mining-reward-row claimed">
+                            <div>{new Date(entry.time).toLocaleString()}</div>
+                            <div>{entry.amount.toFixed(8)} {selectedCoin.symbol}</div>
+                            <div>{rewardValue > 0 ? `$${rewardValue.toFixed(2)}` : 'Calculating...'}</div>
+                            <div className="mining-claimed-badge">✓ {t('mining.claimedRewards', language)}</div>
+                          </div>
+                        )
+                      })}
+                      <div className="mining-reward-total claimed-total">
+                        <div>{t('mining.totalClaimed', language)}</div>
+                        <div>
+                          {coinClaimedRewards[selectedCoin.symbol].reduce((sum, entry) => sum + entry.amount, 0).toFixed(8)} {selectedCoin.symbol}
+                          {coinPrice[selectedCoin.symbol] && (
+                            <span className="mining-reward-usd">
+                              {' '}(${(coinClaimedRewards[selectedCoin.symbol].reduce((sum, entry) => sum + entry.amount, 0) * coinPrice[selectedCoin.symbol].price).toFixed(2)})
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mining-coin-description">
                   <h3 className="mining-coin-description-title">{t('mining.coinDetails', language)}</h3>
