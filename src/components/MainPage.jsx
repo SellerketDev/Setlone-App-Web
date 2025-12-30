@@ -554,7 +554,7 @@ const MainPage = () => {
         }
       }
     } catch (error) {
-      console.error('Logout error:', error)
+      // Logout error occurred
       // 에러가 발생해도 로컬에서 로그아웃 처리
       localStorage.removeItem('isLoggedIn')
       localStorage.removeItem('currentUser')
@@ -590,11 +590,10 @@ const MainPage = () => {
         data = await response.json()
       } else {
         const text = await response.text()
-        console.error('Non-JSON response:', text)
+        // Non-JSON response received
         throw new Error(`Server returned non-JSON response: ${response.status} ${response.statusText}`)
       }
 
-      console.log('Login response:', { status: response.status, data })
 
       if (response.ok && data.success) {
         // 로그인 성공
@@ -617,12 +616,7 @@ const MainPage = () => {
           : `Login failed: ${data.message || 'Invalid email or password.'}`)
       }
     } catch (error) {
-      console.error('Login error:', error)
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      })
+      // Login error occurred
       
       // 더 자세한 에러 메시지 표시
       let errorMessage = language === 'ko' 
@@ -645,7 +639,6 @@ const MainPage = () => {
 
   // 회원가입 완료 핸들러
   const handleSignupComplete = async (userData) => {
-    console.log('Signup completed:', userData)
     setShowSignupPage(false)
     setIsLoggedIn(true)
     localStorage.setItem('isLoggedIn', 'true')
@@ -672,7 +665,7 @@ const MainPage = () => {
           }
         }
       } catch (error) {
-        console.error('Error loading user after signup:', error)
+        // Error loading user after signup
       }
     }
     
@@ -698,7 +691,6 @@ const MainPage = () => {
   // 비밀번호 분실 핸들러
   const handleForgotPassword = () => {
     // TODO: 비밀번호 재설정 페이지로 이동
-    console.log('Forgot password clicked')
     alert(language === 'ko' ? '비밀번호 재설정 기능은 준비 중입니다.' : 'Password reset feature is coming soon.')
   }
 
