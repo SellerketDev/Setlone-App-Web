@@ -6,7 +6,7 @@
   bottom: 0;
   width: 100vw;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
   color: #ffffff;
   padding: 20px;
   z-index: 2000;
@@ -22,19 +22,22 @@
 
 .back-button {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 2px solid rgb(169 168 211 / 64%);
+  color: #e9e8e8;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateX(-3px);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.3);
 }
 
 .mining-title {
@@ -60,22 +63,24 @@
 }
 
 .mining-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   padding: 24px;
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
   min-height: 200px;
 }
 
 .mining-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 5px 20px rgba(169, 168, 211, 0.3),
+    0 0 15px rgba(169, 168, 211, 0.2);
 }
 
 .mining-card-header {
@@ -86,37 +91,39 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-card-description {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(233, 232, 232, 0.7);
   line-height: 1.6;
   margin: 0 0 20px 0;
   flex-grow: 1;
 }
 
 .mining-see-more-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.3s ease;
   margin-top: auto;
 }
 
 .mining-see-more-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .mining-see-more-btn:active {
-  transform: translateY(0);
+  transform: scale(1);
 }
 
 /* 플로팅 상세 화면 */
@@ -137,15 +144,17 @@
 }
 
 .mining-detail-modal {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 20px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(169, 168, 211, 0.2);
   backdrop-filter: blur(20px);
 }
 
@@ -161,13 +170,13 @@
   font-size: 24px;
   font-weight: 600;
   margin: 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-detail-close {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 2px solid rgb(169 168 211 / 64%);
+  color: #e9e8e8;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -181,8 +190,10 @@
 }
 
 .mining-detail-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
   transform: rotate(90deg);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.3);
 }
 
 .mining-detail-content {
@@ -192,9 +203,9 @@
 }
 
 .mining-status-message {
-  background: rgba(255, 193, 7, 0.2);
-  border: 1px solid rgba(255, 193, 7, 0.4);
-  color: #ffc107;
+  background: rgba(169, 168, 211, 0.2);
+  border: 2px solid rgb(169 168 211 / 64%);
+  color: rgb(169 168 211);
   padding: 16px;
   border-radius: 12px;
   text-align: center;
@@ -206,7 +217,7 @@
 .mining-detail-text {
   font-size: 16px;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: #e9e8e8;
   margin: 0;
 }
 
@@ -219,11 +230,11 @@
 }
 
 .mining-back-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
+  color: #e9e8e8;
   padding: 14px 32px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
@@ -233,12 +244,14 @@
 }
 
 .mining-back-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.3);
 }
 
 .mining-back-button:active {
-  transform: translateY(0);
+  transform: scale(1);
 }
 
 /* 채굴 대시보드 */
@@ -256,16 +269,22 @@
 }
 
 .mining-info-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 16px;
   backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.mining-info-card:hover {
+  border-color: rgb(169 168 211 / 80%);
+  box-shadow: 0 0 10px rgba(169, 168, 211, 0.2);
 }
 
 .mining-info-label {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(233, 232, 232, 0.6);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -274,7 +293,7 @@
 .mining-info-value {
   font-size: 18px;
   font-weight: 600;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-status-badge {
@@ -286,31 +305,38 @@
 }
 
 .mining-status-badge.idle {
-  background: rgba(158, 158, 158, 0.3);
-  color: #9e9e9e;
+  background: rgba(158, 158, 158, 0.2);
+  border: 1px solid rgba(158, 158, 158, 0.4);
+  color: rgba(233, 232, 232, 0.6);
 }
 
 .mining-status-badge.mining {
-  background: rgba(76, 175, 80, 0.3);
-  color: #4caf50;
+  background: rgba(169, 168, 211, 0.2);
+  border: 1px solid rgb(169 168 211 / 60%);
+  color: rgb(169 168 211);
   animation: pulse 2s infinite;
 }
 
 .mining-status-badge.paused {
-  background: rgba(255, 193, 7, 0.3);
+  background: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.4);
   color: #ffc107;
 }
 
 .mining-status-badge.active {
-  background: rgba(76, 175, 80, 0.3);
-  color: #4caf50;
+  background: rgba(169, 168, 211, 0.2);
+  border: 1px solid rgb(169 168 211 / 60%);
+  color: rgb(169 168 211);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -318,8 +344,8 @@
 
 /* 채굴 통계 */
 .mining-stats {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
@@ -329,7 +355,7 @@
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 16px 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-stats-grid {
@@ -344,7 +370,7 @@
 
 .mining-stat-label {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(233, 232, 232, 0.6);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -353,7 +379,7 @@
 .mining-stat-value {
   font-size: 20px;
   font-weight: 600;
-  color: #4caf50;
+  color: rgb(169 168 211);
 }
 
 /* 채굴 제어 패널 */
@@ -365,79 +391,93 @@
 
 .mining-start-btn,
 .mining-stop-btn {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 32px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.3s ease;
   min-width: 200px;
 }
 
 .mining-stop-btn {
-  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  background: rgba(244, 67, 54, 0.2);
+  border-color: rgba(244, 67, 54, 0.6);
+  color: #ff5252;
 }
 
 .mining-start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .mining-stop-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+  background: rgba(244, 67, 54, 0.3);
+  border-color: rgba(244, 67, 54, 0.8);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(244, 67, 54, 0.4);
 }
 
 .mining-start-btn:active,
 .mining-stop-btn:active {
-  transform: translateY(0);
+  transform: scale(1);
 }
 
 .mining-start-button {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 14px 32px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.3s ease;
   flex: 1;
   max-width: 200px;
 }
 
 .mining-start-button.mining-stop-button {
-  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  background: rgba(244, 67, 54, 0.2);
+  border-color: rgba(244, 67, 54, 0.6);
+  color: #ff5252;
 }
 
 .mining-start-button:disabled {
-  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  background: rgba(244, 67, 54, 0.2);
+  border-color: rgba(244, 67, 54, 0.6);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .mining-start-button:hover:not(:disabled):not(.mining-stop-button) {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(169, 168, 211, 0.4);
 }
 
 .mining-start-button.mining-stop-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+  background: rgba(244, 67, 54, 0.3);
+  border-color: rgba(244, 67, 54, 0.8);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(244, 67, 54, 0.4);
 }
 
 .mining-start-button:active:not(:disabled) {
-  transform: translateY(0);
+  transform: scale(1);
 }
 
 /* 채굴 내역 */
 .mining-history-section,
 .mining-reward-section {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
@@ -448,7 +488,7 @@
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 16px 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-history-table,
@@ -463,11 +503,11 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 12px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(30 30 70);
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(233, 232, 232, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -483,9 +523,10 @@
   gap: 12px;
   padding: 12px;
   background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgb(169 168 211 / 20%);
   border-radius: 8px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #e9e8e8;
   transition: all 0.2s ease;
 }
 
@@ -502,37 +543,41 @@
 }
 
 .mining-claim-all-btn {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.3s ease;
 }
 
 .mining-claim-all-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(169, 168, 211, 0.3);
 }
 
 .mining-claim-btn {
-  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(169 168 211 / 60%);
   color: #ffffff;
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .mining-claim-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 10px rgba(33, 150, 243, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgb(169 168 211 / 80%);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(169, 168, 211, 0.3);
 }
 
 .mining-reward-total {
@@ -540,12 +585,13 @@
   grid-template-columns: 2fr 2fr;
   gap: 12px;
   padding: 16px;
-  background: rgba(76, 175, 80, 0.1);
+  background: rgba(169, 168, 211, 0.1);
+  border: 2px solid rgb(169 168 211 / 40%);
   border-radius: 8px;
   margin-top: 12px;
   font-weight: 600;
   font-size: 16px;
-  color: #4caf50;
+  color: rgb(169 168 211);
 }
 
 .mining-reward-usd {
@@ -559,26 +605,28 @@
 }
 
 .mining-claimed-badge {
-  color: #4caf50;
+  color: rgb(169 168 211);
   font-weight: 500;
   font-size: 12px;
 }
 
 .mining-reward-total.claimed-total {
-  background: rgba(33, 150, 243, 0.1);
-  color: #2196F3;
+  background: rgba(169, 168, 211, 0.15);
+  border: 2px solid rgb(169 168 211 / 50%);
+  color: rgb(169 168 211);
   margin-top: 12px;
 }
 
 .mining-history-row:hover,
 .mining-reward-row:hover {
   background: rgba(255, 255, 255, 0.08);
+  border-color: rgb(169 168 211 / 40%);
 }
 
 .mining-no-data {
   text-align: center;
   padding: 40px 20px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(233, 232, 232, 0.5);
   font-size: 14px;
 }
 
@@ -664,20 +712,22 @@
 }
 
 .mining-coin-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
+  border-radius: 20px;
   padding: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   backdrop-filter: blur(10px);
 }
 
 .mining-coin-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgb(30 30 70);
+  border-color: rgb(169 168 211 / 80%);
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 5px 20px rgba(169, 168, 211, 0.3),
+    0 0 15px rgba(169, 168, 211, 0.2);
 }
 
 .mining-coin-header {
@@ -691,7 +741,7 @@
   font-size: 18px;
   font-weight: 600;
   margin: 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-coin-symbol {
@@ -705,7 +755,7 @@
 .mining-coin-price {
   font-size: 20px;
   font-weight: 600;
-  color: #4caf50;
+  color: rgb(169 168 211);
   margin-bottom: 12px;
 }
 
@@ -727,11 +777,11 @@
 }
 
 .mining-coin-info-label {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(233, 232, 232, 0.6);
 }
 
 .mining-coin-info-value {
-  color: #ffffff;
+  color: #e9e8e8;
   font-weight: 500;
 }
 
@@ -744,23 +794,26 @@
 }
 
 .mining-coin-profitability.high {
-  background: rgba(76, 175, 80, 0.3);
-  color: #4caf50;
+  background: rgba(169, 168, 211, 0.2);
+  border: 1px solid rgb(169 168 211 / 60%);
+  color: rgb(169 168 211);
 }
 
 .mining-coin-profitability.medium {
-  background: rgba(255, 193, 7, 0.3);
+  background: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.4);
   color: #ffc107;
 }
 
 .mining-coin-profitability.low {
-  background: rgba(158, 158, 158, 0.3);
-  color: #9e9e9e;
+  background: rgba(158, 158, 158, 0.2);
+  border: 1px solid rgba(158, 158, 158, 0.4);
+  color: rgba(233, 232, 232, 0.6);
 }
 
 .mining-coin-description {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(20 20 51);
+  border: 2px solid rgb(169 168 211 / 64%);
   border-radius: 12px;
   padding: 20px;
   margin-top: 24px;
@@ -770,13 +823,13 @@
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: #ffffff;
+  color: #e9e8e8;
 }
 
 .mining-coin-description-text {
   font-size: 14px;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: #e9e8e8;
   margin: 0;
 }
 
@@ -798,4 +851,3 @@
     font-size: 18px;
   }
 }
-
