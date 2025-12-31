@@ -972,7 +972,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
 
                 {/* 실시간 노드 참여 통계 */}
                 <div className="mining-stats">
-                  <h3 className="mining-stats-title">실시간 노드 참여 통계</h3>
+                  <h3 className="mining-stats-title">{t('mining.realTimeNodeStats', language)}</h3>
                   <div className="mining-stats-grid">
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.stakedAmount', language)}</div>

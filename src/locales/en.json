@@ -175,6 +175,7 @@
     "estimatedProfit": "Estimated Profit",
     "miningTime": "Mining Time",
     "realTimeStats": "Real-time Mining Statistics",
+    "realTimeNodeStats": "Real-time Node Participation Statistics",
     "miningHistory": "Mining History",
     "rewardHistory": "Reward History",
     "noHistory": "No mining history",

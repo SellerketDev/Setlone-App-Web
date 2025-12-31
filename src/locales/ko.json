@@ -175,6 +175,7 @@
     "estimatedProfit": "예상 수익",
     "miningTime": "채굴 시간",
     "realTimeStats": "실시간 채굴 통계",
+    "realTimeNodeStats": "실시간 노드 참여 통계",
     "miningHistory": "채굴 내역",
     "rewardHistory": "보상 내역",
     "noHistory": "채굴 내역이 없습니다",
