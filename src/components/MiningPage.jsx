@@ -7,7 +7,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // prop으로 받은 language가 있으면 사용, 없으면 localStorage에서 가져오기
   const [language, setLanguage] = useState(propLanguage || getCurrentLanguage())
   const [selectedMining, setSelectedMining] = useState(null)
-  
+
   // 비트코인 채굴 관련 상태
   const [btcPrice, setBtcPrice] = useState(null)
   const [miningStatus, setMiningStatus] = useState('idle') // idle, mining, paused
@@ -17,7 +17,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [miningHistory, setMiningHistory] = useState([])
   const [rewardHistory, setRewardHistory] = useState([])
   const [claimedRewards, setClaimedRewards] = useState([]) // 수령한 보상 내역
-  
+
   // 이더리움 노드참여 관련 상태
   const [ethPrice, setEthPrice] = useState(null)
   const [nodeStatus, setNodeStatus] = useState('idle') // idle, active, paused
@@ -25,12 +25,12 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [rewardAmount, setRewardAmount] = useState(0)
   const [participationTime, setParticipationTime] = useState(0)
   const [participationHistory, setParticipationHistory] = useState([])
-  
+
   const miningIntervalRef = useRef(null)
   const timeIntervalRef = useRef(null)
   const startTimeRef = useRef(null)
   const unsubscribePriceRef = useRef(null)
-  
+
   const nodeIntervalRef = useRef(null)
   const nodeTimeIntervalRef = useRef(null)
   const nodeStartTimeRef = useRef(null)
@@ -129,26 +129,26 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 채굴 시작
   const handleStartMining = () => {
     if (miningStatus === 'mining') return
-    
+
     setMiningStatus('mining')
     startTimeRef.current = Date.now()
     setMiningTime(0)
-    
+
     // 해시레이트 시뮬레이션 (100-150 TH/s 범위)
     const baseHashRate = 100 + Math.random() * 50
     setHashRate(baseHashRate)
-    
+
     // 채굴 시뮬레이션 (1초마다 업데이트)
     miningIntervalRef.current = setInterval(() => {
       // 해시레이트 약간 변동
       const newHashRate = baseHashRate + (Math.random() - 0.5) * 10
       setHashRate(newHashRate)
-      
+
       // 채굴된 양 증가 (시뮬레이션: 시간당 약 0.00001 BTC)
       const miningRate = 0.00001 / 3600 // 초당 채굴량
       setMinedAmount(prev => prev + miningRate)
     }, 1000)
-    
+
     // 시간 업데이트
     timeIntervalRef.current = setInterval(() => {
       if (startTimeRef.current) {
@@ -161,17 +161,17 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 채굴 중지
   const handleStopMining = () => {
     setMiningStatus('idle')
-    
+
     if (miningIntervalRef.current) {
       clearInterval(miningIntervalRef.current)
       miningIntervalRef.current = null
     }
-    
+
     if (timeIntervalRef.current) {
       clearInterval(timeIntervalRef.current)
       timeIntervalRef.current = null
     }
-    
+
     // 채굴 내역에 추가
     if (minedAmount > 0) {
       const historyEntry = {
@@ -182,7 +182,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
         duration: miningTime
       }
       setMiningHistory(prev => [historyEntry, ...prev])
-      
+
       // 보상 내역에 추가 (가격이 있으면)
       if (btcPrice) {
         const rewardEntry = {
@@ -194,7 +194,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
         }
         setRewardHistory(prev => [rewardEntry, ...prev])
       }
-      
+
       setMinedAmount(0)
       setMiningTime(0)
     }
@@ -203,14 +203,14 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 이더리움 노드 참여 시작
   const handleStartNode = () => {
     if (nodeStatus === 'active') return
-    
+
     setNodeStatus('active')
     nodeStartTimeRef.current = Date.now()
     setParticipationTime(0)
-    
+
     // 스테이킹 수량 설정 (시뮬레이션: 32 ETH)
     setStakedAmount(32)
-    
+
     // 노드 참여 시뮬레이션 (1초마다 업데이트)
     nodeIntervalRef.current = setInterval(() => {
       // 보상 증가 (시뮬레이션: 연간 4% APY 기준)
@@ -218,7 +218,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
       const rewardRate = apy / (365 * 24 * 3600) // 초당 보상률
       setRewardAmount(prev => prev + (32 * rewardRate))
     }, 1000)
-    
+
     // 시간 업데이트
     nodeTimeIntervalRef.current = setInterval(() => {
       if (nodeStartTimeRef.current) {
@@ -231,17 +231,17 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 이더리움 노드 참여 중지
   const handleStopNode = () => {
     setNodeStatus('idle')
-    
+
     if (nodeIntervalRef.current) {
       clearInterval(nodeIntervalRef.current)
       nodeIntervalRef.current = null
     }
-    
+
     if (nodeTimeIntervalRef.current) {
       clearInterval(nodeTimeIntervalRef.current)
       nodeTimeIntervalRef.current = null
     }
-    
+
     // 참여 내역에 추가
     if (rewardAmount > 0) {
       const historyEntry = {
@@ -252,7 +252,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
         duration: participationTime
       }
       setParticipationHistory(prev => [historyEntry, ...prev])
-      
+
       setRewardAmount(0)
       setParticipationTime(0)
       setStakedAmount(0)
@@ -460,7 +460,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [selectedCoin, setSelectedCoin] = useState(null)
   const [coinPrice, setCoinPrice] = useState({})
   const unsubscribeCoinPriceRef = useRef({})
-  
+
   // 각 코인별 채굴 상태 관리
   const [coinMiningStatus, setCoinMiningStatus] = useState({}) // { LTC: 'idle', BCH: 'mining', ... }
   const [coinHashRate, setCoinHashRate] = useState({}) // { LTC: 0, BCH: 100, ... }
@@ -469,7 +469,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   const [coinMiningHistory, setCoinMiningHistory] = useState({}) // { LTC: [], BCH: [], ... }
   const [coinClaimedRewards, setCoinClaimedRewards] = useState({}) // { LTC: [], BCH: [], ... }
   const [ethClaimedRewards, setEthClaimedRewards] = useState([]) // 이더리움 수령한 보상
-  
+
   const coinMiningIntervalRef = useRef({}) // { LTC: intervalId, BCH: intervalId, ... }
   const coinTimeIntervalRef = useRef({}) // { LTC: intervalId, BCH: intervalId, ... }
   const coinStartTimeRef = useRef({}) // { LTC: timestamp, BCH: timestamp, ... }
@@ -491,7 +491,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
           }))
         }
       })
-      
+
       // 실시간 가격 구독
       const unsubscribe = subscribeToPrice(coin.symbol, (priceData) => {
         setCoinPrice(prev => ({
@@ -501,7 +501,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
       })
       unsubscribeCoinPriceRef.current[coin.symbol] = unsubscribe
     }
-    
+
     // 초기 상태 설정 (없는 경우)
     if (!coinMiningStatus[coin.symbol]) {
       setCoinMiningStatus(prev => ({ ...prev, [coin.symbol]: 'idle' }))
@@ -515,11 +515,11 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 코인별 채굴 시작
   const handleStartCoinMining = (coinSymbol) => {
     if (coinMiningStatus[coinSymbol] === 'mining') return
-    
+
     setCoinMiningStatus(prev => ({ ...prev, [coinSymbol]: 'mining' }))
     coinStartTimeRef.current[coinSymbol] = Date.now()
     setCoinMiningTime(prev => ({ ...prev, [coinSymbol]: 0 }))
-    
+
     // 해시레이트 시뮬레이션 (코인별로 다른 범위)
     const hashRateRanges = {
       'LTC': { min: 50, max: 100 }, // TH/s
@@ -531,18 +531,18 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
       'RVN': { min: 3, max: 6 }, // TH/s
       'ETC': { min: 15, max: 25 } // MH/s
     }
-    
+
     const range = hashRateRanges[coinSymbol] || { min: 50, max: 100 }
     const baseHashRate = range.min + Math.random() * (range.max - range.min)
     setCoinHashRate(prev => ({ ...prev, [coinSymbol]: baseHashRate }))
-    
+
     // 채굴 시뮬레이션 (1초마다 업데이트)
     coinMiningIntervalRef.current[coinSymbol] = setInterval(() => {
       // 해시레이트 약간 변동
       const currentHashRate = coinHashRate[coinSymbol] || baseHashRate
       const newHashRate = currentHashRate + (Math.random() - 0.5) * (range.max - range.min) * 0.1
       setCoinHashRate(prev => ({ ...prev, [coinSymbol]: newHashRate }))
-      
+
       // 채굴된 양 증가 (시뮬레이션: 코인별로 다른 비율)
       const miningRates = {
         'LTC': 0.00001 / 3600, // 초당 채굴량
@@ -554,14 +554,14 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
         'RVN': 0.01 / 3600,
         'ETC': 0.00002 / 3600
       }
-      
+
       const miningRate = miningRates[coinSymbol] || 0.00001 / 3600
       setCoinMinedAmount(prev => ({
         ...prev,
         [coinSymbol]: (prev[coinSymbol] || 0) + miningRate
       }))
     }, 1000)
-    
+
     // 시간 업데이트
     coinTimeIntervalRef.current[coinSymbol] = setInterval(() => {
       if (coinStartTimeRef.current[coinSymbol]) {
@@ -574,17 +574,17 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 코인별 채굴 중지
   const handleStopCoinMining = (coinSymbol) => {
     setCoinMiningStatus(prev => ({ ...prev, [coinSymbol]: 'idle' }))
-    
+
     if (coinMiningIntervalRef.current[coinSymbol]) {
       clearInterval(coinMiningIntervalRef.current[coinSymbol])
       delete coinMiningIntervalRef.current[coinSymbol]
     }
-    
+
     if (coinTimeIntervalRef.current[coinSymbol]) {
       clearInterval(coinTimeIntervalRef.current[coinSymbol])
       delete coinTimeIntervalRef.current[coinSymbol]
     }
-    
+
     // 채굴 내역에 추가
     const minedAmount = coinMinedAmount[coinSymbol] || 0
     if (minedAmount > 0) {
@@ -599,7 +599,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
         ...prev,
         [coinSymbol]: [historyEntry, ...(prev[coinSymbol] || [])]
       }))
-      
+
       setCoinMinedAmount(prev => ({ ...prev, [coinSymbol]: 0 }))
       setCoinMiningTime(prev => ({ ...prev, [coinSymbol]: 0 }))
     }
@@ -643,19 +643,19 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   }
 
   // 예상 수익 계산
-  const estimatedProfit = btcPrice && minedAmount > 0 
-    ? minedAmount * btcPrice.price 
+  const estimatedProfit = btcPrice && minedAmount > 0
+    ? minedAmount * btcPrice.price
     : 0
 
   // 예상 보상 계산 (이더리움)
-  const estimatedEthReward = ethPrice && rewardAmount > 0 
-    ? rewardAmount * ethPrice.price 
+  const estimatedEthReward = ethPrice && rewardAmount > 0
+    ? rewardAmount * ethPrice.price
     : 0
 
   // 비트코인 채굴 정보
   const getBitcoinMiningInfo = () => {
     if (selectedMining?.id !== 'bitcoin') return null
-    
+
     return {
       difficulty: '81.73 T',
       expectedReward: '6.25 BTC/block',
@@ -667,7 +667,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
   // 이더리움 노드 정보
   const getEthereumNodeInfo = () => {
     if (selectedMining?.id !== 'ethereum') return null
-    
+
     return {
       minimumStake: '32 ETH',
       apy: '4.0%',
@@ -725,7 +725,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                 ×
               </button>
             </div>
-            
+
             <div className="mining-detail-content">
               {/* 채굴 정보 대시보드 */}
               <div className="mining-dashboard">
@@ -736,29 +736,29 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                       {btcPrice ? `$${parseFloat(btcPrice.priceString).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Loading...'}
                     </div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.miningDifficulty', language)}</div>
                     <div className="mining-info-value">{bitcoinInfo?.difficulty || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.expectedReward', language)}</div>
                     <div className="mining-info-value">{bitcoinInfo?.expectedReward || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.hashRate', language)}</div>
                     <div className="mining-info-value">
                       {hashRate > 0 ? `${hashRate.toFixed(2)} TH/s` : '0 TH/s'}
                     </div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.powerConsumption', language)}</div>
                     <div className="mining-info-value">{bitcoinInfo?.powerConsumption || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.statusLabel', language)}</div>
                     <div className="mining-info-value">
@@ -771,7 +771,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
 
                 {/* 실시간 채굴 통계 */}
                 <div className="mining-stats">
-                  <h3 className="mining-stats-title">실시간 채굴 통계</h3>
+                  <h3 className="mining-stats-title">{t('mining.realTimeStats', language)}</h3>
                   <div className="mining-stats-grid">
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.minedAmount', language)}</div>
@@ -779,14 +779,14 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                         {minedAmount > 0 ? `${minedAmount.toFixed(8)} BTC` : '0.00000000 BTC'}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.estimatedProfit', language)}</div>
                       <div className="mining-stat-value">
                         {estimatedProfit > 0 ? `$${estimatedProfit.toFixed(2)}` : '$0.00'}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.miningTime', language)}</div>
                       <div className="mining-stat-value">{formatTime(miningTime)}</div>
@@ -824,7 +824,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   <div className="mining-reward-header-section">
                     <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
                     {rewardHistory.length > 0 && (
-                      <button 
+                      <button
                         className="mining-claim-all-btn"
                         onClick={handleClaimAllRewards}
                       >
@@ -846,7 +846,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                           <div>{entry.amount.toFixed(8)} BTC</div>
                           <div>${entry.value.toFixed(2)}</div>
                           <div>
-                            <button 
+                            <button
                               className="mining-claim-btn"
                               onClick={() => handleClaimReward(entry.id)}
                             >
@@ -902,7 +902,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
             </div>
 
             <div className="mining-detail-footer">
-              <button 
+              <button
                 className={`mining-start-button ${miningStatus === 'mining' ? 'mining-stop-button' : ''}`}
                 onClick={miningStatus === 'mining' ? handleStopMining : handleStartMining}
               >
@@ -928,7 +928,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                 ×
               </button>
             </div>
-            
+
             <div className="mining-detail-content">
               {/* 노드 정보 대시보드 */}
               <div className="mining-dashboard">
@@ -939,27 +939,27 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                       {ethPrice ? `$${parseFloat(ethPrice.priceString).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Loading...'}
                     </div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.minimumStake', language)}</div>
                     <div className="mining-info-value">{ethereumInfo?.minimumStake || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.apy', language)}</div>
                     <div className="mining-info-value">{ethereumInfo?.apy || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.rewardRate', language)}</div>
                     <div className="mining-info-value">{ethereumInfo?.rewardRate || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.validatorCount', language)}</div>
                     <div className="mining-info-value">{ethereumInfo?.validatorCount || 'N/A'}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.nodeStatus', language)}</div>
                     <div className="mining-info-value">
@@ -980,14 +980,14 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                         {stakedAmount > 0 ? `${stakedAmount.toFixed(2)} ETH` : '0.00 ETH'}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.estimatedReward', language)}</div>
                       <div className="mining-stat-value">
                         {estimatedEthReward > 0 ? `$${estimatedEthReward.toFixed(2)}` : '$0.00'}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.participationTime', language)}</div>
                       <div className="mining-stat-value">{formatTime(participationTime)}</div>
@@ -1000,7 +1000,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   <div className="mining-reward-header-section">
                     <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
                     {participationHistory.length > 0 && (
-                      <button 
+                      <button
                         className="mining-claim-all-btn"
                         onClick={handleClaimAllEthRewards}
                       >
@@ -1029,7 +1029,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                             )}
                           </div>
                           <div>
-                            <button 
+                            <button
                               className="mining-claim-btn"
                               onClick={() => handleClaimEthReward(entry.id)}
                             >
@@ -1099,7 +1099,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
             </div>
 
             <div className="mining-detail-footer">
-              <button 
+              <button
                 className={`mining-start-button ${nodeStatus === 'active' ? 'mining-stop-button' : ''}`}
                 onClick={nodeStatus === 'active' ? handleStopNode : handleStartNode}
               >
@@ -1125,12 +1125,12 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                 ×
               </button>
             </div>
-            
+
             <div className="mining-detail-content">
               <div className="mining-coins-grid">
                 {mineableCoins.map((coin) => (
-                  <div 
-                    key={coin.id} 
+                  <div
+                    key={coin.id}
                     className="mining-coin-card"
                     onClick={() => handleCoinSelect(coin)}
                   >
@@ -1139,7 +1139,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                       <span className="mining-coin-symbol">{coin.symbol}</span>
                     </div>
                     <div className="mining-coin-price">
-                      {coinPrice[coin.symbol] 
+                      {coinPrice[coin.symbol]
                         ? `$${parseFloat(coinPrice[coin.symbol].priceString || coinPrice[coin.symbol].price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                         : 'Loading...'}
                     </div>
@@ -1186,43 +1186,43 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                 ×
               </button>
             </div>
-            
+
             <div className="mining-detail-content">
               <div className="mining-dashboard">
                 <div className="mining-info-grid">
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.currentPrice', language)}</div>
                     <div className="mining-info-value">
-                      {coinPrice[selectedCoin.symbol] 
+                      {coinPrice[selectedCoin.symbol]
                         ? `$${parseFloat(coinPrice[selectedCoin.symbol].priceString || coinPrice[selectedCoin.symbol].price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                         : 'Loading...'}
                     </div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.algorithm', language)}</div>
                     <div className="mining-info-value">{selectedCoin.algorithm}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.blockReward', language)}</div>
                     <div className="mining-info-value">{selectedCoin.blockReward}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.networkHashRate', language)}</div>
                     <div className="mining-info-value">{selectedCoin.networkHashRate}</div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.hashRate', language)}</div>
                     <div className="mining-info-value">
-                      {coinHashRate[selectedCoin.symbol] > 0 
+                      {coinHashRate[selectedCoin.symbol] > 0
                         ? `${coinHashRate[selectedCoin.symbol].toFixed(2)} ${getHashRateUnit(selectedCoin.symbol)}`
                         : '0'}
                     </div>
                   </div>
-                  
+
                   <div className="mining-info-card">
                     <div className="mining-info-label">{t('mining.statusLabel', language)}</div>
                     <div className="mining-info-value">
@@ -1235,17 +1235,17 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
 
                 {/* 실시간 채굴 통계 */}
                 <div className="mining-stats">
-                  <h3 className="mining-stats-title">실시간 채굴 통계</h3>
+                  <h3 className="mining-stats-title">{t('mining.realTimeStats', language)}</h3>
                   <div className="mining-stats-grid">
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.minedAmount', language)}</div>
                       <div className="mining-stat-value">
-                        {(coinMinedAmount[selectedCoin.symbol] || 0) > 0 
+                        {(coinMinedAmount[selectedCoin.symbol] || 0) > 0
                           ? `${(coinMinedAmount[selectedCoin.symbol] || 0).toFixed(8)} ${selectedCoin.symbol}`
                           : `0.00000000 ${selectedCoin.symbol}`}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.estimatedProfit', language)}</div>
                       <div className="mining-stat-value">
@@ -1254,7 +1254,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                           : '$0.00'}
                       </div>
                     </div>
-                    
+
                     <div className="mining-stat-item">
                       <div className="mining-stat-label">{t('mining.miningTime', language)}</div>
                       <div className="mining-stat-value">{formatTime(coinMiningTime[selectedCoin.symbol] || 0)}</div>
@@ -1267,7 +1267,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                   <div className="mining-reward-header-section">
                     <h3 className="mining-reward-title">{t('mining.availableRewards', language)}</h3>
                     {coinMiningHistory[selectedCoin.symbol] && coinMiningHistory[selectedCoin.symbol].length > 0 && (
-                      <button 
+                      <button
                         className="mining-claim-all-btn"
                         onClick={() => handleClaimAllCoinRewards(selectedCoin.symbol)}
                       >
@@ -1284,8 +1284,8 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                         <div>{t('mining.claim', language)}</div>
                       </div>
                       {coinMiningHistory[selectedCoin.symbol].map((entry) => {
-                        const rewardValue = coinPrice[selectedCoin.symbol] 
-                          ? entry.amount * coinPrice[selectedCoin.symbol].price 
+                        const rewardValue = coinPrice[selectedCoin.symbol]
+                          ? entry.amount * coinPrice[selectedCoin.symbol].price
                           : 0
                         return (
                           <div key={entry.id} className="mining-reward-row">
@@ -1295,7 +1295,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                               {rewardValue > 0 ? `$${rewardValue.toFixed(2)}` : 'Calculating...'}
                             </div>
                             <div>
-                              <button 
+                              <button
                                 className="mining-claim-btn"
                                 onClick={() => handleClaimCoinReward(selectedCoin.symbol, entry.id)}
                               >
@@ -1334,8 +1334,8 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                         <div>{t('mining.status', language)}</div>
                       </div>
                       {coinClaimedRewards[selectedCoin.symbol].slice(0, 10).map((entry) => {
-                        const rewardValue = coinPrice[selectedCoin.symbol] 
-                          ? entry.amount * coinPrice[selectedCoin.symbol].price 
+                        const rewardValue = coinPrice[selectedCoin.symbol]
+                          ? entry.amount * coinPrice[selectedCoin.symbol].price
                           : 0
                         return (
                           <div key={entry.id} className="mining-reward-row claimed">
@@ -1369,14 +1369,14 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
             </div>
 
             <div className="mining-detail-footer">
-              <button 
+              <button
                 className={`mining-start-button ${(coinMiningStatus[selectedCoin.symbol] || 'idle') === 'mining' ? 'mining-stop-button' : ''}`}
-                onClick={(coinMiningStatus[selectedCoin.symbol] || 'idle') === 'mining' 
+                onClick={(coinMiningStatus[selectedCoin.symbol] || 'idle') === 'mining'
                   ? () => handleStopCoinMining(selectedCoin.symbol)
                   : () => handleStartCoinMining(selectedCoin.symbol)}
               >
-                {(coinMiningStatus[selectedCoin.symbol] || 'idle') === 'mining' 
-                  ? t('mining.stopMining', language) 
+                {(coinMiningStatus[selectedCoin.symbol] || 'idle') === 'mining'
+                  ? t('mining.stopMining', language)
                   : t('mining.startMining', language)}
               </button>
               <button className="mining-back-button" onClick={() => setSelectedCoin(null)}>
@@ -1399,7 +1399,7 @@ const MiningPage = ({ onBack, language: propLanguage }) => {
                 ×
               </button>
             </div>
-            
+
             <div className="mining-detail-content">
               <div className="mining-status-message">
                 {t('mining.comingSoon', language)}
